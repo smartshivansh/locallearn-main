@@ -46,7 +46,7 @@ const SignUpDetail = () => {
 
     const datas = JSON.stringify(submissionData);
 
-    await fetch("http://localhost:4000/usernamecheck", {
+    await fetch("http://doornextshop.com/usernamecheck", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -60,7 +60,7 @@ const SignUpDetail = () => {
           setUsernameError(`${result.message}`);
           return;
         } else {
-          fetch("http://localhost:4000/signup", {
+          fetch("http://doornextshop.com/signup", {
             method: "POST",
             headers: {
               "content-type": "application/json",

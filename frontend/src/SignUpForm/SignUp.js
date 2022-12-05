@@ -17,7 +17,7 @@ const SignUp = () => {
     e.preventDefault();
     const email = localStorage.getItem("email");
     const data = JSON.stringify({ otp, email });
-    fetch("http://localhost:4000/otpverify", {
+    fetch("http://doornextshop.com/otpverify", {
       method: "POST",
       headers: {
         "content-type": "application/json",

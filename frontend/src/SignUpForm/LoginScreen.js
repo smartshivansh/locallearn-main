@@ -20,7 +20,7 @@ const LoginScreen = () => {
   async function formSubmitHandler(datas) {
     const { loginId, password } = datas;
 
-    await fetch("http://localhost:4000/signin", {
+    await fetch("http://doornextshop.com/signin", {
       method: "POST",
       headers: {
         "content-type": "application/json",
