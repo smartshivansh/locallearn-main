@@ -1,0 +1,88 @@
+.container {
+  width: 100%;
+  background-color: #ffffff;
+  height: 85%;
+  top: 0;
+  position: absolute;
+  border-width: 10px;
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.question {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 30px;
+  text-align: center;
+}
+
+.submit {
+  width: 90%;
+  height: 3.5rem;
+  border: 3px solid #40e0d0;
+  border-radius: 10px;
+  color: #40e0d0;
+  background-color: #ffffff;
+}
+
+.input {
+  width: 90%;
+  border-radius: 10px;
+  height: 3rem;
+  border: 2px solid #c4c4c4;
+  padding: 1rem;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.submit:hover {
+  color: white;
+  background-color: #40e0d0;
+}
+
+@media (max-width: 500px) {
+  .container {
+    border-radius: 5px;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+
+  .question {
+    font-size: 0.75rem;
+    font-weight: 200;
+  }
+
+  .input {
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    height: 1rem;
+    width: 90%;
+  }
+
+  .chips {
+    margin-top: 0.5rem;
+  }
+
+  .submit {
+    margin-top: 0.8rem;
+    width: 90%;
+    height: 2.5rem;
+    border: 2px solid #40e0d0;
+    border-radius: 6px;
+    color: #40e0d0;
+    background-color: #ffffff;
+  }
+}

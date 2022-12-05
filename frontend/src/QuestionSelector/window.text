@@ -1,0 +1,27 @@
+
+<div className={classes.quespanel}>
+          {chipQuestions.map((question) => {
+            return (
+              <QuestionPanel
+                question={question.question}
+                options={question.options}
+                min={question.min}
+                max={question.max}
+                key={question.Id}
+                id={question.Id}
+                last={question.last}
+                onclick={submitHandler}
+              />
+            );
+          })}
+          {selectorQuestions.map((question) => (
+            <QuestionSelector
+              question={question.question}
+              options={question.options}
+              key={question.Id}
+              id={question.Id}
+              last={question.last}
+              onclick={submitHandler}
+            />
+          ))}
+        </div>

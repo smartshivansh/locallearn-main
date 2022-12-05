@@ -1,0 +1,33 @@
+.btn {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn:hover {
+  cursor: pointer;
+  transform: scale(95%);
+}
+
+.vector {
+  background: url("../images/send.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 1200px) {
+  .btn {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 770px) {
+  .btn {
+    width: 2rem;
+    height: 2rem;
+  }
+}

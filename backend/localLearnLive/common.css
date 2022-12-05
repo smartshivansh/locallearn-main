@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+.mainHeader {
+  height: 6rem;
+  background-color: #00072d;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  /* padding: 0 10%; */
+}
+
+.logoContainer {
+  font-family: "Courier Prime";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  margin: auto;
+  color: #ffffff;
+}
+
+.container {
+  font-size: 1.5rem;
+  font-family: "Poppins", sans-serif;
+  width: 80%;
+  height: 100%;
+  margin: 3rem auto;
+}
+
+.heading {
+  text-align: left;
+  padding-left: 6rem;
+  height: 5rem;
+  background: linear-gradient(210.65deg, #40e0d0 0%, #a9dbb8 100%);
+  color: #ffffff;
+  font-size: 3rem;
+}
+
+.sub-heading {
+  width: 90%;
+  margin: 2rem auto;
+  font-weight: 500;
+  line-height: 2.8rem;
+  font-size: 2.5rem;
+}
+
+.content {
+  width: 90%;
+  margin: 2rem auto;
+  font-weight: 300;
+  line-height: 2.8rem;
+}
+
+.list {
+  width: 90%;
+  margin: 2rem auto;
+  font-weight: 300;
+  line-height: 2.8rem;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    width: 100%;
+  }
+  .heading {
+    font-size: 2rem;
+    padding-left: 5%;
+  }
+
+  .sub-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .heading {
+    width: 100%;
+    padding-left: 0;
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  .sub-heading {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+  }
+
+  .list {
+    margin: 2rem;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .heading {
+    width: 100%;
+    padding-left: 0;
+    text-align: center;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .sub-heading {
+    font-size: 1.5rem;
+  }
+
+  .list {
+    margin: 2rem;
+  }
+}

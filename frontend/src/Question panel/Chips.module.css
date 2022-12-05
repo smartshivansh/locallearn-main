@@ -1,0 +1,44 @@
+.chips {
+  width: 120px;
+  min-width: max-content;
+  height: 40px;
+  border: 2px solid #40e0d0;
+  border-radius: 10px;
+  text-align: center;
+  margin: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.xicon {
+  width: 20%;
+  height: 100%;
+  background: url("../images/xchip.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.chips:hover {
+  background-color: #40e0d0;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .chips {
+    width: 60px;
+    border: 1px solid #40e0d0;
+    border-radius: 5px;
+    margin: 1.5px;
+    padding: 3px;
+    font-size: 0.7rem;
+    position: relative;
+  }
+
+  .xicon {
+    width: 15px;
+    height: 100%;
+  }
+}

@@ -1,0 +1,261 @@
+.mainContainer {
+  width: 100%;
+  height: 100%;
+  /* position: relative; */
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.link {
+  display: inline;
+  color: blue;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
+.left {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(210.65deg, #40e0d0 0%, #a9dbb8 100%);
+  position: relative;
+  padding-right: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.welcome {
+  color: white;
+  font-family: "Courier Prime";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  width: 50%;
+}
+
+.doions {
+  position: absolute;
+  bottom: 0;
+  margin: auto;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+.right {
+  width: 50%;
+  height: 100%;
+  padding: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+  width: max-content;
+}
+
+.input {
+  width: 32rem;
+  height: 3.5rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.75rem;
+  padding: 1rem;
+}
+
+/* #password {
+  width: 16rem;
+} */
+
+/* .password {
+  width: 32rem;
+  display: flex;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  align-items: center;
+  justify-content: space-between;
+} */
+
+.input:focus {
+  outline: none;
+}
+
+.checkbox {
+  width: 32rem;
+  height: 3.5rem;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  margin-top: 0;
+}
+
+.errorMsg {
+  color: red;
+  font-size: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.submit {
+  border: 3px solid #40e0d0;
+  background-color: white;
+  border-radius: 10px;
+  width: 32rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: #40e0d0;
+  height: 3.75rem;
+}
+
+.submit:hover {
+  color: white;
+  background: #40e0d0;
+}
+
+.login {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  margin: 1.5rem auto;
+}
+
+@media (max-width: 1300px) {
+  .left {
+    padding: 0;
+    padding-right: 3%;
+  }
+
+  .welcome {
+    width: 100%;
+    text-align: center;
+  }
+
+  .right {
+    padding: 0;
+    padding-left: 3%;
+    display: flex;
+    align-items: center;
+  }
+
+  .form {
+    width: 100%;
+  }
+
+  .input {
+    width: 80%;
+  }
+  .password {
+    width: 80%;
+  }
+
+  #password {
+    width: 50%;
+  }
+
+  .checkbox {
+    width: 90%;
+  }
+
+  .submit {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .input {
+    width: 95%;
+  }
+  .password {
+    width: 95%;
+  }
+
+  #password {
+    width: 50%;
+  }
+}
+
+@media (max-width: 730px) {
+  .container {
+    flex-direction: column;
+    height: max-content;
+  }
+
+  .left {
+    width: 100%;
+    height: 30%;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    padding-bottom: 3%;
+    position: static;
+  }
+
+  .welcome {
+    width: 100%;
+  }
+
+  .right {
+    width: 100%;
+    height: max-content;
+    padding: 0;
+    padding-top: 5%;
+    position: static;
+  }
+
+  .form {
+    height: 100%;
+    align-items: center;
+    margin: 0 1rem 1rem 1rem;
+  }
+
+  .submit {
+    width: 10rem;
+    height: 3.5rem;
+  }
+
+  .doions {
+    position: static;
+    height: max-content;
+    width: 100%;
+    padding-bottom: 0;
+    margin-top: 4%;
+  }
+}

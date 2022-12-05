@@ -1,0 +1,19 @@
+.Tenorgif {
+  width: 400px;
+  height: 300px;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 1000px) {
+  .Tenorgif {
+    width: 300px;
+    height: 225px;
+  }
+}
+
+@media (max-width: 800px) {
+  .Tenorgif {
+    width: 220px;
+    height: 165px;
+  }
+}

@@ -1,0 +1,128 @@
+<div class="feature-card_container" id="slider_container">
+         
+          <!-- slider1 -->
+          <div class="feature-card" id="screen1">
+            <div class="some_symbol">$&&$</div>
+            <p class="feature_card-desp">
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.slider1
+            </p>
+            <div class="feature_brief">
+              <div class="feature_image" style="background-image: url(https://avatars.dicebear.com/api/croodles-neutral/gautam.${customer.firstName}.svg)"></div>
+              <div class="feature-detail">
+                <h3 class="feature_name">Gautam Balhara</h3>
+                <p class="feature_bio">
+                  Compensation Manager
+                </p>
+              </div>
+            </div>
+          </div>
+
+          
+          <!-- slider2 -->
+          <div class="feature-card" id="screen2">
+            <div class="some_symbol">$&&$</div>
+            <p class="feature_card-desp">
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.
+            </p>
+            <div class="feature_brief">
+              <div class="feature_image" style="background-image: url(https://avatars.dicebear.com/api/croodles-neutral/Jayshree.svg)"></div>
+              <div class="feature-detail">
+                <h3 class="feature_name">Jayshree Konda</h3>
+                <p class="feature_bio">
+                  Dental Surgeon
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- slider3 -->
+          <div class="feature-card" id="screen3">
+            <div class="some_symbol">$&&$</div>
+            <p class="feature_card-desp">
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.
+            </p>
+            <div class="feature_brief">
+              <div class="feature_image" style="background-image: url(https://avatars.dicebear.com/api/croodles-neutral/nayana.svg)"></div>
+              <div class="feature-detail">
+                <h3 class="feature_name">Nayana jain</h3>
+                <p class="feature_bio">
+                  Home Decorator
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- slider4 -->
+          <div class="feature-card" id="screen4">
+            <div class="some_symbol">$&&$</div>
+            <p class="feature_card-desp">
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.
+            </p>
+            <div class="feature_brief">
+              <div class="feature_image" style="background-image: url(https://avatars.dicebear.com/api/croodles-neutral/girish.svg)"></div>
+              <div class="feature-detail">
+                <h3 class="feature_name">Girish Bansal</h3>
+                <p class="feature_bio">
+                  Biotechnologist
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- slider5 -->
+          <div class="feature-card" id="screen5">
+            <div class="some_symbol">$&&$</div>
+            <p class="feature_card-desp">
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.
+            </p>
+            <div class="feature_brief">
+              <div class="feature_image" style="background-image: url(https://avatars.dicebear.com/api/croodles-neutral/Girish.svg)"></div>
+              <div class="feature-detail">
+                <h3 class="feature_name">Girish Goyal</h3>
+                <p class="feature_bio">
+                  Sales Manager
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- slider6 -->
+          <div class="feature-card" id="screen6">
+            <div class="some_symbol">$&&$</div>
+            <p class="feature_card-desp">
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book.
+            </p>
+            <div class="feature_brief">
+              <div class="feature_image" style="background-image: url(https://avatars.dicebear.com/api/croodles-neutral/Amal.svg)"></div>
+              <div class="feature-detail">
+                <h3 class="feature_name">Amal Kishore Bakshi</h3>
+                <p class="feature_bio">
+                  Pharmasist
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="slider_dots-container">
+            <div class="slider_dots"></div>
+            <div class="slider_dots"></div>
+            <div class="slider_dots"></div>
+            <div class="slider_dots"></div>
+            <div class="slider_dots"></div>
+            <div class="slider_dots"></div>
+          </div>
+        </div>

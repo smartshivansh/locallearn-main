@@ -1,0 +1,245 @@
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&display=swap");
+
+.container {
+  width: 70%;
+  height: 10%;
+  position: fixed;
+  z-index: 20;
+  left: 15%;
+  top: 0;
+  /* overflow: hidden; */
+}
+
+.link {
+  text-decoration: none;
+}
+
+.navbar {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #00072d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: -10;
+}
+
+.hamberger {
+  background: url("../images/List.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 2rem;
+  width: 2rem;
+  margin: 0rem 1rem;
+  /* position: absolute;
+  z-index: 100; */
+}
+
+.hamberger:hover {
+  cursor: pointer;
+  transform: scale(95%);
+}
+
+.btn {
+  border: none;
+  background: url("../images/X.svg");
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 2rem;
+  width: 2rem;
+  margin: 0rem 1rem;
+  z-index: 100;
+}
+
+.btn:hover {
+  cursor: pointer;
+  transform: scale(95%);
+}
+
+.logoContainer {
+  width: max-content;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.logo {
+  color: #ffffff;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Courier Prime", monospace;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 2.5rem;
+}
+
+.link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.sidebarContainer {
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+}
+
+.backdrop {
+  width: 70%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  right: 0;
+  display: none;
+  transition: 1s;
+  z-index: 20;
+  opacity: 0;
+}
+
+.sideBar {
+  width: 30%;
+  height: 100%;
+  background-color: #00072d;
+  padding: 1rem 0;
+  transform: translateX(-110%);
+}
+
+.sideBarItem {
+  padding: 0.5rem 2rem;
+  color: #ffffff;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2.1rem;
+  text-decoration: none;
+}
+
+.sideBarItem:hover {
+  cursor: pointer;
+  color: white;
+}
+
+/* styling profile */
+
+.profileBtn {
+  background: url("../images/UserCircle.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 2rem;
+  width: 2rem;
+  margin: 0rem 1rem;
+  /* position: absolute;
+  z-index: 100; */
+}
+
+.profilexBtn {
+  border: none;
+  background: url("../images/X.svg");
+  position: absolute;
+  right: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 2rem;
+  width: 2rem;
+  margin: 0rem 1rem;
+  z-index: 100;
+}
+
+.profileContainer {
+  width: 100%;
+  height: 100%;
+  transform: translateX(100%);
+  display: flex;
+}
+
+.profile {
+  width: 30%;
+  height: 100%;
+  transform: translateX(110%);
+  background-color: red;
+}
+
+.profileBackdrop {
+  width: 70%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 1300px) {
+  .container {
+    width: 80%;
+    left: 10%;
+  }
+}
+
+@media (max-width: 950px) {
+  .container {
+    width: 100%;
+    left: 0%;
+  }
+
+  .sideBar {
+    width: 40%;
+  }
+
+  .backdrop {
+    width: 60%;
+  }
+}
+
+@media (max-width: 760px) {
+  .navbar {
+    display: flex;
+    padding: 0 0.5rem;
+    align-items: center;
+    height: 100%;
+  }
+  .container {
+    height: 8%;
+  }
+  .logoContainer {
+    margin: 0 auto;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+
+  .logo {
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  .hamberger {
+    height: 2rem;
+    width: 2rem;
+    margin: 0.5rem;
+  }
+
+  .btn {
+    height: 2rem;
+    width: 2rem;
+    margin: 0.5rem;
+  }
+
+  .sideBar {
+    width: 70%;
+  }
+
+  .backdrop {
+    width: 30%;
+  }
+}

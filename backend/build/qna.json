@@ -1,0 +1,16 @@
+{
+
+    "qna": [
+        {
+            "question":"what your name?",
+            "answer": "My name is Anurag"
+        },
+        {
+            "question":"Where do you live",
+            "answer": ["My name is Anurag","you can call me anurag","they its AJ"]
+        }
+
+    
+    ]
+
+}
