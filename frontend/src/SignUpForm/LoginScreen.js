@@ -5,6 +5,7 @@ import classes from "./LoginScreen.module.css";
 
 import { useForm } from "react-hook-form";
 import PreChatScreen from "./PreChatScreen";
+import Spinners from "../Spinner/Spinner";
 
 const LoginScreen = () => {
   const {
@@ -16,10 +17,12 @@ const LoginScreen = () => {
 
   const navigate = useNavigate();
   const [sucess, setSucess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function formSubmitHandler(datas) {
     const { loginId, password } = datas;
 
+    setLoading(true);
     await fetch("http://doornextshop.com/signin", {
       method: "POST",
       headers: {
@@ -33,9 +36,11 @@ const LoginScreen = () => {
         if (data.responseType.sucess) {
           // navigate("/app/loginsucess");
           setSucess(true);
+          setLoading(false);
         } else {
           alert(data.responseType.message);
           // console.log(data);
+          setLoading(false);
         }
       });
   }
@@ -46,6 +51,7 @@ const LoginScreen = () => {
 
   return (
     <div className={classes.container}>
+      {loading && <Spinners />}
       <div className={classes.left}>
         <h1 className={classes.welcome}>Welcome to LOCALLEARN</h1>
         <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>

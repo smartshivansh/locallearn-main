@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import classes from "./SignupDetail.module.css";
 import SignUp from "./SignUp.js";
+import Spinners from "../Spinner/Spinner";
 
 const SignUpDetail = () => {
   const {
@@ -20,6 +21,8 @@ const SignUpDetail = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const [signup, setSignup] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const password = watch("confirmPassword");
   const username = watch("username");
@@ -46,6 +49,7 @@ const SignUpDetail = () => {
 
     const datas = JSON.stringify(submissionData);
 
+    setLoading(true);
     await fetch("http://doornextshop.com/usernamecheck", {
       method: "POST",
       headers: {
@@ -77,9 +81,11 @@ const SignUpDetail = () => {
                   localStorage.removeItem("email");
                 }, 10 * 60 * 1000);
                 setSignup(true);
+                setLoading(false);
                 // navigate("/app/signups");
               } else {
                 setEmailError(`${result.message}`);
+                setLoading(false);
               }
             });
         }
@@ -114,6 +120,7 @@ const SignUpDetail = () => {
 
   return (
     <div className={classes.mainContainer}>
+      {loading && <Spinners />}
       <div className={classes.mainContainer}>
         <div className={classes.container}>
           <div className={classes.left}>

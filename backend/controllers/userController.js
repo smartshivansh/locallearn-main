@@ -42,6 +42,7 @@ const usernamecheck = async (req, res) => {
   const username = req.body.username;
 
   let user = await Users.findOne({ username });
+  console.log("lll");
 
   if (user) {
     res.json(

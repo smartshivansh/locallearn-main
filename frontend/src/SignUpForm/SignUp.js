@@ -2,6 +2,7 @@ import { useState } from "react";
 import OTPInput from "otp-input-react";
 
 import SignInSuccessfull from "./SignInSuccessfull";
+import Spinners from "../Spinner/Spinner";
 
 import { useNavigate } from "react-router-dom";
 
@@ -11,12 +12,14 @@ const SignUp = () => {
   const [otp, setOtp] = useState();
   const [content, setContent] = useState("");
   const [sucess, setSucess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
     const email = localStorage.getItem("email");
     const data = JSON.stringify({ otp, email });
+    setLoading(true);
     fetch("http://doornextshop.com/otpverify", {
       method: "POST",
       headers: {
@@ -30,8 +33,10 @@ const SignUp = () => {
         if (data.msg === "OTP_MATCHED") {
           // navigate("/app/sucess");
           setSucess(true);
+          setLoading(false);
         } else {
           setContent("Incorrect OTP");
+          setLoading(false);
         }
       });
   };
@@ -46,6 +51,7 @@ const SignUp = () => {
 
   return (
     <div className={classes.container}>
+      {loading && <Spinners />}
       <div className={classes.left}>
         <h1 className={classes.welcome}>Welcome to LOCALLEARN</h1>
       </div>
