@@ -7,7 +7,7 @@
   z-index: 20;
   left: 15%;
   top: 0;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .link {
