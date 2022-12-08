@@ -2,7 +2,7 @@ const express = require("express");
 require("./config/db");
 const bodyParser = require("body-parser");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 const path = require("path");
 require("dotenv").config({

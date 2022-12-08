@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
 import classes from "./Navbar.module.css";
+import SkillChip from "./SkillChip";
 
 import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
+  //sidebar states
   const [showSideBar, setSideBar] = useState(false);
   const [containerHeight, setContainerHeight] = useState(null);
   const [sidebarTransform, setSidebarTransform] = useState(null);
@@ -16,12 +18,33 @@ const Navbar = (props) => {
   const [navbarHeight, setNavbarHeight] = useState(null);
   const navigate = useNavigate();
 
-  // const [showProfile, setProfile] = useState(false);
+  //profile states
+  const [showProfile, setProfile] = useState(false);
+  const [profileTransform, setProfileTransform] = useState(null);
+  const [profileTransition, setProfileTransition] = useState(null);
+  const [profileBackdropOpacity, setProfileBackdropOpacity] = useState(null);
+  const [profileBackdropDisplay, setProfileBackdropDisplay] = useState(null);
+  const [profileContainerTransform, setProfileContainerTransform] =
+    useState(null);
 
-  // const [profileContainerTransfrom, setProfileContainerTransform] =
-  //   useState(null);
-  // const [profileTransform, setProfileTransform] = useState(null);
-  // const [profileTransition, setProfileTransition] = useState(null);
+  const goodSkill = [
+    "React",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "GIT",
+    "Github",
+    "Java",
+  ];
+  const learnSkill = [
+    "NodeJs",
+    "MongoDB",
+    "Express Js",
+    "PHP",
+    "python",
+    "Django",
+    "AI",
+  ];
 
   const showSideMenuHandler = () => {
     setSideBar((prevVal) => !prevVal);
@@ -49,22 +72,31 @@ const Navbar = (props) => {
     }
   };
 
-  // const showProfileHandler = () => {
-  //   setProfile((prevVal) => !prevVal);
+  const showProfileHandler = () => {
+    setProfile((prevVal) => !prevVal);
 
-  //   if (!showSideBar) {
-  //     setNavbarHeight("10%");
-  //     setContainerHeight("100%");
-  //     setProfileContainerTransform("translateX(0)");
-  //     setProfileTransform("translateX(0)");
-  //     setProfileTransition("0.5s");
-  //     setBackdropOpacity(0);
-  //     setBackdropDisplay("block");
-  //     setTimeout(() => {
-  //       setBackdropOpacity(1);
-  //     }, 100);
-  //   }
-  // };
+    if (!showProfile) {
+      setNavbarHeight("10%");
+      setContainerHeight("100%");
+      setProfileContainerTransform("translateX(0)");
+      setProfileTransform("translateX(0)");
+      setProfileTransition("0.5s");
+      setProfileBackdropOpacity(0);
+      setProfileBackdropDisplay("block");
+      setTimeout(() => {
+        setProfileBackdropOpacity(1);
+      }, 100);
+    } else {
+      setProfileTransform("translateX(110%)");
+      setProfileTransition("1s");
+      setTimeout(() => {
+        setProfileBackdropOpacity(1);
+        setProfileContainerTransform("translateX(100%)");
+        setContainerHeight("10%");
+        setNavbarHeight("100%");
+      }, 500);
+    }
+  };
 
   return (
     <div className={classes.container} style={{ height: containerHeight }}>
@@ -97,7 +129,7 @@ const Navbar = (props) => {
 
         {/* profile btn */}
 
-        {/* {!showProfile && (
+        {!showProfile && (
           <div
             className={classes.profileBtn}
             onClick={showProfileHandler}
@@ -108,7 +140,7 @@ const Navbar = (props) => {
             className={classes.profilexBtn}
             onClick={showProfileHandler}
           ></div>
-        )} */}
+        )}
       </div>
 
       {/* sidebar */}
@@ -164,16 +196,58 @@ const Navbar = (props) => {
       </div>
 
       {/* profile */}
-      {/* <div
+
+      <div
         className={classes.profileContainer}
-        style={{ transform: profileContainerTransfrom }}
+        style={{ transform: profileContainerTransform }}
       >
-        <div className={classes.profileBackdrop}></div>
+        <div
+          className={classes.profileBackdrop}
+          style={{
+            opacity: profileBackdropOpacity,
+            display: profileBackdropDisplay,
+          }}
+          onClick={showProfileHandler}
+        ></div>
         <div
           className={classes.profile}
-          style={{ transform: profileTransform, transition: profileTransition }}
-        ></div>
-      </div> */}
+          style={{
+            transform: profileTransform,
+            transition: profileTransition,
+          }}
+        >
+          {/* image Section */}
+          <div className={classes.imageContaioner}>
+            <div className={classes.image}></div>
+            <div className={classes.despContainer}>
+              <h4 className={classes.name}>Shivansh shrivastava</h4>
+              <p className={classes.desp}>Software Engineer</p>
+              <p className={classes.desp}>jabalpur</p>
+            </div>
+          </div>
+
+          {/* skills i am good at */}
+
+          <div className={classes.good}>
+            <h3>Skills I am good At</h3>
+            <div className={classes.skills}>
+              {goodSkill.map((skill) => {
+                return <SkillChip text={skill} />;
+              })}
+            </div>
+          </div>
+
+          {/* skills I want to learn */}
+          <div className={classes.good}>
+            <h3>Skills I am want to learn</h3>
+            <div className={classes.skills}>
+              {learnSkill.map((skill) => {
+                return <SkillChip text={skill} />;
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

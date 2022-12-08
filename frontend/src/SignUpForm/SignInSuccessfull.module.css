@@ -5,7 +5,7 @@
   /* position: relative; */
 }
 
-.right {
+.left {
   width: 50%;
   height: 100%;
   background: linear-gradient(210.65deg, #40e0d0 0%, #a9dbb8 100%);
@@ -15,7 +15,7 @@
   padding-right: 5%;
 }
 
-.left {
+.right {
   width: 50%;
   height: 100%;
   display: flex;
@@ -49,11 +49,9 @@
 }
 
 .image {
-  background: url(../images/success.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
   height: 50%;
   width: 80%;
+  margin-bottom: 1rem;
 }
 
 .content {
@@ -94,14 +92,14 @@
     padding: 0;
   }
 
-  .right {
+  .left {
     width: 100%;
     height: 30%;
     padding: 0;
     justify-content: center;
   }
 
-  .left {
+  .right {
     width: 100%;
     height: 65%;
     padding: 0;

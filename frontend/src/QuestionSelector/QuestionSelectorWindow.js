@@ -67,7 +67,7 @@ const QuestionSelectorWindow = () => {
           "Digital marketing",
           "Entrepreneurship",
           "Data Science",
-          "Bnaking",
+          "Banking",
           "Korean language",
           "Makeup",
           "Investment",

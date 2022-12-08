@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 mongoose
-  .connect(
-    "mongodb+srv://shivansh:react@cluster0.7oywfvv.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_BD_URI)
   .then((e) => console.log(`Connected to mongoDb:${e.connection.host}`))
   .catch((e) => console.log(e));
 

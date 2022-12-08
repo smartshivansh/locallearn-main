@@ -14,10 +14,10 @@ const PreChatScreen = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.right}>
+      <div className={classes.left}>
         <p className={classes.welcome}>welcome to locallearn</p>
       </div>
-      <div className={classes.left}>
+      <div className={classes.right}>
         <p className={classes.content}> Your profile is complete now</p>
         <p className={classes.content}>You may start chatting with the bot</p>
       </div>

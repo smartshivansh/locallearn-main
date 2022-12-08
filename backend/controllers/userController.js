@@ -2,9 +2,12 @@ const Users = require("../models/users");
 // const otp = require("../models/otp")
 const Signup = require("../models/Signup");
 const Skills = require("../models/Skills");
+var rn = require("random-number");
+
+require("dotenv").config();
 
 const { json } = require("express");
-const messagebird = require("messagebird")("6PBBEVn5eNSq66LuzuaoRXRrC");
+
 var validator = require("email-validator");
 var rn = require("random-number");
 const bcrypt = require("bcrypt");
@@ -12,31 +15,24 @@ const bcrypt = require("bcrypt");
 const { createTransport } = require("nodemailer");
 
 const nodemailer = require("nodemailer");
-let otp = 0;
 var jwt = require("jsonwebtoken");
 const users = async (req, res) => {};
 
 let responses = [];
 
-// nodemiller mail system
-
-const sendMail = async (email, subject, text) => {
-  const transport = createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "f8f25657c316ca",
-      pass: "362d1a8cdf173f",
-    },
-  });
-
-  await transport.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
-    subject,
-    text,
-  });
+//add nodemailer  *****
+const mailer_auth = {
+  user: "apikey",
+  pass: process.env.SEND_GRID_API_KEY,
 };
+const transport = nodemailer.createTransport({
+  host: "smtp.sendgrid.net",
+  port: 25,
+  secure: false,
+  service: "SendGrid",
+  requireTLS: false,
+  auth: mailer_auth,
+});
 
 const usernamecheck = async (req, res) => {
   const username = req.body.username;
@@ -70,8 +66,31 @@ const signup = async (req, res) => {
       return;
     }
 
-    const otp = Math.floor(Math.random() * 1000000);
-    console.log(otp);
+    let options = {
+      min: 100000,
+      max: 999999,
+      integer: true,
+    };
+
+    const otp = rn(options);
+
+    const mailOptions = {
+      from: "in@myty.in",
+      to: email,
+      subject: "OTP from LocalLearn",
+      text: "Your OTP for LocalLerarn Registration is " + otp,
+    };
+
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res
+          .status(200)
+          .json(JSON.stringify({ message: "can't send otp", sucess: false }));
+        return;
+      }
+    });
 
     let data = await Users.create({
       name,
@@ -87,8 +106,8 @@ const signup = async (req, res) => {
       Responses: [],
     });
 
-    let response = await data.save();
-    let skill = await skills.save();
+    // data.save();
+    // skills.save();
     let myToken = await data.getAuthToken();
 
     // res.status(200);

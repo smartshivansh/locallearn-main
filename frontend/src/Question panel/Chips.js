@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import classes from "./Chips.module.css";
+import xixon from "../images/xchip.svg";
 
 const Chips = (props) => {
   const [selected, setSelected] = useState(props.selected);
@@ -24,7 +25,7 @@ const Chips = (props) => {
       props.onClick(props.content, "add");
     } else {
       setBGColor("white");
-      setColor("#40e0d0");
+      setColor("black");
       props.onClick(props.content, "remove");
     }
   }
@@ -39,8 +40,8 @@ const Chips = (props) => {
         justifyContent: selected ? "space-around" : "center",
       }}
     >
-      {props.content}
-      {selected && <div className={classes.xicon}></div>}
+      <div className={classes.content}>{props.content}</div>
+      {selected && <img alt="imag" src={xixon} className={classes.xicon} />}
     </div>
   );
 };

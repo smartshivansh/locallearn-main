@@ -162,20 +162,81 @@
   width: 100%;
   height: 100%;
   transform: translateX(100%);
-  display: flex;
+  /* background-color: red; */
+  top: 10%;
+  position: absolute;
 }
 
 .profile {
-  width: 30%;
+  width: 35%;
   height: 100%;
+  background-color: #00072d;
+  padding: 1rem 0;
   transform: translateX(110%);
-  background-color: red;
+  position: absolute;
+  right: 0;
 }
 
 .profileBackdrop {
-  width: 70%;
+  width: 65%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  left: 0;
+  display: none;
+  transition: 1s;
+  z-index: 20;
+  opacity: 0;
+}
+
+/* //styling image  */
+
+.imageContaioner {
+  width: 95%;
+  padding: 2%;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.image {
+  height: 5rem;
+  width: 5rem;
+  margin-right: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.despContainer {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 0.75rem;
+}
+
+.name {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.desp {
+  color: white;
+  font-size: 0.8rem;
+
+  margin: 0;
+}
+
+.good {
+  color: white;
+  padding: 2%;
+  width: 95%;
+  margin: 0.5rem 0;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 1300px) {
@@ -198,6 +259,13 @@
   .backdrop {
     width: 60%;
   }
+  .profile {
+    width: 50%;
+  }
+
+  .profileBackdrop {
+    width: 50%;
+  }
 }
 
 @media (max-width: 760px) {
@@ -213,8 +281,7 @@
   .logoContainer {
     margin: 0 auto;
     height: 100%;
-    position: absolute;
-    width: 100%;
+    width: max-content;
   }
 
   .logo {
@@ -241,5 +308,13 @@
 
   .backdrop {
     width: 30%;
+  }
+
+  .profile {
+    width: 80%;
+  }
+
+  .profileBackdrop {
+    width: 20%;
   }
 }
