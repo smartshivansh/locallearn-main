@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const conn = require("../config/db");
+const conn = require("../controllers/config/db");
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 
