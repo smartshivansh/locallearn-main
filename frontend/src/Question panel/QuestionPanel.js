@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+// import { useNavigate } from "react-router-dom";
+// import { useForm } from "react-hook-form";
+import { addGoodSkill, addLearnSkill } from "../Redux/Store";
+
+import { useDispatch } from "react-redux";
 
 import classes from "./QuestionPanel.module.css";
 
@@ -9,9 +12,9 @@ import FixedOptions from "./FixedOptions";
 
 const QuestionPanel = (props) => {
   const [value, setValue] = useState(0);
-  const navigate = useNavigate();
   const [selections, setSelections] = useState([]);
   const [customize, setCustomize] = useState([]);
+  const dispatch = useDispatch();
 
   const options = useMemo(() => [...props.options], [props]);
 
@@ -48,16 +51,36 @@ const QuestionPanel = (props) => {
         .then((res) => res.json())
         .then((data) => JSON.parse(data))
         .then(() => {
+          if (props.id === "q5") {
+            dispatch(addGoodSkill({ skills: [...selections, ...customize] }));
+          } else if (props.id === "q4") {
+            dispatch(addLearnSkill({ skills: [...selections, ...customize] }));
+          }
           if (props.last) {
             props.sucess();
           }
         });
     } catch (error) {
+      if (props.id === "q5") {
+        dispatch(addGoodSkill({ skills: [...selections, ...customize] }));
+      } else if (props.id === "q4") {
+        dispatch(addLearnSkill({ skills: [...selections, ...customize] }));
+      }
+      if (props.id === "q5") {
+        dispatch(addGoodSkill({ skills: [...selections, ...customize] }));
+      } else if (props.id === "q4") {
+        dispatch(addLearnSkill({ skills: [...selections, ...customize] }));
+      }
       console.log("error");
       if (props.last) {
         props.sucess();
       }
     } finally {
+      if (props.id === "q5") {
+        dispatch(addGoodSkill([...selections, ...customize]));
+      } else if (props.id === "q4") {
+        dispatch(addLearnSkill([...selections, ...customize]));
+      }
       if (props.last) {
         props.sucess();
       }

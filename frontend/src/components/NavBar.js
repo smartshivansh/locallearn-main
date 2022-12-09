@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useSelector } from "react-redux";
 import classes from "./Navbar.module.css";
 import SkillChip from "./SkillChip";
 
@@ -27,24 +27,8 @@ const Navbar = (props) => {
   const [profileContainerTransform, setProfileContainerTransform] =
     useState(null);
 
-  const goodSkill = [
-    "React",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "GIT",
-    "Github",
-    "Java",
-  ];
-  const learnSkill = [
-    "NodeJs",
-    "MongoDB",
-    "Express Js",
-    "PHP",
-    "python",
-    "Django",
-    "AI",
-  ];
+  const goodSkill = useSelector((state) => state.skill.good);
+  const learnSkill = useSelector((state) => state.skill.learn);
 
   const showSideMenuHandler = () => {
     setSideBar((prevVal) => !prevVal);

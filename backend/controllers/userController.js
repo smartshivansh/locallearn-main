@@ -74,6 +74,8 @@ const signup = async (req, res) => {
 
     const otp = rn(options);
 
+    const test = "we are leading tum nahi pakad paoga";
+
     const mailOptions = {
       from: "in@myty.in",
       to: email,

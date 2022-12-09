@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import DotContainer from "./dotContainer";
+import React, { useState } from "react";
 
 import classes from "./QuestionSelector.module.css";
+
+import { useDispatch } from "react-redux";
 
 function QuestionSelector(props) {
   const [transform, setTransform] = useState(0);
   const [answer, setAnswer] = useState(props.options[0]);
-  const navigate = useNavigate();
 
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -31,6 +29,7 @@ function QuestionSelector(props) {
       })
         .then((res) => res.json())
         .then((data) => JSON.parse(data));
+      // dispatch()
     } catch (err) {
       console.log(err);
     }

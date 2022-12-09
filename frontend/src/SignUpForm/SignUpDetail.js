@@ -214,6 +214,9 @@ const SignUpDetail = () => {
                   required: "this field is mandatory",
                   validate: (value) => value === password,
                 })}
+                onFocus={() => {
+                  setPasswordError("");
+                }}
               />
               <p className={classes.errorMsg}>
                 {errors.confirmPassword?.message}
