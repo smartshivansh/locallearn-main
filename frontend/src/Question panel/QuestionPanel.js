@@ -36,12 +36,13 @@ const QuestionPanel = (props) => {
     setValue((prevVal) => prevVal - 110);
 
     const data = JSON.stringify({
-      response: { answers: [...selections, ...customize], id: props.id },
+      skills: [...selections, ...customize],
+      id: props.id,
       email: localStorage.getItem("email"),
     });
 
     try {
-      fetch("http://doornextshop.com/questions", {
+      fetch("http://localhost:4000/questions", {
         method: "POST",
         body: data,
         headers: {
@@ -52,9 +53,9 @@ const QuestionPanel = (props) => {
         .then((data) => JSON.parse(data))
         .then(() => {
           if (props.id === "q5") {
-            dispatch(addGoodSkill({ skills: [...selections, ...customize] }));
+            dispatch(addGoodSkill([...selections, ...customize]));
           } else if (props.id === "q4") {
-            dispatch(addLearnSkill({ skills: [...selections, ...customize] }));
+            dispatch(addLearnSkill([...selections, ...customize]));
           }
           if (props.last) {
             props.sucess();
@@ -121,7 +122,6 @@ const QuestionPanel = (props) => {
         if (val.trim().length === 0) {
           return;
         }
-        console.log(val);
         setCustomize((prevVal) => [...prevVal, val]);
         customRef.current.value = "";
       }

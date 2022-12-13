@@ -23,8 +23,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: [8, "Password must be at least 8 characters long"],
-      select: false,
+      minlength: 8,
     },
     createdAt: {
       type: Date,
@@ -38,6 +37,25 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
+    location: {
+      type: String,
+      default: "location",
+    },
+
+    profession: {
+      type: String,
+      default: "profession",
+    },
+    goodSkills: {
+      type: Array,
+      default: [],
+    },
+
+    learnSkills: {
+      type: Array,
+      default: [],
+    },
+
     otp: Number,
     otp_expiry: Date,
     resetPasswordOtp: Number,
@@ -49,9 +67,9 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", function (next) {
-  const salt = bcrypt.genSaltSync(10);
+  // const salt = bcrypt.genSaltSync(10);
   if (this.password && this.isModified("password")) {
-    this.password = bcrypt.hashSync(this.password, salt);
+    this.password = bcrypt.hashSync(this.password, 10);
   }
   next();
 });
@@ -68,6 +86,21 @@ userSchema.methods.getAuthToken = async function (data) {
   this.token = this.tokens.concat({ token: tokenValue });
   await this.save();
   return tokenValue;
+};
+
+userSchema.methods.comparePassword = function (candidatePassword) {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+    if (candidatePassword === this.password) {
+      return true;
+    } else {
+      return false;
+    }
+    // if (err) {
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+  });
 };
 
 let users = conn.model("users", userSchema);

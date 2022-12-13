@@ -6,6 +6,7 @@ import QuestionSelector from "./QuestionSelector";
 import QuestionPanel from "../Question panel/QuestionPanel";
 import DotContainer from "./dotContainer";
 import PreChatScreen from "../SignUpForm/PreChatScreen";
+import TypeInput from "./TypeInInput";
 
 const QuestionSelectorWindow = () => {
   const [index, setIndex] = useState(1);
@@ -43,6 +44,11 @@ const QuestionSelectorWindow = () => {
         ],
         last: false,
       },
+    ];
+  }, []);
+
+  const typeQuestion = useMemo(() => {
+    return [
       {
         question: "I live in",
         options: ["option1", "option2", "option3", "option4", "option5"],
@@ -79,23 +85,19 @@ const QuestionSelectorWindow = () => {
       {
         question: "Skills that I am good at",
         options: [
-          "option1",
-          "option2",
-          "option3",
-          "option4",
-          "option5",
-          "option6",
-          "option7",
-          "option8",
-          "option9",
-          "option10",
-          "option12",
-          "option13",
-          "option14",
-          "option15",
-          "option16",
-          "option17",
-          "option18",
+          "content writing",
+          "Public speaking",
+          "Web development",
+          "UI/UX design",
+          "Photography",
+          "singing",
+          "Digital marketing",
+          "Entrepreneurship",
+          "Data Science",
+          "Banking",
+          "Korean language",
+          "Makeup",
+          "Investment",
         ],
         Id: "q5",
         min: 1,
@@ -145,6 +147,18 @@ const QuestionSelectorWindow = () => {
               sucess={sucess}
             />
           ))}
+          {typeQuestion.map((question) => {
+            return (
+              <TypeInput
+                question={question.question}
+                key={question.Id}
+                id={question.Id}
+                last={question.last}
+                onClick={slideHandler}
+                sucess={sucess}
+              />
+            );
+          })}
         </div>
         <div className={classes.dots}>
           <DotContainer index={index} />

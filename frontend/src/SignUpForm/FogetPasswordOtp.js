@@ -2,14 +2,12 @@ import { useState } from "react";
 import OTPInput from "otp-input-react";
 import { useSelector } from "react-redux";
 
-import SignInSuccessfull from "./SignInSuccessfull";
+import NewPassword from "./NewPassword";
 import Spinners from "../Spinner/Spinner";
-
-import { useNavigate } from "react-router-dom";
 
 import classes from "./SignUp.module.css";
 
-const SignUp = () => {
+const ForgetPasswordOtp = () => {
   const [otp, setOtp] = useState();
   const [content, setContent] = useState("");
   const [sucess, setSucess] = useState(false);
@@ -44,7 +42,7 @@ const SignUp = () => {
   };
 
   if (sucess) {
-    return <SignInSuccessfull />;
+    return <NewPassword />;
   }
 
   const onFocusHandler = () => {
@@ -97,4 +95,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ForgetPasswordOtp;

@@ -104,7 +104,7 @@ const ChatUI = (props) => {
   const send = new Audio(sendSound);
   const receive = new Audio(receiveSound);
 
-  const msgdata = { question: "", reply: "" };
+  const msgdata = { question: "", answer: "" };
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -226,6 +226,7 @@ const ChatUI = (props) => {
 
       case "qr":
         msgdata.answer = content.text;
+        // questionAnswer();
         return (
           <>
             <Avatar
@@ -328,14 +329,56 @@ const ChatUI = (props) => {
     }
   }, [chatUiRef]);
 
-  useEffect(() => {}, [msgdata]);
-
   useEffect(() => {
     if (referenceForMessageBox) {
       referenceForMessageBox.current.ref.current.children[0].className = `${classes.scroller}`;
       referenceForMessageBox.current.ref.current.children[0].children[0].className = `${classes.scroller}`;
     }
   }, [referenceForMessageBox]);
+
+  const email = localStorage.getItem("email");
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (msgdata.question === "" || msgdata.answer === "" || !email) {
+        return;
+      }
+      await fetch("http://localhost:4000/quesans", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email, msgdata }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+      msgdata.question = "";
+      msgdata.answer = "";
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [msgdata.answer]);
+
+  // const questionAnswer = async () => {
+  //   const email = localStorage.getItem("email");
+  //   if (msgdata.question === "" || msgdata.answer === "" || !email) {
+  //     return;
+  //   }
+
+  //   await fetch("http://localhost:4000/quesans", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ email, msgdata }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  //   msgdata.question = "";
+  //   msgdata.answer = "";
+  // };
 
   return (
     <div className={classes.container} id={classes.chatbox}>

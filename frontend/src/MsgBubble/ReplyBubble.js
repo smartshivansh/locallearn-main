@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import classes from "./ReplyBubble.module.css";
 
@@ -10,6 +11,7 @@ import { ReactComponent as DownVoid } from "../images/thumbsdownvoid.svg";
 const ReplyBubble = (props) => {
   const [up, setUp] = useState(false);
   const [down, setDown] = useState(false);
+  const email = useSelector((state) => state.userdata.email);
 
   // const clickHandler = () => {
   //   setShowReactionPanel((prevVal) => !prevVal);
@@ -18,13 +20,43 @@ const ReplyBubble = (props) => {
   function thumbsUpHandler(e) {
     setUp((prevVal) => !prevVal);
     setDown((prevVal) => false);
-    return;
+    let response;
+    if (up) {
+      response = "no response";
+    } else {
+      response = "liked";
+    }
+
+    fetch("http://localhost:4000/response", {
+      method: "POST",
+      body: JSON.stringify({ email, answer: props.content, response }),
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   }
 
   function thumbsDownHandler() {
     setUp((prevVal) => false);
     setDown((prevVal) => !prevVal);
-    return;
+    let response;
+    if (down) {
+      response = "no response";
+    } else {
+      response = "unliked";
+    }
+
+    fetch("http://localhost:4000/response", {
+      method: "POST",
+      body: JSON.stringify({ email, answer: props.content, response }),
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   }
 
   return (

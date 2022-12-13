@@ -7,7 +7,11 @@ const Skills = new Schema({
     required: true,
     unique: true,
   },
-  Responses: {
+  goodSkills: {
+    type: Array,
+    default: [],
+  },
+  learnSkills: {
     type: Array,
     default: [],
   },

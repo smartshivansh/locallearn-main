@@ -72,6 +72,12 @@
   bottom: 0;
 }
 
+.error {
+  font-size: 1.5rem;
+  text-align: left;
+  color: red;
+}
+
 @media (max-width: 500px) {
   .form {
     justify-content: space-between;

@@ -112,6 +112,18 @@
   color: white;
 }
 
+.resend {
+  border: none;
+  background-color: white;
+  font-size: 1rem;
+  color: blue;
+  max-width: max-content;
+}
+
+.resend:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 1400px) {
   .left {
     padding-right: 3%;

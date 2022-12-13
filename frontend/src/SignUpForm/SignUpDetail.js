@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import classes from "./SignupDetail.module.css";
 import SignUp from "./SignUp.js";
 import Spinners from "../Spinner/Spinner";
+import { useDispatch } from "react-redux";
+import { userDataUpdate } from "../Redux/Store";
 
 const SignUpDetail = () => {
   const {
@@ -28,6 +30,7 @@ const SignUpDetail = () => {
   const username = watch("username");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function formSubmitHandler(data) {
     if (data.confirmPassword !== data.password) {
@@ -50,7 +53,8 @@ const SignUpDetail = () => {
     const datas = JSON.stringify(submissionData);
 
     setLoading(true);
-    await fetch("http://doornextshop.com/usernamecheck", {
+    dispatch(userDataUpdate({ email, username, name }));
+    await fetch("http://localhost:4000/usernamecheck", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -64,7 +68,7 @@ const SignUpDetail = () => {
           setUsernameError(`${result.message}`);
           return;
         } else {
-          fetch("http://doornextshop.com/signup", {
+          fetch("http://localhost:4000/signup", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -74,12 +78,13 @@ const SignUpDetail = () => {
             .then((res) => res.json())
             .then((data) => JSON.parse(data))
             .then((result) => {
+              if (result.invalid) {
+                setEmailError("invalid input");
+                return;
+              }
               if (result.sucess) {
                 localStorage.setItem("email", `${email}`);
-                localStorage.setItem("myToken", `${result.token}`);
-                setTimeout(() => {
-                  localStorage.removeItem("email");
-                }, 10 * 60 * 1000);
+                dispatch(userDataUpdate({ email, username, name }));
                 setSignup(true);
                 setLoading(false);
                 // navigate("/app/signups");

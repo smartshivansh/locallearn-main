@@ -15,6 +15,7 @@ const Navbar = (props) => {
   const [backdropDisplay, setBackdropDisplay] = useState(null);
   const [sidebarContainerTransform, setSidebarContainerTransform] =
     useState(null);
+  const [sidebarDisplay, setSideBarDisplay] = useState("block");
   const [navbarHeight, setNavbarHeight] = useState(null);
   const navigate = useNavigate();
 
@@ -26,14 +27,21 @@ const Navbar = (props) => {
   const [profileBackdropDisplay, setProfileBackdropDisplay] = useState(null);
   const [profileContainerTransform, setProfileContainerTransform] =
     useState(null);
+  const [profileDisplay, setProfileDisplay] = useState("block");
 
   const goodSkill = useSelector((state) => state.skill.good);
   const learnSkill = useSelector((state) => state.skill.learn);
+  const names = useSelector((state) => state.userdata.names);
+  const location = useSelector((state) => state.userdata.location);
+  const profession = useSelector((state) => state.userdata.profession);
 
   const showSideMenuHandler = () => {
     setSideBar((prevVal) => !prevVal);
-    //only git
+    setProfileDisplay("none");
+    setProfile(false);
+
     if (!showSideBar) {
+      setSideBarDisplay("block");
       setNavbarHeight("10%");
       setContainerHeight("100%");
       setSidebarContainerTransform("translateX(0)");
@@ -59,7 +67,11 @@ const Navbar = (props) => {
   const showProfileHandler = () => {
     setProfile((prevVal) => !prevVal);
 
+    setSideBarDisplay("none");
+    setSideBar(false);
+
     if (!showProfile) {
+      setProfileDisplay("block");
       setNavbarHeight("10%");
       setContainerHeight("100%");
       setProfileContainerTransform("translateX(0)");
@@ -130,7 +142,10 @@ const Navbar = (props) => {
       {/* sidebar */}
       <div
         className={classes.sidebarContainer}
-        style={{ transform: sidebarContainerTransform }}
+        style={{
+          transform: sidebarContainerTransform,
+          display: sidebarDisplay,
+        }}
       >
         <div
           className={classes.backdrop}
@@ -183,7 +198,10 @@ const Navbar = (props) => {
 
       <div
         className={classes.profileContainer}
-        style={{ transform: profileContainerTransform }}
+        style={{
+          transform: profileContainerTransform,
+          display: profileDisplay,
+        }}
       >
         <div
           className={classes.profileBackdrop}
@@ -204,9 +222,9 @@ const Navbar = (props) => {
           <div className={classes.imageContaioner}>
             <div className={classes.image}></div>
             <div className={classes.despContainer}>
-              <h4 className={classes.name}>Shivansh shrivastava</h4>
-              <p className={classes.desp}>Software Engineer</p>
-              <p className={classes.desp}>jabalpur</p>
+              <h4 className={classes.name}>{names}</h4>
+              <p className={classes.desp}>{profession}</p>
+              <p className={classes.desp}>{location}</p>
             </div>
           </div>
 
@@ -216,7 +234,7 @@ const Navbar = (props) => {
             <h3>Skills I am good At</h3>
             <div className={classes.skills}>
               {goodSkill.map((skill) => {
-                return <SkillChip text={skill} />;
+                return <SkillChip key={skill} text={skill} />;
               })}
             </div>
           </div>
@@ -226,7 +244,7 @@ const Navbar = (props) => {
             <h3>Skills I am want to learn</h3>
             <div className={classes.skills}>
               {learnSkill.map((skill) => {
-                return <SkillChip text={skill} />;
+                return <SkillChip key={skill} text={skill} />;
               })}
             </div>
           </div>

@@ -11,6 +11,13 @@ router.post("/otpverify", userController.otpverify);
 router.post("/logout", userController.logout);
 router.post("/usernamecheck", userController.usernamecheck);
 router.post("/questions", userController.questions);
+router.post("/userdata", userController.userdata);
+router.post("/resendotp", userController.resendOtp);
+router.post("/finduser", userController.finduser);
+router.post("/quesans", userController.questionAnswer);
+router.post("/response", userController.responseUpdate);
+router.post("/forget-password", userController.forgetPassword);
+router.post("/newpassword", userController.newPassword);
 
 // router.post('/email-send', userController.emailSend)
 // router.post('/change-password', userController.changePassword)

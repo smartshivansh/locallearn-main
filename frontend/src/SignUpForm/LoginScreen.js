@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  userDataUpdate,
+  locationUpdate,
+  professionUpdate,
+  addGoodSkill,
+  addLearnSkill,
+} from "../Redux/Store";
 
 import classes from "./LoginScreen.module.css";
 
 import { useForm } from "react-hook-form";
 import PreChatScreen from "./PreChatScreen";
 import Spinners from "../Spinner/Spinner";
+import ForgetPassword from "./ForgetPassword";
 
 const LoginScreen = () => {
   const {
@@ -18,12 +27,18 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const [sucess, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [forget, setForget] = useState(false);
+  const dispatch = useDispatch();
+
+  if (forget) {
+    return <ForgetPassword />;
+  }
 
   async function formSubmitHandler(datas) {
     const { loginId, password } = datas;
 
     setLoading(true);
-    await fetch("http://doornextshop.com/signin", {
+    await fetch("http://localhost:4000/signin", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -33,13 +48,23 @@ const LoginScreen = () => {
       .then((res) => res.json())
       .then((data) => JSON.parse(data))
       .then((data) => {
-        if (data.responseType.sucess) {
+        if (data.sucess) {
           // navigate("/app/loginsucess");
           setSucess(true);
           setLoading(false);
+          dispatch(
+            userDataUpdate({
+              email: data.user.email,
+              name: data.user.name,
+              username: data.user.username,
+            })
+          );
+          dispatch(locationUpdate(data.user.location));
+          dispatch(professionUpdate(data.user.profession));
+          dispatch(addGoodSkill(data.user.goodSkills));
+          dispatch(addLearnSkill(data.user.learnSkills));
         } else {
-          alert(data.responseType.message);
-          // console.log(data);
+          alert(data.message);
           setLoading(false);
         }
       });
@@ -65,6 +90,7 @@ const LoginScreen = () => {
           <input
             placeholder="Enter your email/phone"
             className={classes.input}
+            autoComplete="off"
             {...register("loginId", {
               minLength: {
                 value: 1,
@@ -105,6 +131,14 @@ const LoginScreen = () => {
               Sign-in
             </div>
           </p>
+          <div
+            onClick={() => {
+              setForget(true);
+            }}
+            className={classes.forget}
+          >
+            Forget password?
+          </div>
         </form>
       </div>
     </div>

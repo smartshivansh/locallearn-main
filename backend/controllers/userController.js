@@ -1,15 +1,12 @@
 const Users = require("../models/users");
-// const otp = require("../models/otp")
-const Signup = require("../models/Signup");
-const Skills = require("../models/Skills");
+const Chat = require("../models/ChatQA");
 var rn = require("random-number");
+var validator = require("email-validator");
 
 require("dotenv").config();
 
 const { json } = require("express");
 
-var validator = require("email-validator");
-var rn = require("random-number");
 const bcrypt = require("bcrypt");
 
 const { createTransport } = require("nodemailer");
@@ -18,7 +15,7 @@ const nodemailer = require("nodemailer");
 var jwt = require("jsonwebtoken");
 const users = async (req, res) => {};
 
-let responses = [];
+let password;
 
 //add nodemailer  *****
 const mailer_auth = {
@@ -38,7 +35,6 @@ const usernamecheck = async (req, res) => {
   const username = req.body.username;
 
   let user = await Users.findOne({ username });
-  console.log("lll");
 
   if (user) {
     res.json(
@@ -56,6 +52,27 @@ const signup = async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
+    let type;
+
+    let isValidEmail = validator.validate(email);
+    if (isValidEmail) {
+      type = "email";
+    } else {
+      const no = isNaN(email);
+      const mobile = email.toString();
+      if (!no && mobile.length === 10) {
+        type = "contact No";
+      } else {
+        res.json(
+          JSON.stringify({
+            sucess: false,
+            invalid: true,
+            message: "invalid input",
+          })
+        );
+        return;
+      }
+    }
 
     let user = await Users.findOne({ email });
 
@@ -73,8 +90,6 @@ const signup = async (req, res) => {
     };
 
     const otp = rn(options);
-
-    const test = "we are leading tum nahi pakad paoga";
 
     const mailOptions = {
       from: "in@myty.in",
@@ -103,16 +118,13 @@ const signup = async (req, res) => {
       otp_expiry: new Date(Date.now() + 5 * 60 * 1000),
     });
 
-    let skills = await Skills.create({
-      email,
-      Responses: [],
-    });
-
-    // data.save();
-    // skills.save();
     let myToken = await data.getAuthToken();
 
-    // res.status(200);
+    const chat = await Chat.create({
+      email,
+      questions: [],
+      answers: [],
+    });
     res
       .status(200)
       .json(
@@ -129,25 +141,44 @@ const signup = async (req, res) => {
 
 const questions = async (req, res) => {
   const email = req.body.email;
-  responses = [...responses, req.body.response];
 
-  Skills.findOneAndUpdate(
-    { email },
-    { Responses: responses },
-    (err, result) => {
-      if (err) {
-        throw err;
+  if (req.body.id === "q5") {
+    Users.findOneAndUpdate(
+      { email },
+      { goodSkills: req.body.skills },
+      (err, result) => {
+        if (err) {
+          throw err;
+        }
+        // console.log(result);
+        if (result == null) {
+          res.status(200).json(JSON.stringify({ msg: "response not added" }));
+        } else {
+          res.status(200).json(JSON.stringify({ msg: "response added" }));
+          //Next Step is to set password. But that all wiil go to Users Collection.
+          //The signup collection is only for doing the OTP/Verification purpose.
+        }
       }
-      // console.log(result);
-      if (result == null) {
-        res.status(200).json(JSON.stringify({ msg: "response not added" }));
-      } else {
-        res.status(200).json(JSON.stringify({ msg: "response added" }));
-        //Next Step is to set password. But that all wiil go to Users Collection.
-        //The signup collection is only for doing the OTP/Verification purpose.
+    );
+  } else if (req.body.id === "q4") {
+    Users.findOneAndUpdate(
+      { email },
+      { learnSkills: req.body.skills },
+      (err, result) => {
+        if (err) {
+          throw err;
+        }
+        // console.log(result);
+        if (result == null) {
+          res.status(200).json(JSON.stringify({ msg: "response not added" }));
+        } else {
+          res.status(200).json(JSON.stringify({ msg: "response added" }));
+          //Next Step is to set password. But that all wiil go to Users Collection.
+          //The signup collection is only for doing the OTP/Verification purpose.
+        }
       }
-    }
-  );
+    );
+  }
 };
 
 //otpverify
@@ -179,30 +210,38 @@ const signin = async (req, res) => {
   if (!req.body.email || !req.body.password) {
     res.status(301).json({ sucess: false, message: "Invalid email/password" });
   }
+
   let user = await Users.findOne({ email: req.body.email });
-  const responseType = {
-    message: "ok",
-    sucess: false,
-  };
 
   if (user) {
-    // var match = await bcrypt.compare(req.body.password, user.password)
-    var match = bcrypt.hashSync(req.body.password, 10);
-    console.log(match);
-    if (match) {
-      let myToken = await user.getAuthToken();
-      responseType.message = "login sucessfully";
-      responseType.sucess = true;
-      responseType.token = myToken;
-    } else {
-      responseType.message = "Wrong Password";
-      responseType.sucess = false;
-    }
+    bcrypt.compare(req.body.password, user.password).then((isMatch) => {
+      if (!isMatch) {
+        res.status(200).json(
+          JSON.stringify({
+            sucess: false,
+            message: "Wrong Password",
+            user: user,
+          })
+        );
+      } else {
+        res.status(200).json(
+          JSON.stringify({
+            sucess: true,
+            message: "Wrong Password",
+            user: user,
+          })
+        );
+      }
+    });
   } else {
-    responseType.message = "Email ID not registered";
-    responseType.sucess = false;
+    res.status(200).json(
+      JSON.stringify({
+        sucess: false,
+        message: "Email ID not registered",
+        user: user,
+      })
+    );
   }
-  res.status(200).json(JSON.stringify({ responseType }));
 };
 
 //forget password,
@@ -242,6 +281,260 @@ const logout = async (req, res) => {
   }
 };
 
+const userdata = async (req, res) => {
+  const { email, type, data } = req.body;
+
+  if (type === "location") {
+    Users.findOneAndUpdate({ email }, { location: data }, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      // console.log(result);
+      if (result == null) {
+        res
+          .status(200)
+          .json(
+            JSON.stringify({ success: false, message: "response not added" })
+          );
+      } else {
+        res
+          .status(200)
+          .json(JSON.stringify({ success: true, message: "response added" }));
+        //Next Step is to set password. But that all wiil go to Users Collection.
+        //The signup collection is only for doing the OTP/Verification purpose.
+      }
+    });
+  } else if (type === "profession") {
+    Users.findOneAndUpdate({ email }, { profession: data }, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      // console.log(result);
+      if (result == null) {
+        res
+          .status(200)
+          .json(
+            JSON.stringify({ success: false, message: "response not added" })
+          );
+      } else {
+        res
+          .status(200)
+          .json(JSON.stringify({ success: true, message: "response added" }));
+        //Next Step is to set password. But that all wiil go to Users Collection.
+        //The signup collection is only for doing the OTP/Verification purpose.
+      }
+    });
+  }
+};
+
+const resendOtp = async (req, res) => {
+  let options = {
+    min: 100000,
+    max: 999999,
+    integer: true,
+  };
+
+  let email = req.body.email;
+
+  const otp = rn(options);
+
+  const mailOptions = {
+    from: "in@myty.in",
+    to: email,
+    subject: "OTP from LocalLearn",
+    text: "Your OTP for LocalLerarn Registration is " + otp,
+  };
+
+  transport.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res
+        .status(200)
+        .json(
+          JSON.stringify({ message: "otp send sucessfully", sucess: true })
+        );
+      return;
+    }
+  });
+
+  Users.findOneAndUpdate(
+    { email: req.body.email },
+    { otp: otp, updated_at: Date.now() },
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      // console.log(result);
+      if (result == null) {
+        res.status(200);
+      } else {
+        res.status(200);
+        //Next Step is to set password. But that all wiil go to Users Collection.
+        //The signup collection is only for doing the OTP/Verification purpose.
+      }
+    }
+  );
+};
+
+const finduser = async (req, res) => {
+  const email = req.body.email;
+
+  const user = Users.findOne({ email }, function (err, ress) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(JSON.stringify(ress));
+    }
+  });
+
+  res.status(200).json(JSON.stringify({ user }));
+};
+
+const questionAnswer = (req, res) => {
+  const { email } = req.body;
+  const { msgdata } = req.body;
+
+  if (!email || !msgdata) {
+    res.json(JSON.stringify({ sucess: false }));
+    return;
+  }
+  const user = Chat.findOne({ email }, function (err, user) {
+    if (err) {
+      res.status(200).json(JSON.stringify({ sucess: false }));
+    } else {
+      const question = [...user.questions, msgdata.question];
+      const answer = [...user.answers, msgdata.answer.trim()];
+      const responses = [...user.responses, "no response"];
+      Chat.findOneAndUpdate(
+        { email },
+        {
+          questions: question,
+          answers: answer,
+          responses: responses,
+        },
+        function (err, result) {
+          if (err) {
+            res.status(200).json(JSON.stringify({ sucess: false }));
+          } else {
+            res.status(200).json(JSON.stringify({ sucess: true }));
+          }
+        }
+      );
+    }
+  });
+};
+
+const responseUpdate = (req, res) => {
+  const { email, response, answer } = req.body;
+
+  if (!email || !response || !answer) {
+    console.log(-17);
+    res.status(200).json(JSON.stringify({ sucess: false }));
+    return;
+  }
+
+  Chat.findOne({ email }, function (err, user) {
+    if (err) {
+      res.status(200).json(JSON.stringify({ sucess: false }));
+      return;
+    } else {
+      const index = user.answers.indexOf(answer.trim());
+      if (index === -1) {
+        res.status(200).json(JSON.stringify({ sucess: false }));
+        return;
+      }
+      let responses = user.responses;
+      responses[index] = response;
+      Chat.findOneAndUpdate(
+        { email },
+        { responses: responses },
+        function (err, result) {
+          if (err) {
+            res.status(200).json(JSON.stringify({ sucess: false }));
+            return;
+          } else {
+            res.status(200).json(JSON.stringify({ sucess: true }));
+            return;
+          }
+        }
+      );
+    }
+  });
+};
+
+const forgetPassword = (req, res) => {
+  const { email } = req.body;
+
+  Users.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        console.log("use");
+        return res
+          .status(400)
+          .json(JSON.stringify({ sucess: false, msg: "USER_DOES_NOT_EXIST" }));
+      } else {
+        let options = {
+          min: 100000,
+          max: 999999,
+          integer: true,
+        };
+        const otp = rn(options);
+
+        // console.log("sending OTP: " + otp + " to " + req.body.email);
+
+        // update the user with new otp
+        Users.findOneAndUpdate(
+          { email: email },
+          { otp: otp },
+          (err, res) => {}
+        );
+
+        const mailOptions = {
+          from: "in@myty.in",
+          to: req.body.email,
+          subject: "OTP",
+          text: "Your OTP for password Recovery is " + otp,
+        };
+
+        transport.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err);
+          } else {
+            // console.warn("checking", info);
+          }
+        });
+
+        res.json(JSON.stringify({ sucess: true, msg: "otp send" }));
+      }
+    })
+    .catch((err) => {
+      console.log("cat");
+      res.send(
+        JSON.stringify({
+          msg: "EMAIL_DOES_NOT_EXISTS",
+          sucess: false,
+        })
+      );
+    });
+
+  res.status(200);
+};
+
+const newPassword = (req, res) => {
+  const { email, password } = req.body;
+
+  const spassword = bcrypt.hashSync(password, 10);
+
+  Users.findOneAndUpdate({ email }, { password: spassword }, (err, ress) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  res.status(200).json(JSON.stringify({ sucess: true, mgs: "ok" }));
+};
+
 module.exports = {
   users,
   signup,
@@ -250,4 +543,11 @@ module.exports = {
   logout,
   usernamecheck,
   questions,
+  userdata,
+  resendOtp,
+  finduser,
+  questionAnswer,
+  responseUpdate,
+  forgetPassword,
+  newPassword,
 };
