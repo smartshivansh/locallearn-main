@@ -2,6 +2,7 @@ const Users = require("../models/users");
 const Chat = require("../models/ChatQA");
 var rn = require("random-number");
 var validator = require("email-validator");
+const twilio = require("twilio");
 
 require("dotenv").config();
 
@@ -31,6 +32,13 @@ const transport = nodemailer.createTransport({
   auth: mailer_auth,
 });
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const vitualMobileNo = process.env.TWILIO_PHONE_NO;
+
+const client = new twilio(accountSid, authToken);
+console.log(client.messages);
+
 const usernamecheck = async (req, res) => {
   const username = req.body.username;
 
@@ -54,6 +62,14 @@ const signup = async (req, res) => {
     const password = req.body.password;
     let type;
 
+    let options = {
+      min: 100000,
+      max: 999999,
+      integer: true,
+    };
+
+    const otp = rn(options);
+
     let isValidEmail = validator.validate(email);
     if (isValidEmail) {
       type = "email";
@@ -62,6 +78,12 @@ const signup = async (req, res) => {
       const mobile = email.toString();
       if (!no && mobile.length === 10) {
         type = "contact No";
+
+        client.messages.create({
+          body: "Your OTP for LocalLerarn Registration is " + otp,
+          to: "+91" + mobile, // Text this number
+          from: vitualMobileNo, // From a valid Twilio number
+        });
       } else {
         res.json(
           JSON.stringify({
@@ -82,14 +104,6 @@ const signup = async (req, res) => {
       );
       return;
     }
-
-    let options = {
-      min: 100000,
-      max: 999999,
-      integer: true,
-    };
-
-    const otp = rn(options);
 
     const mailOptions = {
       from: "in@myty.in",
