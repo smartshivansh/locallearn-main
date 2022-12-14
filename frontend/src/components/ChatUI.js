@@ -343,7 +343,7 @@ const ChatUI = (props) => {
       if (msgdata.question === "" || msgdata.answer === "" || !email) {
         return;
       }
-      await fetch("http://localhost:4000/quesans", {
+      await fetch("http://doornextshop.com/quesans", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -367,7 +367,7 @@ const ChatUI = (props) => {
   //     return;
   //   }
 
-  //   await fetch("http://localhost:4000/quesans", {
+  //   await fetch("http://doornextshop.com/quesans", {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",

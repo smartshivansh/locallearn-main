@@ -34,7 +34,7 @@ const NewPassword = () => {
       setLoading(false);
     }
 
-    fetch("http://localhost:4000/newpassword", {
+    fetch("http://doornextshop.com/newpassword", {
       method: "POST",
       headers: {
         "content-type": "application/json",
