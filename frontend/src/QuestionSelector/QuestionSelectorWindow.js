@@ -164,6 +164,7 @@ const QuestionSelectorWindow = () => {
           <DotContainer index={index} />
         </div>
       </div>
+      <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
     </div>
   );
 };

@@ -80,6 +80,7 @@ const SignUpDetail = () => {
             .then((result) => {
               if (result.invalid) {
                 setEmailError("invalid input");
+                setLoading(false);
                 return;
               }
               if (result.sucess) {
@@ -229,8 +230,10 @@ const SignUpDetail = () => {
               </p>
               <label className={classes.checkbox}>
                 <input type="checkbox" {...register("agree")} />
-                By creating an account you are agreeing to our Terms and
-                Conditions and Privacy Policy
+                <p style={{ margin: "0 0.5rem" }}>
+                  By creating an account you are agreeing to our Terms and
+                  Conditions and Privacy Policy
+                </p>
               </label>
               <input type="submit" className={classes.submit} />
               <p className={classes.login}>

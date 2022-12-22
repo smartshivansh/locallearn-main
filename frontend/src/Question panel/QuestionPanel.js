@@ -1,6 +1,4 @@
 import React, { useState, useCallback, useMemo, useRef } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useForm } from "react-hook-form";
 import { addGoodSkill, addLearnSkill } from "../Redux/Store";
 
 import { useDispatch } from "react-redux";

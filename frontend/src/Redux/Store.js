@@ -18,10 +18,10 @@ const skillSlice = createSlice({
   initialState: skillDataInitialState,
   reducers: {
     addGoodSkill(state, action) {
-      state.good = [...action.payload];
+      state.good = [...action.payload.goodskills];
     },
     addLearnSkill(state, action) {
-      state.learn = [...action.payload];
+      state.learn = [...action.payload.learnskills];
     },
     removeGoodSkill(state, action) {
       state.good = state.good.filter((skill) => {
@@ -58,8 +58,6 @@ const userDataSlice = createSlice({
     },
   },
 });
-
-userDataSlice.actions.locationUpdate("delhi");
 
 const Store = configureStore({
   reducer: { skill: skillSlice.reducer, userdata: userDataSlice.reducer },

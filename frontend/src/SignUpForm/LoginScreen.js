@@ -50,6 +50,8 @@ const LoginScreen = () => {
       .then((data) => {
         if (data.sucess) {
           // navigate("/app/loginsucess");
+          localStorage.setItem("email", loginId);
+          localStorage.setItem("isLoggedIn", true);
           setSucess(true);
           setLoading(false);
           dispatch(
@@ -59,10 +61,10 @@ const LoginScreen = () => {
               username: data.user.username,
             })
           );
-          dispatch(locationUpdate(data.user.location));
-          dispatch(professionUpdate(data.user.profession));
-          dispatch(addGoodSkill(data.user.goodSkills));
-          dispatch(addLearnSkill(data.user.learnSkills));
+          dispatch(locationUpdate({ location: data.user.location }));
+          dispatch(professionUpdate({ profession: data.user.profession }));
+          dispatch(addGoodSkill({ goodskills: data.user.goodSkills }));
+          dispatch(addLearnSkill({ learnskills: data.user.learnSkills }));
         } else {
           alert(data.message);
           setLoading(false);

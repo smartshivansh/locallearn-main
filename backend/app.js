@@ -26,6 +26,14 @@ app.use((req, res, next) => {
 app.use(express.static(__dirname + "/localLearnLive"));
 app.use(express.static(path.join(__dirname + "/build")));
 
+app.post("/test", (req, res) => {
+  fetch(`https://api.textlocal.in/send/${data}`, {
+    method: "POST",
+  }).then((res) => console.log(res));
+
+  res.status(200).json(JSON.stringify({ sucess: true }));
+});
+
 app.get("/app/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });

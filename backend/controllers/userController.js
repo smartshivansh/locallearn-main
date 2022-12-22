@@ -2,7 +2,8 @@ const Users = require("../models/users");
 const Chat = require("../models/ChatQA");
 var rn = require("random-number");
 var validator = require("email-validator");
-const twilio = require("twilio");
+
+const axios = require("axios");
 
 require("dotenv").config();
 
@@ -31,13 +32,6 @@ const transport = nodemailer.createTransport({
   requireTLS: false,
   auth: mailer_auth,
 });
-
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const vitualMobileNo = process.env.TWILIO_PHONE_NO;
-
-const client = new twilio(accountSid, authToken);
-console.log(client.messages);
 
 const usernamecheck = async (req, res) => {
   const username = req.body.username;
@@ -78,12 +72,6 @@ const signup = async (req, res) => {
       const mobile = email.toString();
       if (!no && mobile.length === 10) {
         type = "contact No";
-
-        client.messages.create({
-          body: "Your OTP for LocalLerarn Registration is " + otp,
-          to: "+91" + mobile, // Text this number
-          from: vitualMobileNo, // From a valid Twilio number
-        });
       } else {
         res.json(
           JSON.stringify({
@@ -105,23 +93,29 @@ const signup = async (req, res) => {
       return;
     }
 
-    const mailOptions = {
-      from: "in@myty.in",
-      to: email,
-      subject: "OTP from LocalLearn",
-      text: "Your OTP for LocalLerarn Registration is " + otp,
-    };
+    if (type === "email") {
+      const mailOptions = {
+        from: "in@myty.in",
+        to: email,
+        subject: "OTP from LocalLearn",
+        text: "Your OTP for LocalLerarn Registration is " + otp,
+      };
 
-    transport.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res
-          .status(200)
-          .json(JSON.stringify({ message: "can't send otp", sucess: false }));
-        return;
-      }
-    });
+      transport.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(1111, err);
+        } else {
+          res
+            .status(200)
+            .json(JSON.stringify({ message: "can't send otp", sucess: false }));
+          return;
+        }
+      });
+    } else {
+      fetch(
+        `https://www.fast2sms.com/dev/bulkV2?authorization=5hG1tbj0NCcrXgm83IDVMY7LvJ62TSsZ9xUoizHWRaPBwyOdFnYymP2dw549nTcRg86SiKfajZBze1kI&variables_values=${otp}&route=otp&numbers=${email}`
+      );
+    }
 
     let data = await Users.create({
       name,
@@ -349,28 +343,7 @@ const resendOtp = async (req, res) => {
   };
 
   let email = req.body.email;
-
   const otp = rn(options);
-
-  const mailOptions = {
-    from: "in@myty.in",
-    to: email,
-    subject: "OTP from LocalLearn",
-    text: "Your OTP for LocalLerarn Registration is " + otp,
-  };
-
-  transport.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res
-        .status(200)
-        .json(
-          JSON.stringify({ message: "otp send sucessfully", sucess: true })
-        );
-      return;
-    }
-  });
 
   Users.findOneAndUpdate(
     { email: req.body.email },
@@ -381,7 +354,7 @@ const resendOtp = async (req, res) => {
       }
       // console.log(result);
       if (result == null) {
-        res.status(200);
+        return res.status(200).json(JSON.stringify({ msg: "no user found" }));
       } else {
         res.status(200);
         //Next Step is to set password. But that all wiil go to Users Collection.
@@ -389,6 +362,52 @@ const resendOtp = async (req, res) => {
       }
     }
   );
+
+  if (validator.validate(email)) {
+    const mailOptions = {
+      from: "in@myty.in",
+      to: email,
+      subject: "OTP from LocalLearn",
+      text: "Your OTP for LocalLerarn Registration is " + otp,
+    };
+
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(200)
+          .json(
+            JSON.stringify({ sucess: false, message: "failed to send email" })
+          );
+      } else {
+        return res
+          .status(200)
+          .json(
+            JSON.stringify({ message: "otp send sucessfully", sucess: true })
+          );
+      }
+    });
+  } else {
+    fetch(
+      `https://www.fast2sms.com/dev/bulkV2?authorization=5hG1tbj0NCcrXgm83IDVMY7LvJ62TSsZ9xUoizHWRaPBwyOdFnYymP2dw549nTcRg86SiKfajZBze1kI&variables_values=${otp}&route=otp&numbers=${email}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.return) {
+          return res
+            .status(200)
+            .json(
+              JSON.stringify({ message: "otp send sucessfully", sucess: true })
+            );
+        } else {
+          return res
+            .status(200)
+            .json(
+              JSON.stringify({ sucess: false, message: "failed to send email" })
+            );
+        }
+      });
+  }
 };
 
 const finduser = async (req, res) => {
@@ -483,7 +502,6 @@ const forgetPassword = (req, res) => {
   Users.findOne({ email })
     .then((user) => {
       if (!user) {
-        console.log("use");
         return res
           .status(400)
           .json(JSON.stringify({ sucess: false, msg: "USER_DOES_NOT_EXIST" }));
@@ -503,22 +521,6 @@ const forgetPassword = (req, res) => {
           { otp: otp },
           (err, res) => {}
         );
-
-        const mailOptions = {
-          from: "in@myty.in",
-          to: req.body.email,
-          subject: "OTP",
-          text: "Your OTP for password Recovery is " + otp,
-        };
-
-        transport.sendMail(mailOptions, (err, info) => {
-          if (err) {
-            console.log(err);
-          } else {
-            // console.warn("checking", info);
-          }
-        });
-
         res.json(JSON.stringify({ sucess: true, msg: "otp send" }));
       }
     })
@@ -532,7 +534,51 @@ const forgetPassword = (req, res) => {
       );
     });
 
-  res.status(200);
+  if (validator.validate(email)) {
+    const mailOptions = {
+      from: "in@myty.in",
+      to: email,
+      subject: "OTP from LocalLearn",
+      text: "Your OTP for LocalLerarn Registration is " + otp,
+    };
+
+    transport.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(200)
+          .json(
+            JSON.stringify({ sucess: false, message: "failed to send email" })
+          );
+      } else {
+        return res
+          .status(200)
+          .json(
+            JSON.stringify({ message: "otp send sucessfully", sucess: true })
+          );
+      }
+    });
+  } else {
+    fetch(
+      `https://www.fast2sms.com/dev/bulkV2?authorization=5hG1tbj0NCcrXgm83IDVMY7LvJ62TSsZ9xUoizHWRaPBwyOdFnYymP2dw549nTcRg86SiKfajZBze1kI&variables_values=${otp}&route=otp&numbers=${email}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.return) {
+          return res
+            .status(200)
+            .json(
+              JSON.stringify({ message: "otp send sucessfully", sucess: true })
+            );
+        } else {
+          return res
+            .status(200)
+            .json(
+              JSON.stringify({ sucess: false, message: "failed to send email" })
+            );
+        }
+      });
+  }
 };
 
 const newPassword = (req, res) => {
