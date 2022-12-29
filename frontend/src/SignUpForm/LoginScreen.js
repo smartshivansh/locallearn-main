@@ -9,12 +9,12 @@ import {
   addLearnSkill,
 } from "../Redux/Store";
 
-import classes from "./LoginScreen.module.css";
+import classes from "./SignupDetail.module.css";
+import logo from "../images/logoblack.svg";
 
 import { useForm } from "react-hook-form";
 import PreChatScreen from "./PreChatScreen";
 import Spinners from "../Spinner/Spinner";
-import ForgetPassword from "./ForgetPassword";
 
 const LoginScreen = () => {
   const {
@@ -27,18 +27,13 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const [sucess, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [forget, setForget] = useState(false);
   const dispatch = useDispatch();
-
-  if (forget) {
-    return <ForgetPassword />;
-  }
 
   async function formSubmitHandler(datas) {
     const { loginId, password } = datas;
 
     setLoading(true);
-    await fetch("http://doornextshop.com/signin", {
+    await fetch("http://localhost:4000/signin", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -50,6 +45,7 @@ const LoginScreen = () => {
       .then((data) => {
         if (data.sucess) {
           // navigate("/app/loginsucess");
+          localStorage.clear();
           localStorage.setItem("email", loginId);
           localStorage.setItem("isLoggedIn", true);
           setSucess(true);
@@ -77,18 +73,17 @@ const LoginScreen = () => {
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.mainContainer}>
       {loading && <Spinners />}
       <div className={classes.left}>
-        <h1 className={classes.welcome}>Welcome to LOCALLEARN</h1>
-        <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>
+        <img src={logo} alt="locallearnlogo" className={classes.img} />
       </div>
       <div className={classes.right}>
         <form
           className={classes.form}
           onSubmit={handleSubmit(formSubmitHandler)}
         >
-          <p className={classes.heading}>Please login to continue</p>
+          <p className={classes.formHeading}>Please login to continue</p>
           <input
             placeholder="Enter your email/phone"
             className={classes.input}
@@ -121,26 +116,23 @@ const LoginScreen = () => {
             className={classes.submit}
           />
 
-          <p className={classes.heading}>
-            {" "}
+          <p className={classes.login}>
             Don’t have an account?{" "}
-            <div
-              onClick={() => {
-                navigate("/app/signup");
-              }}
-              className={classes.link}
-            >
+            <a href="/app/signup" className={classes.link}>
               Sign-in
-            </div>
+            </a>
           </p>
           <div
             onClick={() => {
-              setForget(true);
+              localStorage.clear();
+              localStorage.setItem("forget", true);
+              navigate("/app/forget");
             }}
-            className={classes.forget}
+            className={classes.login}
           >
-            Forget password?
+            <p className={classes.link}>Forget password?</p>
           </div>
+          <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
         </form>
       </div>
     </div>

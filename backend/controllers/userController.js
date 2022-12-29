@@ -350,16 +350,9 @@ const resendOtp = async (req, res) => {
     { otp: otp, updated_at: Date.now() },
     (err, result) => {
       if (err) {
-        throw err;
+        return res.status(200).json(JSON.stringify({ msg: "no user found" }));
       }
       // console.log(result);
-      if (result == null) {
-        return res.status(200).json(JSON.stringify({ msg: "no user found" }));
-      } else {
-        res.status(200);
-        //Next Step is to set password. But that all wiil go to Users Collection.
-        //The signup collection is only for doing the OTP/Verification purpose.
-      }
     }
   );
 
@@ -412,16 +405,37 @@ const resendOtp = async (req, res) => {
 
 const finduser = async (req, res) => {
   const email = req.body.email;
-
   const user = Users.findOne({ email }, function (err, ress) {
     if (err) {
       console.log(err);
+      return res.status(200).json(JSON.stringify({ sucess: false }));
     } else {
-      res.json(JSON.stringify(ress));
+      if (ress === null) {
+        return res.status(200).json(JSON.stringify({ sucess: false }));
+      }
+      const {
+        name,
+        email,
+        username,
+        location,
+        profession,
+        learnSkills,
+        goodSkills,
+      } = ress;
+
+      return res.json(
+        JSON.stringify({
+          name,
+          email,
+          username,
+          location,
+          profession,
+          learnSkills,
+          goodSkills,
+        })
+      );
     }
   });
-
-  res.status(200).json(JSON.stringify({ user }));
 };
 
 const questionAnswer = (req, res) => {
@@ -462,7 +476,6 @@ const responseUpdate = (req, res) => {
   const { email, response, answer } = req.body;
 
   if (!email || !response || !answer) {
-    console.log(-17);
     res.status(200).json(JSON.stringify({ sucess: false }));
     return;
   }
@@ -499,33 +512,31 @@ const responseUpdate = (req, res) => {
 const forgetPassword = (req, res) => {
   const { email } = req.body;
 
+  let options = {
+    min: 100000,
+    max: 999999,
+    integer: true,
+  };
+  const otp = rn(options);
+
   Users.findOne({ email })
     .then((user) => {
       if (!user) {
         return res
-          .status(400)
-          .json(JSON.stringify({ sucess: false, msg: "USER_DOES_NOT_EXIST" }));
+          .status(200)
+          .json(JSON.stringify({ sucess: false, msg: "USER DOES NOT EXIST" }));
       } else {
-        let options = {
-          min: 100000,
-          max: 999999,
-          integer: true,
-        };
-        const otp = rn(options);
-
-        // console.log("sending OTP: " + otp + " to " + req.body.email);
-
-        // update the user with new otp
         Users.findOneAndUpdate(
           { email: email },
           { otp: otp },
           (err, res) => {}
         );
-        res.json(JSON.stringify({ sucess: true, msg: "otp send" }));
+        return res
+          .status(200)
+          .json(JSON.stringify({ sucess: true, msg: "otp send" }));
       }
     })
     .catch((err) => {
-      console.log("cat");
       res.send(
         JSON.stringify({
           msg: "EMAIL_DOES_NOT_EXISTS",

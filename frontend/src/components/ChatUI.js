@@ -343,7 +343,8 @@ const ChatUI = (props) => {
       if (msgdata.question === "" || msgdata.answer === "" || !email) {
         return;
       }
-      await fetch("http://doornextshop.com/quesans", {
+
+      await fetch("http://localhost:4000/quesans", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -352,33 +353,14 @@ const ChatUI = (props) => {
       })
         .then((res) => res.json())
         .then((data) => console.log(data));
-      msgdata.question = "";
-      msgdata.answer = "";
+      // msgdata.question = "";
+      // msgdata.answer = "";
     }, 1000);
 
-    return () => {
-      clearTimeout(timer);
-    };
+    // return () => {
+    //   clearTimeout(timer);
+    // };
   }, [msgdata.answer]);
-
-  // const questionAnswer = async () => {
-  //   const email = localStorage.getItem("email");
-  //   if (msgdata.question === "" || msgdata.answer === "" || !email) {
-  //     return;
-  //   }
-
-  //   await fetch("http://doornextshop.com/quesans", {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({ email, msgdata }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  //   msgdata.question = "";
-  //   msgdata.answer = "";
-  // };
 
   return (
     <div className={classes.container} id={classes.chatbox}>

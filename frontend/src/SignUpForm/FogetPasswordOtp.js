@@ -1,17 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import OTPInput from "otp-input-react";
 import { useSelector } from "react-redux";
 
-import NewPassword from "./NewPassword";
 import Spinners from "../Spinner/Spinner";
 
-import classes from "./SignUp.module.css";
+import classes from "./SignupDetail.module.css";
+
+import logo from "../images/logoblack.svg";
 
 const ForgetPasswordOtp = () => {
   const [otp, setOtp] = useState();
   const [content, setContent] = useState("");
-  const [sucess, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const email = useSelector((state) => state.userdata.email);
 
@@ -20,7 +22,7 @@ const ForgetPasswordOtp = () => {
     const email = localStorage.getItem("email");
     const data = JSON.stringify({ otp, email });
     setLoading(true);
-    fetch("http://doornextshop.com/otpverify", {
+    fetch("http://localhost:4000/otpverify", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -32,8 +34,8 @@ const ForgetPasswordOtp = () => {
       .then((data) => {
         if (data.msg === "OTP_MATCHED") {
           // navigate("/app/sucess");
-          setSucess(true);
           setLoading(false);
+          navigate("/app/newpass");
         } else {
           setContent("Incorrect OTP");
           setLoading(false);
@@ -41,17 +43,13 @@ const ForgetPasswordOtp = () => {
       });
   };
 
-  if (sucess) {
-    return <NewPassword />;
-  }
-
   const onFocusHandler = () => {
     setContent("");
   };
 
   const resendOtpHandler = () => {
     setLoading(true);
-    fetch("http://doornextshop.com/resendotp", {
+    fetch("http://localhost:4000/resendotp", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -63,14 +61,14 @@ const ForgetPasswordOtp = () => {
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.mainContainer}>
       {loading && <Spinners />}
       <div className={classes.left}>
-        <h1 className={classes.welcome}>Welcome to LOCALLEARN</h1>
+        <img src={logo} alt="locallearnlogo" className={classes.img} />
       </div>
       <div className={classes.right}>
         <form className={classes.form} onSubmit={formSubmitHandler}>
-          <h3 className={classes.h3}>
+          <h3 className={classes.formHeading}>
             Please enter the OTP we have sent on your registered mobile/email.
           </h3>
 
@@ -81,16 +79,16 @@ const ForgetPasswordOtp = () => {
             OTPLength={6}
             otpType="number"
             disabled={false}
-            className={classes.input}
+            className={classes.otpInput}
           />
           <p className={classes.error}>{content}</p>
           <button className={classes.submit}>Let's get started</button>
-          <div className={classes.resend} onClick={resendOtpHandler}>
+          <div className={classes.link} onClick={resendOtpHandler}>
             Resend otp
           </div>
+          <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>
         </form>
       </div>
-      <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>
     </div>
   );
 };

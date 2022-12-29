@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import classes from "./ForgetPassword.module.css";
+import classes from "./SignupDetail.module.css";
 import Spinners from "../Spinner/Spinner";
 import { useForm } from "react-hook-form";
-import ForgetPasswordOtp from "./FogetPasswordOtp";
+
+import logo from "../images/logoblack.svg";
+
+import { useNavigate } from "react-router";
 
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
-  const [sucess, setSucess] = useState(false);
+  const navigate = useNavigate();
+
+  localStorage.setItem("forget", true);
+  setTimeout(() => {
+    localStorage.removeItem("forget");
+  }, 1000 * 60 * 8);
+
   const {
     register,
     handleSubmit,
@@ -14,16 +23,12 @@ const ForgetPassword = () => {
     formState: { errors },
   } = useForm();
 
-  if (sucess) {
-    return <ForgetPasswordOtp />;
-  }
-
   const formSubmitHandler = (datas) => {
     setLoading(true);
 
     const { email } = datas;
 
-    fetch("http://doornextshop.com/forget-password", {
+    fetch("http://localhost:4000/forget-password", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -35,26 +40,29 @@ const ForgetPassword = () => {
       .then((data) => {
         if (!data.sucess) {
           alert(data.msg);
+          setLoading(false);
         } else {
           setLoading(false);
-          setSucess(true);
+          localStorage.setItem("email", email);
+          navigate("/app/forgetotp");
         }
       });
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.mainContainer}>
       {loading && <Spinners />}
       <div className={classes.left}>
-        <h1 className={classes.welcome}>Welcome to LOCALLEARN</h1>
-        <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>
+        <img src={logo} alt="locallearnlogo" className={classes.img} />
       </div>
       <div className={classes.right}>
         <form
           className={classes.form}
           onSubmit={handleSubmit(formSubmitHandler)}
         >
-          <p className={classes.heading}>Please login your email/contact No</p>
+          <p className={classes.formHeading}>
+            Please login your email/contact No
+          </p>
           <input
             placeholder="Enter your email/phone"
             className={classes.input}
@@ -74,6 +82,7 @@ const ForgetPassword = () => {
             placeholder="submit"
             className={classes.submit}
           />
+          <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
         </form>
       </div>
     </div>

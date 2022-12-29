@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import classes from "./ForgetPassword.module.css";
 import Spinners from "../Spinner/Spinner";
 import { useForm } from "react-hook-form";
 import NewPasswordSucessScreen from "./NewPasswordSucessScreen";
+
+import logo from "../images/logoblack.svg";
+import classes from "./SignupDetail.module.css";
 
 const NewPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -28,13 +30,15 @@ const NewPassword = () => {
     if (password.length < 8) {
       setLoading(false);
       setPasswordError("minimum 8 characters required");
+      return;
     }
     if (password !== conpassword) {
       setPasswordError("password mismatch");
       setLoading(false);
+      return;
     }
 
-    fetch("http://doornextshop.com/newpassword", {
+    fetch("http://localhost:4000/newpassword", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -48,6 +52,7 @@ const NewPassword = () => {
           alert(data.msg);
         } else {
           setLoading(false);
+          localStorage.setItem("isLoggedIn", true);
           setSucess(true);
         }
       });
@@ -58,18 +63,19 @@ const NewPassword = () => {
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.mainContainer}>
       {loading && <Spinners />}
       <div className={classes.left}>
-        <h1 className={classes.welcome}>Welcome to LOCALLEARN</h1>
-        <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>
+        <img src={logo} alt="locallearnlogo" className={classes.img} />
       </div>
       <div className={classes.right}>
         <form
           className={classes.form}
           onSubmit={handleSubmit(formSubmitHandler)}
         >
-          <p className={classes.heading}>Please login your email/contact No</p>
+          <p className={classes.formHeading}>
+            Please login your email/contact No
+          </p>
           <input
             placeholder="please enter new password"
             className={classes.input}

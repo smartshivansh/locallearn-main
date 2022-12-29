@@ -1,27 +1,30 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import classes from "./PreChatScreen.module.css";
+import classes from "./SignupDetail.module.css";
+import logo from "../images/logoblack.svg";
 
 const PreChatScreen = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTimeout(() => {
-      navigate("/app/chat");
-    }, 2100);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigate("/app/chat");
+  //   }, 2100);
+  // }, []);
 
   return (
-    <div className={classes.container}>
+    <div className={classes.mainContainer}>
       <div className={classes.left}>
-        <p className={classes.welcome}>welcome to locallearn</p>
+        <img src={logo} alt="locallearnlogo" className={classes.img} />
       </div>
       <div className={classes.right}>
-        <p className={classes.content}> Your profile is complete now</p>
-        <p className={classes.content}>You may start chatting with the bot</p>
+        <div className={classes.form}>
+          <p className={classes.login}> Your profile is complete now</p>
+          <p className={classes.login}>You may start chatting with the bot</p>
+        </div>
+        <p className={classes.doions}>Powered By Doions Pvt Ltd</p>
       </div>
-      <p className={classes.doions}>Powered By Doions Pvt Ltd</p>
     </div>
   );
 };

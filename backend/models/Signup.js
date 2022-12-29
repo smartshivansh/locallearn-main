@@ -7,14 +7,15 @@ const Signup = new Schema({
     required: true,
     unique: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   otp: {
     type: String,
   },
   verified: {
     type: Boolean,
-  },
-  password: {
-    type: String,
   },
   created_at: {
     type: Date,

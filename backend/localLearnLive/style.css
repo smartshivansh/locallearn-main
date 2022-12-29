@@ -17,7 +17,6 @@
   align-items: center;
   flex-wrap: wrap;
   padding: 0 10%;
-  position: relative;
 }
 
 .menuIcon {
@@ -84,6 +83,7 @@
   flex-wrap: wrap;
   width: max-content;
   margin: auto;
+  max-width: 1650px;
 }
 
 .mainNavItem {
@@ -120,6 +120,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 10%;
+  max-width: 1650px;
+  margin: auto;
 }
 
 .left {
@@ -281,15 +283,24 @@
 
 /* styling features */
 
+.featureCont {
+  background: linear-gradient(210.65deg, #40e0d0 0%, #a9dbb8 100%);
+  /* width: 90vw; */
+  left: 0;
+  margin: auto;
+  margin-top: 3rem;
+}
+
 .features {
   width: 100%;
   height: max-content;
   padding: 1rem;
-  background: linear-gradient(210.65deg, #40e0d0 0%, #a9dbb8 100%);
   display: flex;
   align-items: center;
-  padding: 5% 10%;
+  padding: 2% 10%;
   justify-content: space-between;
+  max-width: 1650px;
+  margin: auto;
 }
 
 .feature-list {
@@ -324,6 +335,7 @@
   height: 1.5rem;
   margin: 0 1rem;
   margin-left: 0;
+  margin-top: 4px;
 }
 
 .feature_desp {
@@ -490,18 +502,20 @@
 .icon-panel {
   width: 100%;
   height: max-content;
-  padding: 1rem;
+  /* padding: 1rem; */
   margin: 1rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  max-width: 1512px;
+  margin: auto;
 }
 
 .icon-panel__Item {
   display: flex;
   align-items: center;
-  margin: 1rem;
+  margin: 2rem;
   width: 25%;
 }
 
@@ -537,6 +551,8 @@
   justify-content: center;
   align-items: center;
   padding: 0 10%;
+  max-width: 1650px;
+  margin: auto;
 }
 
 .bot_desp {
@@ -585,6 +601,8 @@
   padding: 0.5rem;
   background-color: white;
   margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
 }
 
 .linksignup {
@@ -598,6 +616,7 @@
 .bot-msg__screenshot-conatiner {
   width: 50%;
   padding: 2rem 0;
+  padding-right: 0;
   margin: 2rem 0;
   display: flex;
   flex-direction: column;
@@ -649,13 +668,23 @@
 
 /* footer design */
 
+.footer-border {
+  left: 0;
+  width: 100%;
+  margin: 0;
+  height: 1px;
+  border-top: 1px solid black;
+  margin-bottom: 1rem;
+}
+
 .main-footer {
   width: 100%;
   padding: 0 10%;
-  border-top: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 1650px;
+  margin: auto;
 }
 
 .footer-text_container {
@@ -687,14 +716,14 @@
 
 .some_text-list {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 2.25rem;
   margin: 1rem;
-  width: 60%;
+  width: 50%;
   height: max-content;
   margin: 1rem 0;
   flex-wrap: wrap;
@@ -712,55 +741,24 @@
 .sm_links {
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  align-items: center;
+  width: 50%;
   margin: 1rem 0;
 }
 
-#sm-link:hover {
-  cursor: pointer;
+#smlink {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
-.facebook {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: url("./images/FacebookLogo.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
+#myty {
+  width: 2rem;
+  height: 2rem;
 }
-.instagram {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: url("./images/InstagramLogo.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.linkedin {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: url("./images/LinkedinLogo.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.twiter {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: url("./images/TwitterLogo.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.youtube {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: url("./images/YoutubeLogo.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.myty {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: url("./images/mytyl.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
+
+#sm-link:hover,
+myty:hover {
+  cursor: pointer;
 }
 
 /* //styles from 1400px */
@@ -864,7 +862,7 @@
 
   .icon-panel {
     padding: 0 5%;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   .bot_desp-heading {
@@ -1404,7 +1402,7 @@ styles for 1000px */
   }
 
   .screenshot-msg {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.8rem;
     width: 70%;
   }
@@ -1435,7 +1433,7 @@ styles for 1000px */
   }
 
   #bot_desp-btn {
-    width: 40%;
+    width: 60%;
   }
 }
 

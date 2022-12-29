@@ -15,6 +15,7 @@ function QuestionSelector(props) {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     let data;
+    console.log(props.id);
 
     if (props.id === "q1") {
       dispatch(professionUpdate({ profession: answer }));
@@ -22,7 +23,7 @@ function QuestionSelector(props) {
     }
     setTransform((prevVal) => prevVal - 110);
 
-    fetch("http://doornextshop.com/userdata", {
+    fetch("http://localhost:4000/userdata", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

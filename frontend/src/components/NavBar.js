@@ -3,6 +3,12 @@ import { useSelector } from "react-redux";
 import classes from "./Navbar.module.css";
 import SkillChip from "./SkillChip";
 
+import logo from "../images/logo.svg";
+import holoImg from "../images/holoImg.jpg";
+import hamberger from "../images/List.svg";
+import profileBtn from "../images/UserCircle.svg";
+import xBtn from "../images/X.svg";
+
 import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
@@ -100,42 +106,51 @@ const Navbar = (props) => {
       <div className={classes.navbar} style={{ height: navbarHeight }}>
         {/* //sidebar btn */}
         {!showSideBar && (
-          <div
+          <img
             onClick={showSideMenuHandler}
             className={classes.hamberger}
-          ></div>
+            alt="img"
+            src={hamberger}
+          />
         )}
         {showSideBar && (
-          <div className={classes.btn} onClick={showSideMenuHandler}></div>
+          <img
+            src={xBtn}
+            alt="img"
+            className={classes.btn}
+            onClick={showSideMenuHandler}
+          />
         )}
 
         {/* logo */}
         <div className={classes.logoContainer}>
-          <p className={classes.logo}>
-            <div
-              onClick={() => {
-                navigate("/app/chat");
-              }}
-              className={classes.link}
-            >
-              LOCALLEARN
-            </div>
-          </p>
+          <div
+            onClick={() => {
+              navigate("/app/chat");
+            }}
+            className={classes.link}
+          >
+            <img src={logo} alt="ll" className={classes.logo} />
+          </div>
         </div>
 
         {/* profile btn */}
 
         {!showProfile && (
-          <div
+          <img
             className={classes.profileBtn}
             onClick={showProfileHandler}
-          ></div>
+            src={profileBtn}
+            alt="profile"
+          />
         )}
         {showProfile && (
-          <div
+          <img
             className={classes.profilexBtn}
             onClick={showProfileHandler}
-          ></div>
+            src={xBtn}
+            alt="close"
+          />
         )}
       </div>
 
@@ -220,7 +235,7 @@ const Navbar = (props) => {
         >
           {/* image Section */}
           <div className={classes.imageContaioner}>
-            <div className={classes.image}></div>
+            <img className={classes.image} src={holoImg} alt="img" />
             <div className={classes.despContainer}>
               <h4 className={classes.name}>{names}</h4>
               <p className={classes.desp}>{profession}</p>

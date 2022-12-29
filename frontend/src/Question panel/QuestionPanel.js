@@ -40,7 +40,7 @@ const QuestionPanel = (props) => {
     });
 
     try {
-      fetch("http://doornextshop.com/questions", {
+      fetch("http://localhost:4000/questions", {
         method: "POST",
         body: data,
         headers: {
@@ -51,11 +51,13 @@ const QuestionPanel = (props) => {
         .then((data) => JSON.parse(data))
         .then(() => {
           if (props.id === "q5") {
-            dispatch(addGoodSkill([...selections, ...customize]));
+            dispatch(
+              addGoodSkill({ goodskills: [...selections, ...customize] })
+            );
           } else if (props.id === "q4") {
-            dispatch(addLearnSkill([...selections, ...customize]));
-          }
-          if (props.last) {
+            dispatch(
+              addLearnSkill({ learnskills: [...selections, ...customize] })
+            );
             props.sucess();
           }
         });
@@ -165,7 +167,7 @@ const QuestionPanel = (props) => {
       </div>
 
       <button onClick={formSubmitHandler} className={classes.submit}>
-        Some Text
+        Submit
       </button>
 
       {/* <input

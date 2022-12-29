@@ -12,7 +12,16 @@ import AboutUsPage from "./pages/AboutUs.Page/AboutUsPage";
 import TermsOfUse from "./pages/TermsOfUse/TermsOfUse";
 import Privacy from "./pages/Privacy/PrivacyPolicy";
 import CoC from "./pages/CodeOfConduct/CoC";
+import SignUp from "./SignUpForm/SignUp";
+import ForgetPassword from "./SignUpForm/ForgetPassword";
+import ForgetPasswordOtp from "./SignUpForm/FogetPasswordOtp";
+import NewPassword from "./SignUpForm/NewPassword";
+
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { Navigate } from "react-router-dom";
+
 import {
   userDataUpdate,
   locationUpdate,
@@ -25,9 +34,10 @@ function App() {
   const dispatch = useDispatch();
 
   const email = localStorage.getItem("email");
+  const logedIn = localStorage.getItem("isLoggedIn");
 
-  if (email) {
-    fetch("http://doornextshop.com/finduser", {
+  if ((email, logedIn)) {
+    fetch("http://localhost:4000/finduser", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -61,12 +71,57 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/app/termsofuse" element={<TermsOfUse />} />
+          <Route exact path="/app/test" element={<ForgetPasswordOtp />} />
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />
           <Route exact path="/app/coc" element={<CoC />} />
-          <Route exact path="/app/chat" element={<ChatUI />} />
+          <Route
+            exact
+            path="/app/chat"
+            element={
+              localStorage.getItem("isLoggedIn") ? (
+                <ChatUI />
+              ) : (
+                <Navigate replace to={"/app/login"} />
+              )
+            }
+          />
           <Route exact path="/app/signup" element={<SignupDetail />} />
           <Route exact path="/app/login" element={<LoginScreen />} />
+          <Route exact path="/app/otplogin" element={<SignUp />} />
+          <Route
+            exact
+            path="/app/forget"
+            element={
+              localStorage.getItem("forget") ? (
+                <ForgetPassword />
+              ) : (
+                <Navigate replace to={"/app/login"} />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/app/forgetotp"
+            element={
+              localStorage.getItem("forget") ? (
+                <ForgetPasswordOtp />
+              ) : (
+                <Navigate replace to={"/app/login"} />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/app/newpass"
+            element={
+              localStorage.getItem("forget") ? (
+                <NewPassword />
+              ) : (
+                <Navigate replace to={"/app/login"} />
+              )
+            }
+          />
           <Route
             exact
             path="/app/question"

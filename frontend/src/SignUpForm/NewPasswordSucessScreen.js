@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import classes from "./PreChatScreen.module.css";
+// import classes from "./PreChatScreen.module.css";
+import classes from "./SignupDetail.module.css";
 
 const NewPasswordSucessScreen = () => {
   const navigate = useNavigate();
