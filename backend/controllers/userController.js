@@ -113,7 +113,7 @@ const signup = async (req, res) => {
       });
     } else {
       fetch(
-        `https://www.fast2sms.com/dev/bulkV2?authorization=5hG1tbj0NCcrXgm83IDVMY7LvJ62TSsZ9xUoizHWRaPBwyOdFnYymP2dw549nTcRg86SiKfajZBze1kI&variables_values=${otp}&route=otp&numbers=${email}`
+        `https://www.fast2sms.com/dev/bulkV2?authorization=${process.env.FAST_SMS_API_KEY}&variables_values=${otp}&route=otp&numbers=${email}`
       );
     }
 
@@ -382,7 +382,7 @@ const resendOtp = async (req, res) => {
     });
   } else {
     fetch(
-      `https://www.fast2sms.com/dev/bulkV2?authorization=5hG1tbj0NCcrXgm83IDVMY7LvJ62TSsZ9xUoizHWRaPBwyOdFnYymP2dw549nTcRg86SiKfajZBze1kI&variables_values=${otp}&route=otp&numbers=${email}`
+      `https://www.fast2sms.com/dev/bulkV2?authorization=${process.env.FAST_SMS_API_KEY}&variables_values=${otp}&route=otp&numbers=${email}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -571,7 +571,7 @@ const forgetPassword = (req, res) => {
     });
   } else {
     fetch(
-      `https://www.fast2sms.com/dev/bulkV2?authorization=5hG1tbj0NCcrXgm83IDVMY7LvJ62TSsZ9xUoizHWRaPBwyOdFnYymP2dw549nTcRg86SiKfajZBze1kI&variables_values=${otp}&route=otp&numbers=${email}`
+      `https://www.fast2sms.com/dev/bulkV2?authorization=${process.env.FAST_SMS_API_KEY}&variables_values=${otp}&route=otp&numbers=${email}`
     )
       .then((res) => res.json())
       .then((data) => {
