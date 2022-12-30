@@ -38,7 +38,7 @@ function App() {
   const forget = localStorage.getItem("forget");
 
   if ((email, logedIn)) {
-    fetch("http://localhost:4000/finduser", {
+    fetch("http://doornextshop.com/finduser", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -23,7 +23,7 @@ const SignUp = () => {
     const email = localStorage.getItem("email");
     const data = JSON.stringify({ otp, email });
     setLoading(true);
-    fetch("http://localhost:4000/otpverify", {
+    fetch("http://doornextshop.com/otpverify", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -56,7 +56,7 @@ const SignUp = () => {
 
   const resendOtpHandler = () => {
     setLoading(true);
-    fetch("http://localhost:4000/resendotp", {
+    fetch("http://doornextshop.comresendotp", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -40,7 +40,7 @@ const QuestionPanel = (props) => {
     });
 
     try {
-      fetch("http://localhost:4000/questions", {
+      fetch("http://doornextshop.com/questions", {
         method: "POST",
         body: data,
         headers: {
