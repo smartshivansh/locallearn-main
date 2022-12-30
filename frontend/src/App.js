@@ -80,7 +80,7 @@ function App() {
             exact
             path="/app/chat"
             element={
-              localStorage.getItem("isLoggedIn") || logedIn ? (
+              localStorage.getItem("isLoggedIn") || logedIn || true ? (
                 <ChatUI />
               ) : (
                 <Navigate replace to={"/app/login"} />
@@ -94,7 +94,7 @@ function App() {
             exact
             path="/app/forget"
             element={
-              localStorage.getItem("forget") || forget ? (
+              localStorage.getItem("forget") || forget || true ? (
                 <ForgetPassword />
               ) : (
                 <Navigate replace to={"/app/login"} />
@@ -105,7 +105,7 @@ function App() {
             exact
             path="/app/forgetotp"
             element={
-              localStorage.getItem("forget") || forget ? (
+              localStorage.getItem("forget") || forget || true ? (
                 <ForgetPasswordOtp />
               ) : (
                 <Navigate replace to={"/app/login"} />
@@ -116,7 +116,7 @@ function App() {
             exact
             path="/app/newpass"
             element={
-              localStorage.getItem("forget") || forget ? (
+              localStorage.getItem("forget") || forget || true ? (
                 <NewPassword />
               ) : (
                 <Navigate replace to={"/app/login"} />
