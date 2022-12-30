@@ -15,13 +15,27 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4000");
-  res.setHeader("Access-Control-Allow-Origin", "http://192.168.29.58:4000");
-  res.setHeader("Access-Control-Allow-Origin", "http://192.168.0.111:4000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  const allowList = [
+    "http://localhost:4000",
+    "http://localhost:3000",
+    "http://doornextshop.com",
+    "https://doornextshop.com",
+    "https://doornextshop.com",
+    "http://192.168.29.58:4000",
+    "http://192.168.29.255:4000",
+    undefined,
+  ];
+
+  console.log(req.headers.origin);
+
+  if (allowList.indexOf(req.headers.origin) !== -1) {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+  }
+
   next();
 });
 

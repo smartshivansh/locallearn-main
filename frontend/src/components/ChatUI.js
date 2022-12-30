@@ -223,6 +223,7 @@ const ChatUI = (props) => {
             <SendBubble content={content.text} />
           </>
         );
+        break;
 
       case "qr":
         msgdata.answer = content.text;
@@ -237,6 +238,7 @@ const ChatUI = (props) => {
             <ReplyBubble content={content.text} />
           </>
         );
+        break;
 
       case "image":
         return (
@@ -244,6 +246,7 @@ const ChatUI = (props) => {
             <img src={content.picUrl} alt="" />
           </Bubble>
         );
+        break;
 
       case "gipphy":
         return <div>test gipphy</div>;
@@ -282,6 +285,7 @@ const ChatUI = (props) => {
             </List>
           </>
         );
+        break;
       case "tenor":
         const { innerWidth, innerHeight } = window;
         let flag = 1;
@@ -361,6 +365,20 @@ const ChatUI = (props) => {
     //   clearTimeout(timer);
     // };
   }, [msgdata.answer]);
+
+  // async function chatSaver(msgdata) {
+  //   if (msgdata.question === "" || msgdata.answer === "" || !email) {
+  //     return;
+  //   }
+
+  //   await fetch("http://localhost:4000/quesans", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ email, msgdata }),
+  //   });
+  // }
 
   return (
     <div className={classes.container} id={classes.chatbox}>

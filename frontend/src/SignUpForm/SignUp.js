@@ -40,6 +40,7 @@ const SignUp = () => {
           localStorage.setItem("isLoggedIn", true);
         } else {
           setContent("Incorrect OTP");
+          setOtp(null);
           setLoading(false);
         }
       });

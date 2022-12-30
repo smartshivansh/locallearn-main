@@ -35,6 +35,7 @@ function App() {
 
   const email = localStorage.getItem("email");
   const logedIn = localStorage.getItem("isLoggedIn");
+  const forget = localStorage.getItem("forget");
 
   if ((email, logedIn)) {
     fetch("http://localhost:4000/finduser", {
@@ -79,7 +80,7 @@ function App() {
             exact
             path="/app/chat"
             element={
-              localStorage.getItem("isLoggedIn") ? (
+              localStorage.getItem("isLoggedIn") || logedIn ? (
                 <ChatUI />
               ) : (
                 <Navigate replace to={"/app/login"} />
@@ -93,7 +94,7 @@ function App() {
             exact
             path="/app/forget"
             element={
-              localStorage.getItem("forget") ? (
+              localStorage.getItem("forget") || forget ? (
                 <ForgetPassword />
               ) : (
                 <Navigate replace to={"/app/login"} />
@@ -104,7 +105,7 @@ function App() {
             exact
             path="/app/forgetotp"
             element={
-              localStorage.getItem("forget") ? (
+              localStorage.getItem("forget") || forget ? (
                 <ForgetPasswordOtp />
               ) : (
                 <Navigate replace to={"/app/login"} />
@@ -115,7 +116,7 @@ function App() {
             exact
             path="/app/newpass"
             element={
-              localStorage.getItem("forget") ? (
+              localStorage.getItem("forget") || forget ? (
                 <NewPassword />
               ) : (
                 <Navigate replace to={"/app/login"} />

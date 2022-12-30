@@ -74,6 +74,17 @@
   margin-bottom: 1.5rem;
 }
 
+.input:focus,
+.otpInput:focus {
+  outline: none;
+}
+
+.errorMsg {
+  font-size: 1rem;
+  color: red;
+  margin: 0.5rem;
+}
+
 .checkbox {
   display: flex;
   align-items: flex-start;
@@ -142,6 +153,10 @@
   font-family: "Poppins";
   margin: 0.5rem;
   margin-top: 1rem;
+}
+
+.link:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 1250px) {

@@ -168,29 +168,36 @@ body {
 
 /* footer design */
 
+.footer-border {
+  left: 0;
+  width: 100%;
+  margin: 0;
+  height: 1px;
+  border-top: 1px solid black;
+  margin-bottom: 1rem;
+}
+
 .main-footer {
   width: 100%;
   padding: 0 10%;
-  border-top: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 10rem;
-  max-height: 15rem;
-  position: relative;
-  bottom: 0;
+  max-width: 1650px;
+  margin: auto;
 }
 
 .footer-text_container {
   width: 35%;
+  height: max-content;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.75rem;
   text-align: left;
-  /* padding: 2rem 0; */
-  /* margin: 2rem 0; */
+  /* padding: 2rem 0;
+  margin: 2rem 0; */
 }
 
 .footer-text {
@@ -209,14 +216,14 @@ body {
 
 .some_text-list {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 2.25rem;
   margin: 1rem;
-  width: 60%;
+  width: 50%;
   height: max-content;
   margin: 1rem 0;
   flex-wrap: wrap;
@@ -234,22 +241,24 @@ body {
 .sm_links {
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  align-items: center;
+  width: 50%;
   margin: 1rem 0;
 }
 
-#sm-link {
+#smlink {
   width: 2.5rem;
   height: 2.5rem;
 }
 
-#sm-link:hover {
-  cursor: pointer;
+#myty {
+  width: 2rem;
+  height: 2rem;
 }
 
-.links {
-  color: black;
-  text-decoration: none;
+#sm-link:hover,
+myty:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 1200px) {

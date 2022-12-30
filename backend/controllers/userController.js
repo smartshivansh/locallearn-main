@@ -346,7 +346,7 @@ const resendOtp = async (req, res) => {
   const otp = rn(options);
 
   Users.findOneAndUpdate(
-    { email: req.body.email },
+    { email: email },
     { otp: otp, updated_at: Date.now() },
     (err, result) => {
       if (err) {
@@ -366,7 +366,7 @@ const resendOtp = async (req, res) => {
 
     transport.sendMail(mailOptions, (err, info) => {
       if (err) {
-        console.log(err);
+        console.log(1111, err);
         return res
           .status(200)
           .json(

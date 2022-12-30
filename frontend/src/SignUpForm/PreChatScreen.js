@@ -7,11 +7,11 @@ import logo from "../images/logoblack.svg";
 const PreChatScreen = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigate("/app/chat");
-  //   }, 2100);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/app/chat");
+    }, 2100);
+  }, []);
 
   return (
     <div className={classes.mainContainer}>

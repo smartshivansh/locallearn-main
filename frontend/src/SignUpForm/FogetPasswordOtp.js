@@ -15,7 +15,7 @@ const ForgetPasswordOtp = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const email = useSelector((state) => state.userdata.email);
+  const email = localStorage.getItem("email");
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
