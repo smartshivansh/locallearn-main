@@ -76,53 +76,13 @@ function App() {
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />
           <Route exact path="/app/coc" element={<CoC />} />
-          <Route
-            exact
-            path="/app/chat"
-            element={
-              localStorage.getItem("isLoggedIn") || logedIn || true ? (
-                <ChatUI />
-              ) : (
-                <Navigate replace to={"/app/login"} />
-              )
-            }
-          />
+          <Route exact path="/app/chat" element={<ChatUI />} />
           <Route exact path="/app/signup" element={<SignupDetail />} />
           <Route exact path="/app/login" element={<LoginScreen />} />
           <Route exact path="/app/otplogin" element={<SignUp />} />
-          <Route
-            exact
-            path="/app/forget"
-            element={
-              localStorage.getItem("forget") || forget || true ? (
-                <ForgetPassword />
-              ) : (
-                <Navigate replace to={"/app/login"} />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/app/forgetotp"
-            element={
-              localStorage.getItem("forget") || forget || true ? (
-                <ForgetPasswordOtp />
-              ) : (
-                <Navigate replace to={"/app/login"} />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/app/newpass"
-            element={
-              localStorage.getItem("forget") || forget || true ? (
-                <NewPassword />
-              ) : (
-                <Navigate replace to={"/app/login"} />
-              )
-            }
-          />
+          <Route exact path="/app/forget" element={<ForgetPassword />} />
+          <Route exact path="/app/forgetotp" element={<ForgetPasswordOtp />} />
+          <Route exact path="/app/newpass" element={<NewPassword />} />
           <Route
             exact
             path="/app/question"
