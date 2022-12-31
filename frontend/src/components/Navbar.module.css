@@ -231,6 +231,24 @@
   flex-wrap: wrap;
 }
 
+.logoutcont {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logout {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 17%;
+  width: 8rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  background: linear-gradient(180deg, #40e0d0 0%, #a9dbb8 100%);
+}
+
 @media (max-width: 1300px) {
   .container {
     width: 80%;

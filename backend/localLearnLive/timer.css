@@ -1,0 +1,107 @@
+:root {
+  --smaller: 0.75;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#topscreen {
+  color: #333;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 8%;
+}
+
+.link {
+  color: red;
+}
+
+.link:hover {
+  color: wheat;
+}
+
+.h1 {
+  font-weight: normal;
+  letter-spacing: 0.125rem;
+  font-size: 1.6rem;
+  max-width: 1000px;
+  line-height: 2.3rem;
+}
+
+.li {
+  display: inline-block;
+  font-size: 1.5em;
+  list-style-type: none;
+  padding: 1em;
+}
+
+.span {
+  display: block;
+  font-size: 4.5rem;
+}
+
+.emoji {
+  display: none;
+  padding: 1rem;
+}
+
+.emojispan {
+  font-size: 4rem;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 1000px) {
+  .h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .h1 {
+    font-size: 1.3rem;
+  }
+
+  .li {
+    font-size: calc(1.5);
+  }
+
+  .span {
+    font-size: calc(1.5);
+  }
+  .emojispan {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .h1 {
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .h1 {
+    font-size: 1rem;
+    line-height: 1.3rem;
+  }
+  .li {
+    font-size: 1rem;
+  }
+
+  .span {
+    font-size: 1rem;
+  }
+  .emojispan {
+    font-size: 1.5rem;
+  }
+}

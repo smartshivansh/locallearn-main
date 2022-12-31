@@ -267,6 +267,12 @@ const Navbar = (props) => {
               })}
             </div>
           </div>
+
+          <div className={classes.logoutcont}>
+            <button className={classes.logout} onClick={() => navigate("/")}>
+              Log out
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { locationUpdate } from "../Redux/Store";
 
 import classes from "./QuestionSelector.module.css";
@@ -9,7 +9,7 @@ const TypeInput = (props) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const email = localStorage.getItem("email");
+  const email = useSelector((state) => state.userdata.email);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -62,7 +62,7 @@ const TypeInput = (props) => {
           autoFocus
           autoCapitalize={value}
           style={{ padding: "2%" }}
-          placeholder="Mumbai, Maharastra"
+          placeholder="Jabalpur, Madhya Pradesh"
         />
       </div>
       <input type="submit" className={classes.submit} />

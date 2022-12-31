@@ -127,7 +127,7 @@ const LoginScreen = () => {
             }}
             className={classes.login}
           >
-            <p className={classes.link}>Forget password?</p>
+            <p className={classes.link}>Forgot password?</p>
           </div>
           <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
         </form>

@@ -13,6 +13,11 @@ const backdrop = document.querySelector("#backdrop");
 const sidebar = document.querySelector("#sidebar");
 const sidebarHeader = document.querySelector("#sidebar-header");
 const xbutton = document.querySelector("#sidebar-xicon");
+const tops = document.querySelector("#topscreen");
+
+// setTimeout(() => {
+//   tops.style.display = "none";
+// }, 1000 * 60);
 
 const login = document.querySelector(".details-Btn1");
 const signin = document.querySelector(".details-Btn2");
