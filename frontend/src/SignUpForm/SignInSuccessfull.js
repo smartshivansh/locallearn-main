@@ -11,14 +11,14 @@ import logo from "../images/logoblack.svg";
 const SignInSuccessfull = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigate("/app/question");
-  //   }, 3000);
-  //   setTimeout(() => {
-  //     localStorage.clear();
-  //   }, 1000 * 60 * 6024 * 5);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/app/question");
+    }, 3000);
+    setTimeout(() => {
+      localStorage.clear();
+    }, 1000 * 60 * 6024 * 5);
+  }, []);
 
   return (
     <div className={classes.mainContainer}>
