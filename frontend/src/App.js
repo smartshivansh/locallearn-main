@@ -16,6 +16,7 @@ import SignUp from "./SignUpForm/SignUp";
 import ForgetPassword from "./SignUpForm/ForgetPassword";
 import ForgetPasswordOtp from "./SignUpForm/FogetPasswordOtp";
 import NewPassword from "./SignUpForm/NewPassword";
+import SignInSuccessfull from "./SignUpForm/SignInSuccessfull";
 
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -71,6 +72,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/app/termsofuse" element={<TermsOfUse />} />
+          <Route exact path="/app/test" element={<SignInSuccessfull />} />
           <Route exact path="/app/test" element={<ForgetPasswordOtp />} />
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />

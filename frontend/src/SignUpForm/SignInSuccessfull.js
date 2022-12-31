@@ -11,14 +11,14 @@ import logo from "../images/logoblack.svg";
 const SignInSuccessfull = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTimeout(() => {
-      navigate("/app/question");
-    }, 3000);
-    setTimeout(() => {
-      localStorage.clear();
-    }, 1000 * 60 * 6024 * 5);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigate("/app/question");
+  //   }, 3000);
+  //   setTimeout(() => {
+  //     localStorage.clear();
+  //   }, 1000 * 60 * 6024 * 5);
+  // }, []);
 
   return (
     <div className={classes.mainContainer}>
@@ -28,7 +28,7 @@ const SignInSuccessfull = () => {
       <div className={classes.right}>
         <div className={classes.form}>
           <p className={classes.login}>Sign up successful!</p>
-          <img className={classes.image} alt="imag" src={image1} />
+          <img className={classes.img} alt="imag" src={image1} />
           <p className={classes.login}>
             You will be redirected to set up your profile in next step.
           </p>
