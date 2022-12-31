@@ -37,7 +37,7 @@ const NewPassword = () => {
       return;
     }
 
-    fetch("http://doornextshop.com/newpassword", {
+    fetch("https://locallearn.in/newpassword", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -348,7 +348,7 @@ const ChatUI = (props) => {
         return;
       }
 
-      await fetch("http://doornextshop.com/quesans", {
+      await fetch("https://locallearn.in/quesans", {
         method: "POST",
         headers: {
           "content-type": "application/json",

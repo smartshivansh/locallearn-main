@@ -33,7 +33,7 @@ const LoginScreen = () => {
     const { loginId, password } = datas;
 
     setLoading(true);
-    await fetch("http://doornextshop.com/signin", {
+    await fetch("https://locallearn.in/ignin", {
       method: "POST",
       headers: {
         "content-type": "application/json",

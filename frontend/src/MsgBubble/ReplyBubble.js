@@ -27,7 +27,7 @@ const ReplyBubble = (props) => {
       response = "liked";
     }
 
-    fetch("http://doornextshop.com/response", {
+    fetch("https://locallearn.in/response", {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -48,7 +48,7 @@ const ReplyBubble = (props) => {
       response = "unliked";
     }
 
-    fetch("http://doornextshop.com/response", {
+    fetch("https://locallearn.in/response", {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {

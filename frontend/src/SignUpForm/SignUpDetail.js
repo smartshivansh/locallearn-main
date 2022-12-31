@@ -58,7 +58,7 @@ const SignUpDetail = () => {
     //http://doornextshop.com
     setLoading(true);
     dispatch(userDataUpdate({ email, username, name }));
-    await fetch("http://doornextshop.com/usernamecheck", {
+    await fetch("https://locallearn.in/usernamecheck", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -73,7 +73,7 @@ const SignUpDetail = () => {
           setLoading(false);
           return;
         } else {
-          fetch("http://doornextshop.com/signup", {
+          fetch("https://locallearn.in/signup", {
             method: "POST",
             headers: {
               "content-type": "application/json",

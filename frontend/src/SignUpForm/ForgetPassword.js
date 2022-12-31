@@ -30,7 +30,7 @@ const ForgetPassword = () => {
 
     const { email } = datas;
 
-    fetch("http://doornextshop.com/forget-password", {
+    fetch("https://locallearn.in/forget-password", {
       method: "POST",
       headers: {
         "content-type": "application/json",

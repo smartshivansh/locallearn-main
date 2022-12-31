@@ -22,7 +22,7 @@ const ForgetPasswordOtp = () => {
 
     const data = JSON.stringify({ otp, email });
     setLoading(true);
-    fetch("http://doornextshop.com/otpverify", {
+    fetch("https://locallearn.in/otpverify", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -49,7 +49,7 @@ const ForgetPasswordOtp = () => {
 
   const resendOtpHandler = () => {
     setLoading(true);
-    fetch("http://doornextshop.com/resendotp", {
+    fetch("https://locallearn.in/resendotp", {
       method: "POST",
       headers: {
         "content-type": "application/json",

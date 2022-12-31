@@ -23,7 +23,7 @@ function QuestionSelector(props) {
     }
     setTransform((prevVal) => prevVal - 110);
 
-    fetch("http://doornextshop.com/userdata", {
+    fetch("https://locallearn.in/userdata", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

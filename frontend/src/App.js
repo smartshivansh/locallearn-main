@@ -38,7 +38,7 @@ function App() {
   const logedIn = localStorage.getItem("isLoggedIn");
 
   if ((email, logedIn)) {
-    fetch("http://doornextshop.com/finduser", {
+    fetch("https://locallearn.in/finduser", {
       method: "POST",
       headers: {
         "content-type": "application/json",

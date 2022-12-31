@@ -40,7 +40,7 @@ const QuestionPanel = (props) => {
     });
 
     try {
-      fetch("http://doornextshop.com/questions", {
+      fetch("https://locallearn.in/questions", {
         method: "POST",
         body: data,
         headers: {
