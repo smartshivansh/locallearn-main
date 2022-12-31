@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classes from "./SignupDetail.module.css";
 import Spinners from "../Spinner/Spinner";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { userDataUpdate } from "../Redux/Store";
 
 import logo from "../images/logoblack.svg";
 
@@ -10,8 +12,8 @@ import { useNavigate } from "react-router";
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  localStorage.setItem("forget", true);
   setTimeout(() => {
     localStorage.removeItem("forget");
   }, 1000 * 60 * 8);
@@ -43,7 +45,13 @@ const ForgetPassword = () => {
           setLoading(false);
         } else {
           setLoading(false);
-          localStorage.setItem("email", email);
+          dispatch(
+            userDataUpdate({
+              email: email,
+              name: "",
+              username: "",
+            })
+          );
           navigate("/app/forgetotp");
         }
       });

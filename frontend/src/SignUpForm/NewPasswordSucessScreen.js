@@ -9,7 +9,7 @@ const NewPasswordSucessScreen = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/app/chat");
+      navigate("/app/login");
     }, 2100);
   }, []);
 
@@ -20,7 +20,8 @@ const NewPasswordSucessScreen = () => {
       </div>
       <div className={classes.right}>
         <p className={classes.content}> password change sucessfully</p>
-        <p className={classes.content}>You may start chatting with the bot</p>
+        <br />
+        <p className={classes.content}>Please login to continue</p>
       </div>
       <p className={classes.doions}>Powered By Doions Pvt Ltd</p>
     </div>

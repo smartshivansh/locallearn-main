@@ -45,10 +45,6 @@ const LoginScreen = () => {
       .then((data) => {
         if (data.sucess) {
           // navigate("/app/loginsucess");
-          localStorage.clear();
-          localStorage.setItem("email", loginId);
-          localStorage.setItem("isLoggedIn", true);
-          setSucess(true);
           setLoading(false);
           dispatch(
             userDataUpdate({
@@ -61,6 +57,7 @@ const LoginScreen = () => {
           dispatch(professionUpdate({ profession: data.user.profession }));
           dispatch(addGoodSkill({ goodskills: data.user.goodSkills }));
           dispatch(addLearnSkill({ learnskills: data.user.learnSkills }));
+          navigate("/app/chat");
         } else {
           alert(data.message);
           setLoading(false);

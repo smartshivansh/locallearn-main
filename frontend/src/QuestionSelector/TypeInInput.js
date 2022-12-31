@@ -26,7 +26,7 @@ const TypeInput = (props) => {
       data = { type: "location", email, data: value };
     }
 
-    fetch("http://localhost:4000/userdata", {
+    fetch("http://doornextshop.com/userdata", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

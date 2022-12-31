@@ -56,7 +56,7 @@ const SignUp = () => {
 
   const resendOtpHandler = () => {
     setLoading(true);
-    fetch("http://doornextshop.comresendotp", {
+    fetch("http://doornextshop.com/resendotp", {
       method: "POST",
       headers: {
         "content-type": "application/json",

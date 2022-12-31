@@ -291,6 +291,7 @@
   .form {
     width: 22rem;
     margin-top: 2rem;
+    height: 100%;
   }
 
   .formHeading {
@@ -325,7 +326,6 @@
 
   .doions {
     width: 20rem;
-    position: static;
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
   }

@@ -235,7 +235,11 @@ const Navbar = (props) => {
         >
           {/* image Section */}
           <div className={classes.imageContaioner}>
-            <img className={classes.image} src={holoImg} alt="img" />
+            <img
+              className={classes.image}
+              src={`https://avatars.dicebear.com/api/croodles-neutral/customer.${names}.svg`}
+              alt="img"
+            />
             <div className={classes.despContainer}>
               <h4 className={classes.name}>{names}</h4>
               <p className={classes.desp}>{profession}</p>
@@ -256,7 +260,7 @@ const Navbar = (props) => {
 
           {/* skills I want to learn */}
           <div className={classes.good}>
-            <h3>Skills I am want to learn</h3>
+            <h3>Skills I want to learn</h3>
             <div className={classes.skills}>
               {learnSkill.map((skill) => {
                 return <SkillChip key={skill} text={skill} />;

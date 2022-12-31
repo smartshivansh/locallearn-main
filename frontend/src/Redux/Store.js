@@ -18,10 +18,10 @@ const skillSlice = createSlice({
   initialState: skillDataInitialState,
   reducers: {
     addGoodSkill(state, action) {
-      state.good = [...action.payload.goodskills];
+      state.good = action.payload.goodskills;
     },
     addLearnSkill(state, action) {
-      state.learn = [...action.payload.learnskills];
+      state.learn = action.payload.learnskills;
     },
     removeGoodSkill(state, action) {
       state.good = state.good.filter((skill) => {

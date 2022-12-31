@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Spinners from "../Spinner/Spinner";
 import { useForm } from "react-hook-form";
 import NewPasswordSucessScreen from "./NewPasswordSucessScreen";
-
+import { useSelector } from "react-redux";
 import logo from "../images/logoblack.svg";
 import classes from "./SignupDetail.module.css";
 
@@ -10,6 +10,7 @@ const NewPassword = () => {
   const [loading, setLoading] = useState(false);
   const [sucess, setSucess] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const email = useSelector((state) => state.userdata.email);
   const {
     register,
     handleSubmit,
@@ -20,8 +21,6 @@ const NewPassword = () => {
   if (sucess) {
     return <NewPasswordSucessScreen />;
   }
-
-  const email = localStorage.getItem("email");
 
   const formSubmitHandler = (datas) => {
     setLoading(true);

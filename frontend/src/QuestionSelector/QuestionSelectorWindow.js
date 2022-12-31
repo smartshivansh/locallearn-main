@@ -41,6 +41,7 @@ const QuestionSelectorWindow = () => {
           "software professional",
           "engineering",
           "merchant navy",
+          "other",
         ],
         last: false,
       },

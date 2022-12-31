@@ -35,7 +35,6 @@ function App() {
 
   const email = localStorage.getItem("email");
   const logedIn = localStorage.getItem("isLoggedIn");
-  const forget = localStorage.getItem("forget");
 
   if ((email, logedIn)) {
     fetch("http://doornextshop.com/finduser", {

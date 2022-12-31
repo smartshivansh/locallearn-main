@@ -15,11 +15,11 @@ const ForgetPasswordOtp = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const email = localStorage.getItem("email");
+  const email = useSelector((state) => state.userdata.email);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    const email = localStorage.getItem("email");
+
     const data = JSON.stringify({ otp, email });
     setLoading(true);
     fetch("http://doornextshop.com/otpverify", {
