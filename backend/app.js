@@ -20,7 +20,6 @@ app.use((req, res, next) => {
     "http://localhost:3000",
     "http://doornextshop.com",
     "https://doornextshop.com",
-    "https://doornextshop.com",
     "http://192.168.29.58:4000",
     "http://192.168.29.255:4000",
     undefined,
