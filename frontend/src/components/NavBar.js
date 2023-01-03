@@ -10,6 +10,7 @@ import profileBtn from "../images/UserCircle.svg";
 import xBtn from "../images/X.svg";
 
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Navbar = (props) => {
   //sidebar states
@@ -102,7 +103,7 @@ const Navbar = (props) => {
 
   const logoutHandler = () => {
     localStorage.clear();
-    navigate("/");
+    return navigate("/app/signup");
   };
 
   return (

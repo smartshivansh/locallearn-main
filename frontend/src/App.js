@@ -97,6 +97,7 @@ function App() {
 
           <Route path="/app/chat" element={<ChatUI />} />
           <Route exact path="/app/signup" element={<SignupDetail />} />
+          <Route exact path="/app" element={<SignupDetail />} />
           <Route exact path="/app/login" element={<LoginScreen />} />
           <Route exact path="/app/otplogin" element={<SignUp />} />
           <Route exact path="/app/forget" element={<ForgetPassword />} />

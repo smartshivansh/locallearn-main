@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { locationUpdate } from "../Redux/Store";
+import { locationUpdate, professionUpdate } from "../Redux/Store";
 
 import classes from "./QuestionSelector.module.css";
 
@@ -57,12 +57,14 @@ const TypeInput = (props) => {
         <input
           onFocus={onFocusHandler}
           onChange={onChangeHandler}
-          value={value}
+          value={props.value ? props.value : value}
           className={classes.select}
           autoFocus
           autoCapitalize={value}
           style={{ padding: "2%" }}
-          placeholder="Jabalpur, Madhya Pradesh"
+          placeholder={
+            props.placeholder ? props.placeholder : "Jabalpur, Madhya Pradesh"
+          }
         />
       </div>
       <input type="submit" className={classes.submit} />

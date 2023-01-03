@@ -387,10 +387,10 @@ const ChatUI = (props) => {
   const email = useSelector((state) => state.userdata.email);
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
-      <div className={classes.container} id={classes.chatbox}>
-        {" "}
-        <NavBar />
+    <div className={classes.container} id={classes.chatbox}>
+      {" "}
+      <NavBar />
+      <div className={classes.chat}>
         <Chat
           wideBreakpoint="800px"
           renderNavbar={handlerenderNavbar}
