@@ -7,6 +7,7 @@ import {
   professionUpdate,
   addGoodSkill,
   addLearnSkill,
+  authStatusLogin,
 } from "../Redux/Store";
 
 import classes from "./SignupDetail.module.css";
@@ -33,7 +34,7 @@ const LoginScreen = () => {
     const { loginId, password } = datas;
 
     setLoading(true);
-    await fetch("https://locallearn.in/ignin", {
+    await fetch("https://locallearn.in/signin", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -45,6 +46,9 @@ const LoginScreen = () => {
       .then((data) => {
         if (data.sucess) {
           // navigate("/app/loginsucess");
+          localStorage.setItem("email", data.user.email);
+          localStorage.setItem("token", data.user.token);
+          dispatch(authStatusLogin({ token: data.user.token }));
           setLoading(false);
           dispatch(
             userDataUpdate({
@@ -129,7 +133,7 @@ const LoginScreen = () => {
           >
             <p className={classes.link}>Forgot password?</p>
           </div>
-          <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
+          {/* <p className={classes.doions}>Powered by Doions Pvt Ltd</p> */}
         </form>
       </div>
     </div>

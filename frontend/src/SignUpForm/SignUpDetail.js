@@ -7,6 +7,7 @@ import classes from "./SignupDetail.module.css";
 import Spinners from "../Spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { userDataUpdate } from "../Redux/Store";
+import { authStatusLogin } from "../Redux/Store";
 
 import logo from "../images/logoblack.svg";
 
@@ -89,8 +90,9 @@ const SignUpDetail = () => {
                 return;
               }
               if (result.sucess) {
-                localStorage.setItem("email", `${email}`);
-                localStorage.setItem("isLoggedIn", true);
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("email", email);
+                dispatch(authStatusLogin({ token: result.token }));
                 dispatch(userDataUpdate({ email, username, name }));
                 setSignup(true);
                 setLoading(false);
@@ -240,7 +242,7 @@ const SignUpDetail = () => {
               Login
             </a>
           </p>
-          <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
+          {/* <p className={classes.doions}>Powered by Doions Pvt Ltd</p> */}
         </form>
       </div>
     </div>

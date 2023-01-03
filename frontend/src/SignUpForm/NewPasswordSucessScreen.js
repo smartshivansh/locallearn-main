@@ -23,7 +23,7 @@ const NewPasswordSucessScreen = () => {
         <br />
         <p className={classes.content}>Please login to continue</p>
       </div>
-      <p className={classes.doions}>Powered By Doions Pvt Ltd</p>
+      {/* <p className={classes.doions}>Powered By Doions Pvt Ltd</p> */}
     </div>
   );
 };

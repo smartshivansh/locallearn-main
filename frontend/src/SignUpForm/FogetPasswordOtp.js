@@ -86,7 +86,7 @@ const ForgetPasswordOtp = () => {
           <div className={classes.link} onClick={resendOtpHandler}>
             Resend otp
           </div>
-          <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4>
+          {/* <h4 className={classes.doions}>Powered By Doions Pvt Ltd</h4> */}
         </form>
       </div>
     </div>

@@ -6,7 +6,7 @@ import classes from "./QuestionSelector.module.css";
 
 const TypeInput = (props) => {
   const [transform, setTransform] = useState(0);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("Jabalpur");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const email = useSelector((state) => state.userdata.email);

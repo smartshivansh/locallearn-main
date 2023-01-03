@@ -90,7 +90,7 @@ const ForgetPassword = () => {
             placeholder="submit"
             className={classes.submit}
           />
-          <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
+          {/* <p className={classes.doions}>Powered by Doions Pvt Ltd</p> */}
         </form>
       </div>
     </div>

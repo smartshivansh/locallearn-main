@@ -87,10 +87,9 @@ const signup = async (req, res) => {
     let user = await Users.findOne({ email });
 
     if (user) {
-      res.json(
+      return res.json(
         JSON.stringify({ sucess: false, message: "User already exists" })
       );
-      return;
     }
 
     if (type === "email") {
@@ -128,18 +127,20 @@ const signup = async (req, res) => {
 
     let myToken = await data.getAuthToken();
 
+    // Users.findOneAndUpdate({ email }, { token: myToken });
+
     const chat = await Chat.create({
       email,
       questions: [],
       answers: [],
     });
-    res
+    return res
       .status(200)
       .json(
         JSON.stringify({ message: "ok", token: myToken, sucess: true, otp })
       );
   } catch (error) {
-    res
+    return res
       .status(500)
       .json(JSON.stringify({ sucess: false, message: error.message }));
   }
@@ -228,14 +229,13 @@ const signin = async (req, res) => {
           JSON.stringify({
             sucess: false,
             message: "Wrong Password",
-            user: user,
           })
         );
       } else {
         res.status(200).json(
           JSON.stringify({
             sucess: true,
-            message: "Wrong Password",
+            message: "login sucessfull",
             user: user,
           })
         );
@@ -246,7 +246,6 @@ const signin = async (req, res) => {
       JSON.stringify({
         sucess: false,
         message: "Email ID not registered",
-        user: user,
       })
     );
   }
@@ -404,8 +403,8 @@ const resendOtp = async (req, res) => {
 };
 
 const finduser = async (req, res) => {
-  const email = req.body.email;
-  const user = Users.findOne({ email }, function (err, ress) {
+  const token = req.body.token;
+  const user = Users.findOne({ token }, function (err, ress) {
     if (err) {
       console.log(err);
       return res.status(200).json(JSON.stringify({ sucess: false }));

@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import authSlice from "./isAuthSlice";
 
 const userDataInitialdata = {
   email: "",
@@ -60,7 +61,11 @@ const userDataSlice = createSlice({
 });
 
 const Store = configureStore({
-  reducer: { skill: skillSlice.reducer, userdata: userDataSlice.reducer },
+  reducer: {
+    skill: skillSlice.reducer,
+    userdata: userDataSlice.reducer,
+    authstatus: authSlice.reducer,
+  },
 });
 
 export const {
@@ -72,5 +77,7 @@ export const {
 
 export const { userDataUpdate, locationUpdate, professionUpdate } =
   userDataSlice.actions;
+
+export const { authStatusLogin, authStatusLogout } = authSlice.actions;
 
 export default Store;

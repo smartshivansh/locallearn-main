@@ -100,6 +100,11 @@ const Navbar = (props) => {
     }
   };
 
+  const logoutHandler = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <div className={classes.container} style={{ height: containerHeight }}>
       {/* navbar */}
@@ -269,7 +274,7 @@ const Navbar = (props) => {
           </div>
 
           <div className={classes.logoutcont}>
-            <button className={classes.logout} onClick={() => navigate("/")}>
+            <button className={classes.logout} onClick={logoutHandler}>
               Log out
             </button>
           </div>

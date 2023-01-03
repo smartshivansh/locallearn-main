@@ -33,7 +33,7 @@ const SignInSuccessfull = () => {
             You will be redirected to set up your profile in next step.
           </p>
         </div>
-        <p className={classes.doions}>Powered by Doions Pvt Ltd</p>
+        {/* <p className={classes.doions}>Powered by Doions Pvt Ltd</p> */}
       </div>
     </div>
   );

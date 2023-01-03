@@ -29,7 +29,10 @@ const userSchema = new mongoose.Schema(
       default: Date.now,
     },
 
-    tokens: [{ token: { type: String, require: true } }],
+    token: {
+      type: String,
+      default: "cfref",
+    },
 
     verified: {
       type: Boolean,
@@ -82,7 +85,8 @@ userSchema.methods.getAuthToken = async function (data) {
   var tokenValue = jwt.sign(param, "hssssghsjmQQQisjsnsnbnmmmaxmnmmamsm", {
     expiresIn: "300000s",
   });
-  this.token = this.tokens.concat({ token: tokenValue });
+  console.log(tokenValue);
+  this.token = tokenValue;
   await this.save();
   return tokenValue;
 };

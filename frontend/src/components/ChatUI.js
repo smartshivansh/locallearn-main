@@ -6,6 +6,9 @@ import Chat, {
   List,
   ListItem,
 } from "@chatui/core";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import "@chatui/core/dist/index.css";
 import io from "socket.io-client";
 import Tenor from "./Tenor";
@@ -96,6 +99,7 @@ const defaultQuickReplies = [
 const ChatUI = (props) => {
   const { messages, appendMsg, setTyping } = useMessages(initialMessages);
   const [connected, setConnected] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [myplaceholder, setMyplaceholder] = useState("Go on, ask me something");
   const referenceForMessageBox = useRef();
   const chatUiRef = useRef();
@@ -103,6 +107,8 @@ const ChatUI = (props) => {
 
   const send = new Audio(sendSound);
   const receive = new Audio(receiveSound);
+
+  const navigate = useNavigate();
 
   const msgdata = { question: "", answer: "" };
 
@@ -340,8 +346,6 @@ const ChatUI = (props) => {
     }
   }, [referenceForMessageBox]);
 
-  const email = localStorage.getItem("email");
-
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (msgdata.question === "" || msgdata.answer === "" || !email) {
@@ -380,26 +384,31 @@ const ChatUI = (props) => {
   //   });
   // }
 
+  const email = useSelector((state) => state.userdata.email);
+
   return (
-    <div className={classes.container} id={classes.chatbox}>
-      <NavBar />
-      <Chat
-        wideBreakpoint="800px"
-        renderNavbar={handlerenderNavbar}
-        messages={messages}
-        renderMessageContent={renderMessageContent}
-        onSend={handleSend}
-        placeholder={myplaceholder}
-        locale="en-US"
-        quickReplies={defaultQuickReplies}
-        onQuickReplyClick={handleQuickReplyClick}
-        onInputFocus={oninputfocushandle}
-        messagesRef={referenceForMessageBox}
-        Composer={Composer}
-        ref={chatUiRef}
-        composerRef={composerRef}
-        renderQuickReplies={quickReplyRenderHandler}
-      />
+    <div style={{ width: "100%", height: "100%" }}>
+      <div className={classes.container} id={classes.chatbox}>
+        {" "}
+        <NavBar />
+        <Chat
+          wideBreakpoint="800px"
+          renderNavbar={handlerenderNavbar}
+          messages={messages}
+          renderMessageContent={renderMessageContent}
+          onSend={handleSend}
+          placeholder={myplaceholder}
+          locale="en-US"
+          quickReplies={defaultQuickReplies}
+          onQuickReplyClick={handleQuickReplyClick}
+          onInputFocus={oninputfocushandle}
+          messagesRef={referenceForMessageBox}
+          Composer={Composer}
+          ref={chatUiRef}
+          composerRef={composerRef}
+          renderQuickReplies={quickReplyRenderHandler}
+        />
+      </div>
     </div>
   );
 };

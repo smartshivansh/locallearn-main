@@ -1,9 +1,14 @@
 import "@chatui/core/es/styles/index.less";
 import "@chatui/core/dist/index.css";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import ChatUI from "./components/ChatUI";
 import SignupDetail from "./SignUpForm/SignUpDetail";
 import LoginScreen from "./SignUpForm/LoginScreen";
@@ -18,10 +23,10 @@ import ForgetPasswordOtp from "./SignUpForm/FogetPasswordOtp";
 import NewPassword from "./SignUpForm/NewPassword";
 import SignInSuccessfull from "./SignUpForm/SignInSuccessfull";
 
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import Protected from "./Protected";
 
-import { Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authStatusLogin, authStatusLogout } from "./Redux/Store";
 
 import {
   userDataUpdate,
@@ -34,16 +39,16 @@ import {
 function App() {
   const dispatch = useDispatch();
 
+  const token = localStorage.getItem("token");
   const email = localStorage.getItem("email");
-  const logedIn = localStorage.getItem("isLoggedIn");
 
-  if ((email, logedIn)) {
+  if (token || email) {
     fetch("https://locallearn.in/finduser", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ token, email }),
     })
       .then((res) => {
         if (!res) {
@@ -60,11 +65,14 @@ function App() {
             username: data.username,
           })
         );
+        dispatch(authStatusLogin());
         dispatch(locationUpdate({ location: data.location }));
         dispatch(professionUpdate({ profession: data.profession }));
         dispatch(addGoodSkill({ goodskills: data.goodSkills }));
         dispatch(addLearnSkill({ learnskills: data.learnSkills }));
       });
+  } else {
+    dispatch(authStatusLogout());
   }
 
   return (
@@ -77,7 +85,17 @@ function App() {
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />
           <Route exact path="/app/coc" element={<CoC />} />
-          <Route exact path="/app/chat" element={<ChatUI />} />
+
+          <Route
+            path="/app/chat"
+            element={
+              <Protected>
+                <ChatUI />
+              </Protected>
+            }
+          />
+
+          <Route path="/app/chat" element={<ChatUI />} />
           <Route exact path="/app/signup" element={<SignupDetail />} />
           <Route exact path="/app/login" element={<LoginScreen />} />
           <Route exact path="/app/otplogin" element={<SignUp />} />

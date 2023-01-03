@@ -23,7 +23,7 @@ const PreChatScreen = () => {
           <p className={classes.login}> Your profile is complete now</p>
           <p className={classes.login}>You may start chatting with the bot</p>
         </div>
-        <p className={classes.doions}>Powered By Doions Pvt Ltd</p>
+        {/* <p className={classes.doions}>Powered By Doions Pvt Ltd</p> */}
       </div>
     </div>
   );

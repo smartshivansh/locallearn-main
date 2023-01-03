@@ -93,7 +93,7 @@ const SignUp = () => {
           <div className={classes.link} onClick={resendOtpHandler}>
             Resend otp
           </div>
-          <p className={classes.doions}>Powered By Doions Pvt Ltd</p>
+          {/* <p className={classes.doions}>Powered By Doions Pvt Ltd</p> */}
         </form>
       </div>
     </div>
