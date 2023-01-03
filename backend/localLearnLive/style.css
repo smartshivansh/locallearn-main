@@ -134,6 +134,7 @@
   padding: 0 10%;
   max-width: 1650px;
   margin: auto;
+  margin-top: 3rem;
 }
 
 .left {
@@ -142,7 +143,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .leftItem {
@@ -171,7 +172,7 @@
 }
 
 .action-btns {
-  width: 100%;
+  width: 28rem;
   height: 30%;
   display: flex;
   align-items: center;
@@ -179,9 +180,9 @@
 }
 
 .details-Btn2 {
-  width: 45%;
+  width: 40%;
   height: 3rem;
-  background-color: #40e0d0;
+  background-color: #00072d;
   color: white;
   border-radius: 10px;
   font-family: "Poppins";
@@ -192,13 +193,14 @@
   text-align: left;
   padding: 0.5rem;
   border: none;
+  padding-left: 25px;
 }
 
 .details-Btn1 {
-  width: 45%;
+  width: 40%;
   height: 3rem;
-  border: 3px solid #40e0d0;
-  color: #40e0d0;
+  border: 3px solid #00072d;
+  color: #00072d;
   border-radius: 10px;
   font-family: "Poppins";
   font-style: normal;
@@ -208,6 +210,7 @@
   text-align: left;
   padding: 0.5rem;
   background-color: white;
+  padding-left: 25px;
 }
 
 .btnLink {
@@ -222,6 +225,7 @@
 
 .details-Btn1:hover {
   background-color: #40e0d0;
+  border: 3px solid #40e0d0;
   color: white;
 }
 
@@ -601,8 +605,8 @@
 #bot_desp-btn {
   width: 45%;
   height: 3rem;
-  border: 3px solid #40e0d0;
-  color: #40e0d0;
+  border: 3px solid #00072d;
+  color: #00072d;
   border-radius: 10px;
   font-family: "Poppins";
   font-style: normal;
@@ -610,19 +614,29 @@
   font-size: 1.25rem;
   line-height: 2rem;
   text-align: left;
-  padding: 0.5rem;
+
   background-color: white;
   margin: 1.5rem 0;
   display: flex;
   align-items: center;
 }
 
+#bot_desp-btn:hover,
+.linksignup:hover {
+  border: 3px solid #40e0d0;
+  color: white;
+  background-color: #40e0d0;
+}
+
 .linksignup {
   text-decoration: none;
-  color: #40e0d0;
+  color: #00072d;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding: 0.5rem;
 }
 
 .bot-msg__screenshot-conatiner {
@@ -919,7 +933,7 @@ myty:hover {
 @media (max-width: 1150px) {
   .details {
     height: 28rem;
-    margin-top: 0.5rem;
+    margin-top: 3rem;
   }
   .left {
     width: 28rem;
@@ -992,7 +1006,7 @@ styles for 1000px */
   }
 
   .left {
-    height: 20rem;
+    height: max-content;
     width: 100%;
     padding: 1%;
   }
@@ -1011,6 +1025,7 @@ styles for 1000px */
   .action-btns {
     width: 100%;
     justify-content: space-around;
+    margin-top: 3rem;
   }
 
   .right {
@@ -1025,6 +1040,7 @@ styles for 1000px */
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 3rem;
   }
 
   #top-img {
@@ -1228,6 +1244,7 @@ styles for 1000px */
   .left {
     width: 100%;
     padding: 3%;
+    height: max-content;
   }
 
   /* .screenshot-msg {
@@ -1311,7 +1328,7 @@ styles for 1000px */
   .left {
     width: 100%;
     padding: 0.5rem;
-    height: 20rem;
+    height: max-content;
   }
 
   .headingll {
@@ -1462,7 +1479,7 @@ styles for 1000px */
   }
 
   .action-btns {
-    margin-top: 2rem;
+    margin-top: 4rem;
   }
 
   .details-Btn1,
