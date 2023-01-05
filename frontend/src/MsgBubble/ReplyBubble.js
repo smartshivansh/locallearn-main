@@ -23,7 +23,7 @@ const ReplyBubble = (props) => {
       response = "liked";
     }
 
-    fetch("http://localhost:5000/response", {
+    fetch("http://doornextshop.com/response", {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -44,7 +44,7 @@ const ReplyBubble = (props) => {
       response = "unliked";
     }
 
-    fetch("http://localhost:5000/response", {
+    fetch("http://doornextshop.com/response", {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -60,7 +60,7 @@ const ReplyBubble = (props) => {
       if (props.content === "Hi there! How are you?") {
         return;
       }
-      fetch("http://localhost:5000/quesans", {
+      fetch("http://doornextshop.com/quesans", {
         method: "POST",
         body: JSON.stringify({
           email: "8319007235",

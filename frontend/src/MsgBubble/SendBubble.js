@@ -8,7 +8,7 @@ const SendBubble = (props) => {
       return;
     }
     const timer = setTimeout(() => {
-      fetch("http://localhost:5000/quesans", {
+      fetch("http://doornextshop.com/quesans", {
         method: "POST",
         body: JSON.stringify({
           email: "8319007235",
