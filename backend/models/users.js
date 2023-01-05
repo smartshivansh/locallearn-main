@@ -5,59 +5,17 @@ var jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-    },
-
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-
-    password: {
-      type: String,
-
-      minlength: 8,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-
-    token: {
-      type: String,
-      default: "cfref",
-    },
-
-    verified: {
-      type: Boolean,
-      default: false,
-    },
-
-    location: {
-      type: String,
-      default: "location",
-    },
-
-    profession: {
-      type: String,
-      default: "profession",
-    },
-    goodSkills: {
-      type: Array,
-      default: [],
-    },
-
-    learnSkills: {
-      type: Array,
-      default: [],
-    },
-
+    name: { type: String, required: true },
+    username: { type: String },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, minlength: 8 },
+    createdAt: { type: Date, default: Date.now },
+    token: { type: String, default: "cfref" },
+    verified: { type: Boolean, default: false },
+    location: { type: String, default: "location" },
+    profession: { type: String, default: "profession" },
+    goodSkills: { type: Array, default: [] },
+    learnSkills: { type: Array, default: [] },
     otp: Number,
     otp_expiry: Date,
     resetPasswordOtp: Number,

@@ -175,7 +175,7 @@ const NewPassword = () => {
               style={{ borderColor: passwordInputColor }}
               type={passwordType}
               autoComplete="off"
-              {...register("confirmPassword", {
+              {...register("cPassword", {
                 minLength: {
                   value: 8,
                   message: "minimum 10 charactes required",

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js --host"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
     "messagebird": "^3.8.1",
     "mongoose": "^6.7.2",
     "nodemailer": "^6.8.0",
+    "openai": "^3.1.0",
     "path": "^0.12.7",
     "random-number": "^0.0.9",
     "rn": "^0.0.1",

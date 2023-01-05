@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const { Server } = require("socket.io");
 var cors = require("cors");
+
 let onlineUsers = [];
 
 const port = process.env.PORT || 5000;
@@ -155,27 +156,29 @@ io.on("connection", (socket) => {
       presence_penalty: 0,
     });
 
-    console.log(
-      "response from ai ((((((((((((******",
-      completion.data.choices[0].text
-    );
+    console.log("RESPONSE\n", completion.data.choices[0].text);
     // let response = await generateResponseAI(data.text);
     // console.log(response);
+
     socket.emit("send-msg-response", completion.data.choices[0].text);
+
     data["response"] = completion.data.choices[0].text;
+
     console.log("data with reponse", data);
+
     var json = JSON.stringify(data);
+
     fs.appendFile("myjsonfile.json", json + "\n", "utf8", function (err) {
       if (err) throw err;
       console.log("Saved!");
     });
   });
+
   socket.on("disconnect", () => {
     const index = onlineUsers.indexOf(socket.id);
     onlineUsers.splice(index, 1);
     io.emit("broadcast", onlineUsers.length);
-
-    console.log("socket disconnected ----> ", onlineUsers); // undefined
+    console.log("socket disconnected --> ", onlineUsers); // undefined
   });
 });
 

@@ -50,10 +50,8 @@ const usernamecheck = async (req, res) => {
 
 const signup = async (req, res) => {
   try {
-    const name = req.body.name;
-    const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
+    const { name, email, username, password } = req.body;
+
     let type;
 
     let options = {
@@ -147,7 +145,6 @@ const signup = async (req, res) => {
 };
 
 //questionresponses
-
 const questions = async (req, res) => {
   const email = req.body.email;
 
@@ -215,6 +212,29 @@ const otpverify = async (req, res) => {
   );
 };
 
+const signupPassword = async (req, res) => {
+  try {
+    let { email, username, password } = req.body;
+    // console.log({ email, username, password });
+
+    password = bcrypt.hashSync(password, 10);
+
+    if (email && username && password) {
+      const updatedUser = await Users.findOneAndUpdate(
+        { email },
+        { username, password },
+        { new: true }
+      );
+      // console.log("Updated User Document", updatedUser);
+      res.status(200).json({ msg: "Updated Successfully", user: updatedUser });
+    } else {
+      res.status(400).json({ msg: "USERNAME_OR_PASSWORD_EMPTY" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const signin = async (req, res) => {
   if (!req.body.email || !req.body.password) {
     res.status(301).json({ sucess: false, message: "Invalid email/password" });
@@ -232,6 +252,9 @@ const signin = async (req, res) => {
           })
         );
       } else {
+        // don't send password to client
+        user.password = undefined;
+
         res.status(200).json(
           JSON.stringify({
             sucess: true,
@@ -484,6 +507,7 @@ const questionAnswer = async (req, res) => {
 
 const responseUpdate = (req, res) => {
   const { email, response, answer } = req.body;
+  console.log("def");
 
   if (!email || !response || !answer) {
     res.status(200).json(JSON.stringify({ sucess: false }));
@@ -623,6 +647,7 @@ module.exports = {
   signup,
   signin,
   otpverify,
+  signupPassword,
   logout,
   usernamecheck,
   questions,
