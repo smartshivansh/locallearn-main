@@ -1,6 +1,33 @@
 import classes from "./SendBubble.module.css";
 
+import React, { useEffect } from "react";
+
 const SendBubble = (props) => {
+  useEffect(() => {
+    if (props.content.length <= 10) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      fetch("http://localhost:5000/quesans", {
+        method: "POST",
+        body: JSON.stringify({
+          email: "8319007235",
+          data: props.content,
+          type: "question",
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json)
+        .then((res) => JSON.parse(res));
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <div>
       {props.children}
@@ -9,4 +36,4 @@ const SendBubble = (props) => {
   );
 };
 
-export default SendBubble;
+export default React.memo(SendBubble);

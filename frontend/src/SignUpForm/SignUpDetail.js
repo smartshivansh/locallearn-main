@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { validate } from "email-validator";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { passwordStrength } from "check-password-strength";
 
 import classes from "./SignupDetail.module.css";
 
@@ -10,6 +12,8 @@ import { userDataUpdate } from "../Redux/Store";
 import { authStatusLogin } from "../Redux/Store";
 
 import logo from "../images/logoblack.svg";
+import showeye from "../images/eye.svg";
+import hideeye from "../images/eyekati.svg";
 
 const SignUpDetail = () => {
   const {
@@ -20,26 +24,113 @@ const SignUpDetail = () => {
   } = useForm();
 
   const [usernameError, setUsernameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [usernameInputColor, setUsernameInputColor] = useState(null);
+  const [showpassword, setShowPassword] = useState(false);
+  const [eye, setEye] = useState(hideeye);
+  const [passwordType, setPasswordType] = useState("password");
 
-  const [signup, setSignup] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [emailInputColor, setEmailInputColor] = useState(null);
+
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordInputColor, setPasswordInputColor] = useState(null);
+
+  const [passStrengthColor, setPassStrengthColor] = useState("red");
 
   const [loading, setLoading] = useState(false);
 
-  const password = watch("confirmPassword");
-  const username = watch("username");
+  const cpassword = watch("confirmPassword");
+  const password = watch("password");
+  const emails = watch("email");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (
+      passwordStrength(password).value === "Too weak" ||
+      passwordStrength(password).value === "Weak"
+    ) {
+      setPassStrengthColor("red");
+    } else if (passwordStrength(password).value === "Medium") {
+      setPassStrengthColor("#ffa500");
+    } else {
+      setPassStrengthColor("green");
+    }
+  }, [password]);
+
+  const showPasswordHandler = () => {
+    if (!showpassword) {
+      setEye(showeye);
+      setPasswordType("text");
+      setShowPassword((p) => !p);
+    } else {
+      setEye(hideeye);
+      setPasswordType("password");
+      setShowPassword((p) => !p);
+    }
+  };
+
+  const emailValidator = (email) => {
+    if (validate(email)) {
+      console.log("rferfg");
+      setEmailInputColor(null);
+      setEmailError(null);
+      return true;
+    } else {
+      if (isNaN(email)) {
+        setEmailInputColor("red");
+        setEmailError("Invalid email Address");
+        return false;
+      }
+      if (email.length !== 10) {
+        setEmailInputColor("red");
+        setEmailError("Phone number must have 10 digit");
+        return false;
+      } else {
+        setEmailInputColor(null);
+        setEmailError(null);
+        return true;
+      }
+    }
+  };
+
+  const emailBlurHandler = (e) => {
+    emailValidator(e.target.value);
+  };
+
+  const passwordValidator = (password, cpassword) => {
+    setPasswordInputColor(null);
+    setPasswordError("");
+    if (password.length < 10) {
+      setPasswordInputColor("red");
+      setPasswordError("Password must contain 10 digits");
+      return false;
+    } else if (password !== cpassword) {
+      setPasswordInputColor("red");
+      setPasswordError("Password Mismatch");
+      return false;
+    }
+    return true;
+  };
+
+  const passwordBlurHandler = (e) => {
+    passwordValidator(password, cpassword);
+  };
+
+  const usernameValidator = () => {
+    console.log("frefc");
+  };
 
   async function formSubmitHandler(data) {
     setEmailError("");
     setUsernameError("");
     setPasswordError("");
 
-    if (data.confirmPassword !== data.password) {
-      setPasswordError("password mismatch");
+    if (
+      !emailValidator(data.email) ||
+      !passwordValidator(data.password, data.confirmPassword)
+    ) {
       return;
     }
     if (!data.agree) {
@@ -94,7 +185,6 @@ const SignUpDetail = () => {
                 localStorage.setItem("email", email);
                 dispatch(authStatusLogin({ token: result.token }));
                 dispatch(userDataUpdate({ email, username, name }));
-                setSignup(true);
                 setLoading(false);
                 navigate("/app/otplogin");
               } else {
@@ -105,28 +195,6 @@ const SignUpDetail = () => {
         }
       });
   }
-
-  // const usernameBlurHandler = () => {
-  //   try {
-  //     fetch(`http://localhost:5000/${username}`)
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then((data) => {
-  //         console.log(data);
-  //         if (!data) {
-  //           setUsernameBorder("2px solid red");
-  //           alert("username already taken");
-  //         }
-  //       });
-  //   } catch (e) {
-  //     console.log(e, "error");
-  //   }
-  // };
-
-  // const usernameFocusHandler = () => {
-  //   setUsernameBorder("1px solid #c4c4c4");
-  // };
 
   return (
     <div className={classes.mainContainer}>
@@ -144,6 +212,8 @@ const SignUpDetail = () => {
           <input
             className={classes.input}
             placeholder="Enter your email/phone"
+            style={{ borderColor: emailInputColor }}
+            onBlurCapture={emailBlurHandler}
             type="text"
             autoComplete="off"
             {...register("email", {
@@ -174,6 +244,7 @@ const SignUpDetail = () => {
           <input
             className={classes.input}
             placeholder="Username"
+            style={{ borderColor: usernameInputColor }}
             type="text"
             autoComplete="off"
             {...register("username", {
@@ -184,42 +255,77 @@ const SignUpDetail = () => {
           <p className={classes.errorMsg}>
             {errors.username?.message} {usernameError}
           </p>
-          {/* <div className={classes.password}> */}
-          <input
-            className={classes.input}
-            // id={classes.password}
-            placeholder="Password"
-            type="password"
-            autoComplete="off"
-            {...register("password", {
-              minLength: {
-                value: 8,
-                message: "minimum 8 charactes required",
-              },
-              required: "this field is mandatory",
-            })}
-          />
-          {/* <p>{`Password Strength: ${passwordStrength}`}</p> */}
-          <p className={classes.errorMsg}>{errors.password?.message}</p>
-          {/* </div> */}
 
-          <input
-            className={classes.input}
-            placeholder="Confirm password"
-            type="password"
-            autoComplete="off"
-            {...register("confirmPassword", {
-              minLength: {
-                value: 8,
-                message: "minimum 8 charactes required",
-              },
-              required: "this field is mandatory",
-              validate: (value) => value === password,
-            })}
-            onFocus={() => {
-              setPasswordError("");
-            }}
-          />
+          {/* //password */}
+
+          <div className={classes.passwordBox}>
+            <div className={classes.passwordInputBox}>
+              <input
+                style={{ borderColor: passwordInputColor }}
+                className={classes.passwordInput}
+                placeholder="Password"
+                type={passwordType}
+                autoComplete="off"
+                {...register("password", {
+                  minLength: {
+                    value: 8,
+                    message: "minimum 10 charactes required",
+                  },
+                  required: "this field is mandatory",
+                })}
+              />
+              <img
+                src={eye}
+                alt="show password"
+                className={classes.passwordImg}
+                onClick={showPasswordHandler}
+              />
+            </div>
+            <div className={classes.pasStrength}>
+              Password Strength:{" "}
+              <p
+                style={{ color: passStrengthColor }}
+                className={classes.strength}
+              >
+                {passwordStrength(password).value}{" "}
+              </p>
+            </div>
+          </div>
+
+          <p className={classes.errorMsg}>{errors.password?.message}</p>
+
+          {/* confirm passowrd */}
+
+          <div
+            className={classes.passwordInputBox}
+            onBlurCapture={passwordBlurHandler}
+          >
+            <input
+              placeholder="Confirm password"
+              className={classes.passwordInput}
+              style={{ borderColor: passwordInputColor }}
+              type={passwordType}
+              autoComplete="off"
+              {...register("confirmPassword", {
+                minLength: {
+                  value: 8,
+                  message: "minimum 10 charactes required",
+                },
+                required: "this field is mandatory",
+                validate: (value) => value === password,
+              })}
+              onFocus={() => {
+                setPasswordError("");
+              }}
+            />
+            <img
+              src={eye}
+              alt="show password"
+              className={classes.passwordImg}
+              onClick={showPasswordHandler}
+            />
+          </div>
+
           <p className={classes.errorMsg}>
             {errors.confirmPassword?.message}
             {passwordError}
@@ -230,9 +336,34 @@ const SignUpDetail = () => {
               type="checkbox"
               {...register("agree")}
             />
-            <p>
-              By creating an account you are agreeing to our Terms and
-              Conditions and Privacy Policy
+            <p className={classes.declaration}>
+              By creating an account you are agreeing to our{" "}
+              <a
+                href="/toc"
+                className={classes.dlink}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Terms and Conditions
+              </a>{" "}
+              ,
+              <a
+                href="/privacy"
+                className={classes.dlink}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Privacy Policy
+              </a>
+              and{" "}
+              <a
+                href="/ethics"
+                className={classes.dlink}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Ethics
+              </a>
             </p>
           </label>
           <input type="submit" className={classes.submit} />

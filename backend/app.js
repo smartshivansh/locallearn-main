@@ -53,6 +53,30 @@ const corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
 app.use(cors(corsOptionsDelegate));
+app.use("/", require("./routes/users"));
+
+//html pages
+
+app.get("/privacy", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "privacyPolicy.html"));
+});
+app.get("/toc", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "termsOfUse.html"));
+});
+app.get("/ethics", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "Ethics.html"));
+});
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "aboutUs.index.html"));
+});
+app.get("/philosophy", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "ourPhilosophy.html"));
+});
+app.get("/community", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "community.html"));
+});
+
+//react pages
 
 app.get("/app/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
@@ -85,8 +109,6 @@ app.get("/app/forgetotp", (req, res) => {
 app.get("/app/newpass", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
-
-app.use("/", require("./routes/users"));
 
 const server = app.listen(port, () => {
   console.log(`Port is running at http://localhost:${port}`);

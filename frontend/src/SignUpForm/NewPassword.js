@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Spinners from "../Spinner/Spinner";
 import { useForm } from "react-hook-form";
 import NewPasswordSucessScreen from "./NewPasswordSucessScreen";
@@ -6,17 +6,57 @@ import { useSelector } from "react-redux";
 import logo from "../images/logoblack.svg";
 import classes from "./SignupDetail.module.css";
 
+import { passwordStrength } from "check-password-strength";
+
+import showeye from "../images/eye.svg";
+import hideeye from "../images/eyekati.svg";
+
 const NewPassword = () => {
   const [loading, setLoading] = useState(false);
   const [sucess, setSucess] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [showpassword, setShowPassword] = useState(false);
+  const [eye, setEye] = useState(showeye);
+  const [passwordType, setPasswordType] = useState("password");
   const email = useSelector((state) => state.userdata.email);
+
+  const [passwordInputColor, setPasswordInputColor] = useState(null);
+  const [passStrengthColor, setPassStrengthColor] = useState("red");
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
+  const password = watch("password");
+  const cpassword = watch("conpassword");
+
+  const showPasswordHandler = () => {
+    if (!showpassword) {
+      setEye(hideeye);
+      setPasswordType("text");
+      setShowPassword((p) => !p);
+    } else {
+      setEye(showeye);
+      setPasswordType("password");
+      setShowPassword((p) => !p);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      passwordStrength(password).value === "Too weak" ||
+      passwordStrength(password).value === "Weak"
+    ) {
+      setPassStrengthColor("red");
+    } else if (passwordStrength(password).value === "Medium") {
+      setPassStrengthColor("#ffa500");
+    } else {
+      setPassStrengthColor("green");
+    }
+  }, [password]);
 
   if (sucess) {
     return <NewPasswordSucessScreen />;
@@ -57,10 +97,24 @@ const NewPassword = () => {
       });
   };
 
-  function focusHandler() {
+  const passwordValidator = (password, cpassword) => {
+    setPasswordInputColor(null);
     setPasswordError("");
-  }
+    if (password.length < 10) {
+      setPasswordInputColor("red");
+      setPasswordError("Password must contain 10 digits");
+      return false;
+    } else if (password !== cpassword) {
+      setPasswordInputColor("red");
+      setPasswordError("Password Mismatch");
+      return false;
+    }
+    return true;
+  };
 
+  const passwordBlurHandler = (e) => {
+    passwordValidator(password, cpassword);
+  };
   return (
     <div className={classes.mainContainer}>
       {loading && <Spinners />}
@@ -72,41 +126,78 @@ const NewPassword = () => {
           className={classes.form}
           onSubmit={handleSubmit(formSubmitHandler)}
         >
-          <p className={classes.formHeading}>
-            Please login your email/contact No
-          </p>
-          <input
-            placeholder="please enter new password"
-            className={classes.input}
-            type="password"
-            onFocus={focusHandler}
-            autoComplete="off"
-            {...register("password", {
-              minLength: {
-                value: 1,
-                message: "please enter a valid Value",
-              },
-              required: "this field is mandatory",
-            })}
-          />
-          <p className={classes.errorMsg}>{errors.loginId?.message}</p>
-          <input
-            placeholder="confirm password"
-            className={classes.input}
-            autoComplete="off"
-            onFocus={focusHandler}
-            type="password"
-            {...register("conpassword", {
-              minLength: {
-                value: 1,
-                message: "minimum 8 characters required",
-              },
-              required: "this field is mandatory",
-            })}
-          />
+          <p className={classes.formHeading}>Please enter your new password</p>
+          <div className={classes.passwordBox}>
+            <div className={classes.passwordInputBox}>
+              <input
+                style={{ borderColor: passwordInputColor }}
+                className={classes.passwordInput}
+                placeholder="Password"
+                type={passwordType}
+                autoComplete="off"
+                {...register("password", {
+                  minLength: {
+                    value: 8,
+                    message: "minimum 10 charactes required",
+                  },
+                  required: "this field is mandatory",
+                })}
+              />
+              <img
+                src={eye}
+                alt="show password"
+                className={classes.passwordImg}
+                onClick={showPasswordHandler}
+              />
+            </div>
+            <div className={classes.pasStrength}>
+              Password Strength:{" "}
+              <p
+                style={{ color: passStrengthColor }}
+                className={classes.strength}
+              >
+                {passwordStrength(password).value}{" "}
+              </p>
+            </div>
+          </div>
+
+          <p className={classes.errorMsg}>{errors.password?.message}</p>
+
+          {/* confirm passowrd */}
+
+          <div
+            className={classes.passwordInputBox}
+            onBlurCapture={passwordBlurHandler}
+          >
+            <input
+              placeholder="Confirm password"
+              className={classes.passwordInput}
+              style={{ borderColor: passwordInputColor }}
+              type={passwordType}
+              autoComplete="off"
+              {...register("confirmPassword", {
+                minLength: {
+                  value: 8,
+                  message: "minimum 10 charactes required",
+                },
+                required: "this field is mandatory",
+                validate: (value) => value === password,
+              })}
+              onFocus={() => {
+                setPasswordError("");
+              }}
+            />
+            <img
+              src={eye}
+              alt="show password"
+              className={classes.passwordImg}
+              onClick={showPasswordHandler}
+            />
+          </div>
+
           <p className={classes.errorMsg}>
+            {errors.confirmPassword?.message}
             {passwordError}
-            {errors.loginId?.message}
           </p>
 
           <input
