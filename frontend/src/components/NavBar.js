@@ -102,8 +102,8 @@ const Navbar = (props) => {
   };
 
   const logoutHandler = () => {
-    localStorage.clear();
-    return navigate("/app/signup");
+    // localStorage.clear();
+    return navigate("/");
   };
 
   return (

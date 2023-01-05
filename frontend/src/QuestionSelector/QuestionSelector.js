@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 import classes from "./QuestionSelector.module.css";
-import TypeInput from "./TypeInInput";
+
+import xIcon from "../images/xblack.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { locationUpdate, professionUpdate } from "../Redux/Store";
@@ -46,6 +47,11 @@ function QuestionSelector(props) {
     }
   };
 
+  const typeInputHandler = () => {
+    setSelectDisplay("block");
+    setTypeDisplay("none");
+  };
+
   return (
     <form
       className={classes.form}
@@ -59,20 +65,27 @@ function QuestionSelector(props) {
           className={classes.select}
           onChange={selectorHandler}
           value={answer}
-          style={{ display: `${selectDisplay}`, padding: "1% 3%" }}
+          style={{ display: `${selectDisplay}` }}
         >
           {props.options.map((option) => (
             <option key={option}>{option}</option>
           ))}
         </select>
-        <input
-          className={classes.select}
-          style={{ display: `${typeDisplay}`, padding: "1% 3%" }}
-          onChange={selectorHandler}
-          value={answer}
-          placeholder="Profession"
-          autoFocus
-        />
+        <div className={classes.select} style={{ display: `${typeDisplay}` }}>
+          <input
+            onChange={selectorHandler}
+            value={answer}
+            placeholder="Profession"
+            className={classes.input}
+            autoFocus
+          />
+          <img
+            className={classes.cancelIcon}
+            src={xIcon}
+            alt="cancel"
+            onClick={typeInputHandler}
+          />
+        </div>
       </div>
       <input type="submit" className={classes.submit} />
     </form>

@@ -23,6 +23,8 @@ import ForgetPasswordOtp from "./SignUpForm/FogetPasswordOtp";
 import NewPassword from "./SignUpForm/NewPassword";
 import SignInSuccessfull from "./SignUpForm/SignInSuccessfull";
 
+import NewPasswordSucessScreen from "./SignUpForm/NewPasswordSucessScreen";
+
 import Protected from "./Protected";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -80,12 +82,10 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/app/termsofuse" element={<TermsOfUse />} />
-          <Route exact path="/app/test" element={<SignInSuccessfull />} />
-          <Route exact path="/app/test" element={<ForgetPasswordOtp />} />
+          <Route exact path="/app/test" element={<ChatUI />} />
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />
           <Route exact path="/app/coc" element={<CoC />} />
-
           <Route
             path="/app/chat"
             element={
@@ -94,7 +94,6 @@ function App() {
               </Protected>
             }
           />
-
           <Route path="/app/chat" element={<ChatUI />} />
           <Route exact path="/app/signup" element={<SignupDetail />} />
           <Route exact path="/app" element={<SignupDetail />} />

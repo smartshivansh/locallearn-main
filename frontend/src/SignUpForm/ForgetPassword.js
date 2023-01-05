@@ -4,6 +4,7 @@ import Spinners from "../Spinner/Spinner";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { userDataUpdate } from "../Redux/Store";
+import { validate } from "email-validator";
 
 import logo from "../images/logoblack.svg";
 
@@ -11,6 +12,8 @@ import { useNavigate } from "react-router";
 
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [emailInputColor, setEmailInputColor] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,6 +27,33 @@ const ForgetPassword = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const emailValidator = (email) => {
+    if (validate(email)) {
+      setEmailInputColor(null);
+      setEmailError(null);
+      return true;
+    } else {
+      if (isNaN(email)) {
+        setEmailInputColor("red");
+        setEmailError("Invalid email Address");
+        return false;
+      }
+      if (email.length !== 10) {
+        setEmailInputColor("red");
+        setEmailError("Phone number must have 10 digit");
+        return false;
+      } else {
+        setEmailInputColor(null);
+        setEmailError(null);
+        return true;
+      }
+    }
+  };
+
+  const emailBlurHandler = (e) => {
+    emailValidator(e.target.value);
+  };
 
   const formSubmitHandler = (datas) => {
     setLoading(true);
@@ -74,6 +104,8 @@ const ForgetPassword = () => {
           <input
             placeholder="Enter your email/phone"
             className={classes.input}
+            style={{ borderColor: emailInputColor }}
+            onBlurCapture={emailBlurHandler}
             autoComplete="off"
             {...register("email", {
               minLength: {
@@ -83,7 +115,9 @@ const ForgetPassword = () => {
               required: "this field is mandatory",
             })}
           />
-          <p className={classes.errorMsg}>{errors.loginId?.message}</p>
+          <p className={classes.errorMsg}>
+            {errors.loginId?.message} {emailError}
+          </p>
 
           <input
             type="submit"

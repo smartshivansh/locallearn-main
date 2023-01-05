@@ -149,6 +149,7 @@ const ChatUI = (props) => {
       socket.disconnect();
     };
   }, [appendMsg]);
+
   const handleQuickReplyClick = (item) => {
     send.play();
     appendMsg({
@@ -218,7 +219,6 @@ const ChatUI = (props) => {
     const { type, content, user } = msg;
     switch (type) {
       case "text":
-        msgdata.question = content.text;
         return (
           <>
             <Avatar
@@ -232,8 +232,6 @@ const ChatUI = (props) => {
         break;
 
       case "qr":
-        msgdata.answer = content.text;
-        // questionAnswer();
         return (
           <>
             <Avatar
@@ -346,29 +344,29 @@ const ChatUI = (props) => {
     }
   }, [referenceForMessageBox]);
 
-  useEffect(() => {
-    const timer = setTimeout(async () => {
-      if (msgdata.question === "" || msgdata.answer === "" || !email) {
-        return;
-      }
+  // useEffect(() => {
+  //   const timer = setTimeout(async () => {
+  //     if (msgdata.question === "" || msgdata.answer === "" || !email) {
+  //       return;
+  //     }
 
-      await fetch("https://locallearn.in/quesans", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ email, msgdata }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
-      // msgdata.question = "";
-      // msgdata.answer = "";
-    }, 1000);
+  //     await fetch("https://locallearn.in/quesans", {
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //       body: JSON.stringify({ email, msgdata }),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => console.log(data));
+  //     // msgdata.question = "";
+  //     // msgdata.answer = "";
+  //   }, 1000);
 
-    // return () => {
-    //   clearTimeout(timer);
-    // };
-  }, [msgdata.answer]);
+  //   // return () => {
+  //   //   clearTimeout(timer);
+  //   // };
+  // }, [msgdata.answer]);
 
   // async function chatSaver(msgdata) {
   //   if (msgdata.question === "" || msgdata.answer === "" || !email) {

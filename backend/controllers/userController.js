@@ -460,45 +460,58 @@ const finduser = async (req, res) => {
   });
 };
 
-const questionAnswer = (req, res) => {
-  const { email } = req.body;
-  const { msgdata } = req.body;
+const questionAnswer = async (req, res) => {
+  const { email, data, type } = req.body;
 
-  if (!email || !msgdata) {
-    res.json(JSON.stringify({ sucess: false }));
-    return;
+  if (!email || !data || !type) {
+    return res.status(200).json(JSON.stringify({ sucess: false }));
   }
   const user = Chat.findOne({ email }, function (err, user) {
     if (err) {
       res.status(200).json(JSON.stringify({ sucess: false }));
     } else {
-      const question = [...user.questions, msgdata.question];
-      const answer = [...user.answers, msgdata.answer.trim()];
-      const responses = [...user.responses, "no response"];
-      Chat.findOneAndUpdate(
-        { email },
-        {
-          questions: question,
-          answers: answer,
-          responses: responses,
-        },
-        function (err, result) {
-          if (err) {
-            res.status(200).json(JSON.stringify({ sucess: false }));
-          } else {
-            res.status(200).json(JSON.stringify({ sucess: true }));
+      if (type === "question") {
+        const ques = user.questions;
+        Chat.findOneAndUpdate(
+          { email },
+          { questions: [...ques, data] },
+          function (err, result) {
+            if (err) {
+              res.status(200).json(JSON.stringify({ sucess: false }));
+            } else {
+              res.status(200).json(JSON.stringify({ sucess: true }));
+            }
           }
-        }
-      );
+        );
+      } else if (type === "answer") {
+        const ans = user.answers;
+        const resp = user.responses;
+        Chat.findOneAndUpdate(
+          { email },
+          {
+            answers: [...ans, data.trim()],
+            responses: [...resp, "no response"],
+          },
+          function (err, result) {
+            if (err) {
+              res.status(200).json(JSON.stringify({ sucess: false }));
+            } else {
+              res.status(200).json(JSON.stringify({ sucess: true }));
+            }
+          }
+        );
+      }
     }
   });
 };
 
 const responseUpdate = (req, res) => {
   const { email, response, answer } = req.body;
+  console.log("def");
 
   if (!email || !response || !answer) {
     res.status(200).json(JSON.stringify({ sucess: false }));
+
     return;
   }
 
@@ -509,6 +522,7 @@ const responseUpdate = (req, res) => {
     } else {
       const index = user.answers.indexOf(answer.trim());
       if (index === -1) {
+        console.log(answer);
         res.status(200).json(JSON.stringify({ sucess: false }));
         return;
       }

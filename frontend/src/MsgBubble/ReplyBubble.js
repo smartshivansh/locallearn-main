@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import classes from "./ReplyBubble.module.css";
@@ -13,10 +13,6 @@ const ReplyBubble = (props) => {
   const [down, setDown] = useState(false);
   const email = useSelector((state) => state.userdata.email);
 
-  // const clickHandler = () => {
-  //   setShowReactionPanel((prevVal) => !prevVal);
-  // };
-
   function thumbsUpHandler(e) {
     setUp((prevVal) => !prevVal);
     setDown((prevVal) => false);
@@ -27,7 +23,7 @@ const ReplyBubble = (props) => {
       response = "liked";
     }
 
-    fetch("https://locallearn.in/response", {
+    fetch("http://localhost:5000/response", {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -48,7 +44,7 @@ const ReplyBubble = (props) => {
       response = "unliked";
     }
 
-    fetch("https://locallearn.in/response", {
+    fetch("http://localhost:5000/response", {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -58,6 +54,31 @@ const ReplyBubble = (props) => {
       .then((res) => res.json())
       .then((data) => console.log(data));
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (props.content === "Hi there! How are you?") {
+        return;
+      }
+      fetch("http://localhost:5000/quesans", {
+        method: "POST",
+        body: JSON.stringify({
+          email: "8319007235",
+          data: props.content,
+          type: "answer",
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json)
+        .then((res) => JSON.parse(res));
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className={classes.container}>

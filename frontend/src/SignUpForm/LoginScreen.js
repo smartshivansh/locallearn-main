@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { validate } from "email-validator";
 import {
   userDataUpdate,
   locationUpdate,
@@ -28,7 +29,36 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const [sucess, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [emailInputColor, setEmailInputColor] = useState(null);
   const dispatch = useDispatch();
+
+  const emailValidator = (email) => {
+    if (validate(email)) {
+      setEmailInputColor(null);
+      setEmailError(null);
+      return true;
+    } else {
+      if (isNaN(email)) {
+        setEmailInputColor("red");
+        setEmailError("Invalid email Address");
+        return false;
+      }
+      if (email.length !== 10) {
+        setEmailInputColor("red");
+        setEmailError("Phone number must have 10 digit");
+        return false;
+      } else {
+        setEmailInputColor(null);
+        setEmailError(null);
+        return true;
+      }
+    }
+  };
+
+  const emailBlurHandler = (e) => {
+    emailValidator(e.target.value);
+  };
 
   async function formSubmitHandler(datas) {
     const { loginId, password } = datas;
@@ -89,6 +119,8 @@ const LoginScreen = () => {
             placeholder="Enter your email/phone"
             className={classes.input}
             autoComplete="off"
+            style={{ borderColor: emailInputColor }}
+            onBlurCapture={emailBlurHandler}
             {...register("loginId", {
               minLength: {
                 value: 1,
@@ -97,7 +129,9 @@ const LoginScreen = () => {
               required: "this field is mandatory",
             })}
           />
-          <p className={classes.errorMsg}>{errors.loginId?.message}</p>
+          <p className={classes.errorMsg}>
+            {errors.loginId?.message} {emailError}
+          </p>
           <input
             type="password"
             placeholder="Enter password"
