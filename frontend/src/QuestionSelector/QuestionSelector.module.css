@@ -60,6 +60,10 @@
   border: none;
 }
 
+.input:focus {
+  outline: none;
+}
+
 .cancelIcon {
   width: 10%;
   height: 50%;

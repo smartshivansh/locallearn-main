@@ -7,8 +7,7 @@ import Chat, {
   ListItem,
 } from "@chatui/core";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { Navigate } from "react-router";
+import getUrls from "get-urls";
 import "@chatui/core/dist/index.css";
 import io from "socket.io-client";
 import Tenor from "./Tenor";
@@ -17,6 +16,7 @@ import ReplyBubble from "../MsgBubble/ReplyBubble";
 import SendBubble from "../MsgBubble/SendBubble";
 import FormBubble from "../MsgBubble/FormBubble";
 import NavBar from "./NavBar";
+import LinkBubble from "../MsgBubble/LinkBubble";
 
 import classes from "./Chat.module.css";
 import Avatars from "./Avatar.module.css";
@@ -99,7 +99,7 @@ const defaultQuickReplies = [
 const ChatUI = (props) => {
   const { messages, appendMsg, setTyping } = useMessages(initialMessages);
   const [connected, setConnected] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+
   const [myplaceholder, setMyplaceholder] = useState("Go on, ask me something");
   const referenceForMessageBox = useRef();
   const chatUiRef = useRef();
@@ -107,10 +107,6 @@ const ChatUI = (props) => {
 
   const send = new Audio(sendSound);
   const receive = new Audio(receiveSound);
-
-  const navigate = useNavigate();
-
-  const msgdata = { question: "", answer: "" };
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -136,6 +132,19 @@ const ChatUI = (props) => {
     socket.on("broadcast", (data) => {});
     socket.on("send-msg-response", (data) => {
       // console.log("response msg  ----> ", data);
+
+      if (getUrls(data).size > 0) {
+        let url = getUrls(data);
+        url = url.values();
+        url = url.next();
+
+        appendMsg({
+          type: "link",
+          content: { href: url.value, message: data },
+        });
+        return;
+      }
+
       appendMsg({
         type: "qr",
         content: { text: data },
@@ -227,6 +236,19 @@ const ChatUI = (props) => {
               className={Avatars.container}
             />
             <SendBubble content={content.text} />
+          </>
+        );
+        break;
+
+      case "link":
+        return (
+          <>
+            <Avatar
+              src="https://avatars.dicebear.com/api/croodles-neutral/vibhavari.svg"
+              size="md"
+              className={Avatars.container}
+            />
+            <LinkBubble href={content.href} message={content.message} />
           </>
         );
         break;

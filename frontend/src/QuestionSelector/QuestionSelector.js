@@ -77,7 +77,6 @@ function QuestionSelector(props) {
             value={answer}
             placeholder="Profession"
             className={classes.input}
-            autoFocus
           />
           <img
             className={classes.cancelIcon}
