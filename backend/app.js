@@ -8,7 +8,7 @@ var cors = require("cors");
 
 let onlineUsers = [];
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8090;
 
 require("dotenv").config({
   path: path.join(__dirname, ".env"),
