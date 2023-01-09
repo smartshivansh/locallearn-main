@@ -20,6 +20,7 @@ import LinkBubble from "../MsgBubble/LinkBubble";
 
 import classes from "./Chat.module.css";
 import Avatars from "./Avatar.module.css";
+import apis from "../Constants/api";
 
 import sendSound from "./audio/audioSent.mp3";
 import receiveSound from "./audio/receiveMsg.mp3";
@@ -30,15 +31,7 @@ let msg1 = {
   type: "text",
   content: { text: "I would like to learn something new" },
 };
-const initialMessages = [
-  {
-    type: "qr",
-    content: { text: "Hi there! How are you?" },
-    // user: {
-    //   avatar: "https://avatars.dicebear.com/api/croodles-neutral/vibhavari.svg",
-    // },
-  },
-];
+
 // need to be replaced with the sukruti file
 const defaultQuickReplies = [
   {
@@ -97,7 +90,17 @@ const defaultQuickReplies = [
 ];
 
 const ChatUI = (props) => {
+  const email = useSelector((state) => state.userdata.email);
+
+  const [initialMessages, setInitialMessages] = useState([
+    {
+      type: "qr",
+      content: { text: "Hi there! How are you?" },
+    },
+  ]);
+
   const { messages, appendMsg, setTyping } = useMessages(initialMessages);
+  // console.log(initialMessages);
   const [connected, setConnected] = useState(false);
 
   const [myplaceholder, setMyplaceholder] = useState("Go on, ask me something");
@@ -403,8 +406,6 @@ const ChatUI = (props) => {
   //     body: JSON.stringify({ email, msgdata }),
   //   });
   // }
-
-  const email = useSelector((state) => state.userdata.email);
 
   return (
     <div className={classes.container} id={classes.chatbox}>

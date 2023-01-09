@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 import logo from "../images/logoblack.svg";
 import classes from "./SignupDetail.module.css";
+import apis from "../Constants/api";
 
 const SignUp = () => {
   const [otp, setOtp] = useState();
@@ -23,7 +24,7 @@ const SignUp = () => {
     const email = localStorage.getItem("email");
     const data = JSON.stringify({ otp, email });
     setLoading(true);
-    fetch("https://locallearn.in/otpverify", {
+    fetch(`${apis.otpverify}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -56,7 +57,7 @@ const SignUp = () => {
 
   const resendOtpHandler = () => {
     setLoading(true);
-    fetch("https://locallearn.in/resendotp", {
+    fetch(`${apis.resendotp}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

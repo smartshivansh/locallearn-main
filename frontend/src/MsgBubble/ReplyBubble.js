@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import apis from "../Constants/api";
 
 import classes from "./ReplyBubble.module.css";
 
@@ -23,7 +24,7 @@ const ReplyBubble = (props) => {
       response = "liked";
     }
 
-    fetch("http://doornextshop.com/response", {
+    fetch(`${apis.response}`, {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -44,7 +45,7 @@ const ReplyBubble = (props) => {
       response = "unliked";
     }
 
-    fetch("http://doornextshop.com/response", {
+    fetch(`${apis.response}`, {
       method: "POST",
       body: JSON.stringify({ email, answer: props.content, response }),
       headers: {
@@ -60,12 +61,14 @@ const ReplyBubble = (props) => {
       if (props.content === "Hi there! How are you?") {
         return;
       }
-      fetch("http://doornextshop.com/quesans", {
+      fetch(`${apis.quesans}`, {
         method: "POST",
         body: JSON.stringify({
-          email: "8319007235",
-          data: props.content,
-          type: "answer",
+          email: email,
+          data: {
+            content: props.content,
+            type: "qa",
+          },
         }),
         headers: {
           "content-type": "application/json",
@@ -79,6 +82,7 @@ const ReplyBubble = (props) => {
       clearTimeout(timer);
     };
   }, []);
+  console.log("fcerferf");
 
   return (
     <div className={classes.container}>

@@ -8,6 +8,7 @@ import Spinners from "../Spinner/Spinner";
 import classes from "./SignupDetail.module.css";
 
 import logo from "../images/logoblack.svg";
+import apis from "../Constants/api";
 
 const ForgetPasswordOtp = () => {
   const [otp, setOtp] = useState();
@@ -22,7 +23,7 @@ const ForgetPasswordOtp = () => {
 
     const data = JSON.stringify({ otp, email });
     setLoading(true);
-    fetch("https://locallearn.in/otpverify", {
+    fetch(`${apis.otpverify}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -49,7 +50,7 @@ const ForgetPasswordOtp = () => {
 
   const resendOtpHandler = () => {
     setLoading(true);
-    fetch("https://locallearn.in/resendotp", {
+    fetch(`${apis.resendotp}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -81,7 +82,7 @@ const ForgetPasswordOtp = () => {
             disabled={false}
             className={classes.otpInput}
           />
-          <p className={classes.error}>{content}</p>
+          <p className={classes.errorMsg}>{content}</p>
           <button className={classes.submit}>Let's get started</button>
           <div className={classes.link} onClick={resendOtpHandler}>
             Resend otp

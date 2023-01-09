@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { userDataUpdate } from "../Redux/Store";
 import { validate } from "email-validator";
+import apis from "../Constants/api";
 
 import logo from "../images/logoblack.svg";
 
@@ -60,7 +61,7 @@ const ForgetPassword = () => {
 
     const { email } = datas;
 
-    fetch("https://locallearn.in/forget-password", {
+    fetch(`${apis.forgetPassword}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

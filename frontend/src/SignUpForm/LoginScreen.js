@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validate } from "email-validator";
 import {
   userDataUpdate,
@@ -17,6 +17,7 @@ import logo from "../images/logoblack.svg";
 import { useForm } from "react-hook-form";
 import PreChatScreen from "./PreChatScreen";
 import Spinners from "../Spinner/Spinner";
+import apis from "../Constants/api";
 
 const LoginScreen = () => {
   const {
@@ -64,7 +65,7 @@ const LoginScreen = () => {
     const { loginId, password } = datas;
 
     setLoading(true);
-    await fetch("https://locallearn.in/signin", {
+    await fetch(`${apis.signin}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

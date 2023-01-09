@@ -7,6 +7,7 @@ import classes from "./QuestionPanel.module.css";
 
 import Chips from "./Chips";
 import FixedOptions from "./FixedOptions";
+import apis from "../Constants/api";
 
 const QuestionPanel = (props) => {
   const [value, setValue] = useState(0);
@@ -40,7 +41,7 @@ const QuestionPanel = (props) => {
     });
 
     try {
-      fetch("https://locallearn.in/questions", {
+      fetch(`${apis.questions}`, {
         method: "POST",
         body: data,
         headers: {

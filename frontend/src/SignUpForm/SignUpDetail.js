@@ -14,6 +14,7 @@ import { authStatusLogin } from "../Redux/Store";
 import logo from "../images/logoblack.svg";
 import showeye from "../images/eye.svg";
 import hideeye from "../images/eyekati.svg";
+import apis from "../Constants/api";
 
 const SignUpDetail = () => {
   const {
@@ -150,7 +151,7 @@ const SignUpDetail = () => {
     //http://doornextshop.com
     setLoading(true);
     dispatch(userDataUpdate({ email, username, name }));
-    await fetch("https://locallearn.in/usernamecheck", {
+    await fetch(`${apis.usernamecheck}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -165,7 +166,7 @@ const SignUpDetail = () => {
           setLoading(false);
           return;
         } else {
-          fetch("https://locallearn.in/signup", {
+          fetch(`${apis.signup}`, {
             method: "POST",
             headers: {
               "content-type": "application/json",

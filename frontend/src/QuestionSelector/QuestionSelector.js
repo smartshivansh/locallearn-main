@@ -6,6 +6,7 @@ import xIcon from "../images/xblack.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { locationUpdate, professionUpdate } from "../Redux/Store";
+import apis from "../Constants/api";
 
 function QuestionSelector(props) {
   const [transform, setTransform] = useState(0);
@@ -26,7 +27,7 @@ function QuestionSelector(props) {
     }
     setTransform((prevVal) => prevVal - 110);
 
-    fetch("https://locallearn.in/userdata", {
+    fetch(`${apis.userdata}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

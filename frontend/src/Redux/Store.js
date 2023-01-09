@@ -60,11 +60,31 @@ const userDataSlice = createSlice({
   },
 });
 
+const chatSlice = createSlice({
+  name: "chat",
+  initialState: {
+    chat: [
+      // {
+      //   type: "qr",
+      //   content: { text: "Hi there! How are you?" },
+      // },
+    ],
+  },
+  reducers: {
+    chatUpdate(state, action) {
+      console.log(action.payload.chat);
+      state.chat = [...state.chat, ...action.payload.chat];
+      console.log(state.chat);
+    },
+  },
+});
+
 const Store = configureStore({
   reducer: {
     skill: skillSlice.reducer,
     userdata: userDataSlice.reducer,
     authstatus: authSlice.reducer,
+    chat: chatSlice.reducer,
   },
 });
 
@@ -79,5 +99,7 @@ export const { userDataUpdate, locationUpdate, professionUpdate } =
   userDataSlice.actions;
 
 export const { authStatusLogin, authStatusLogout } = authSlice.actions;
+
+export const { chatUpdate } = chatSlice.actions;
 
 export default Store;

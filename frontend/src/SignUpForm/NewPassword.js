@@ -10,6 +10,7 @@ import { passwordStrength } from "check-password-strength";
 
 import showeye from "../images/eye.svg";
 import hideeye from "../images/eyekati.svg";
+import apis from "../Constants/api";
 
 const NewPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -77,7 +78,7 @@ const NewPassword = () => {
       return;
     }
 
-    fetch("https://locallearn.in/newpassword", {
+    fetch(`${apis.newpassword}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

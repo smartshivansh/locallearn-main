@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { locationUpdate, professionUpdate } from "../Redux/Store";
 
 import classes from "./QuestionSelector.module.css";
+import apis from "../Constants/api";
 
 const TypeInput = (props) => {
   const [transform, setTransform] = useState(0);
@@ -26,7 +27,7 @@ const TypeInput = (props) => {
       data = { type: "location", email, data: value };
     }
 
-    fetch("https://locallearn.in/userdata", {
+    fetch(`${apis.userdata}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

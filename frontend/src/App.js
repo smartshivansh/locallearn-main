@@ -36,7 +36,10 @@ import {
   professionUpdate,
   addGoodSkill,
   addLearnSkill,
+  chatUpdate,
 } from "./Redux/Store";
+
+import apis from "./Constants/api";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,7 +48,7 @@ function App() {
   const email = localStorage.getItem("email");
 
   if (token || email) {
-    fetch("https://locallearn.in/finduser", {
+    fetch(`${apis.finduser}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -72,6 +75,20 @@ function App() {
         dispatch(professionUpdate({ profession: data.profession }));
         dispatch(addGoodSkill({ goodskills: data.goodSkills }));
         dispatch(addLearnSkill({ learnskills: data.learnSkills }));
+      });
+
+    fetch(`${apis.getChat}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((res) => res.json())
+      .then((res) => JSON.parse(res))
+      .then((res) => {
+        console.log(res.data);
+        dispatch(chatUpdate({ chat: res.data }));
       });
   } else {
     dispatch(authStatusLogout());

@@ -1,19 +1,25 @@
 import classes from "./SendBubble.module.css";
+import { useSelector } from "react-redux";
 
 import React, { useEffect } from "react";
+import apis from "../Constants/api";
 
 const SendBubble = (props) => {
+  const email = useSelector((state) => state.userdata.email);
+
   useEffect(() => {
-    if (props.content.length <= 10) {
-      return;
-    }
     const timer = setTimeout(() => {
-      fetch("http://doornextshop.com/quesans", {
+      if (props.content === "Hi there! How are you?") {
+        return;
+      }
+      fetch(`${apis.quesans}`, {
         method: "POST",
         body: JSON.stringify({
-          email: "8319007235",
-          data: props.content,
-          type: "question",
+          email: email,
+          data: {
+            content: props.content,
+            type: "text",
+          },
         }),
         headers: {
           "content-type": "application/json",
