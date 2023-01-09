@@ -87,7 +87,6 @@ function App() {
       .then((res) => res.json())
       .then((res) => JSON.parse(res))
       .then((res) => {
-        console.log(res.data);
         dispatch(chatUpdate({ chat: res.data }));
       });
   } else {

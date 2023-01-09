@@ -12,6 +12,7 @@ import { ReactComponent as DownVoid } from "../images/thumbsdownvoid.svg";
 const ReplyBubble = (props) => {
   const [up, setUp] = useState(false);
   const [down, setDown] = useState(false);
+  const [index, setIndex] = useState(0);
   const email = useSelector((state) => state.userdata.email);
 
   function thumbsUpHandler(e) {
@@ -24,15 +25,15 @@ const ReplyBubble = (props) => {
       response = "liked";
     }
 
+    const timer = setTimeout(() => {}, 500);
+
     fetch(`${apis.response}`, {
       method: "POST",
-      body: JSON.stringify({ email, answer: props.content, response }),
+      body: JSON.stringify({ email, index, response }),
       headers: {
         "content-type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    });
   }
 
   function thumbsDownHandler() {
@@ -47,13 +48,11 @@ const ReplyBubble = (props) => {
 
     fetch(`${apis.response}`, {
       method: "POST",
-      body: JSON.stringify({ email, answer: props.content, response }),
+      body: JSON.stringify({ email, index, response }),
       headers: {
         "content-type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    }).then((res) => res.json());
   }
 
   useEffect(() => {
@@ -68,21 +67,26 @@ const ReplyBubble = (props) => {
           data: {
             content: props.content,
             type: "qa",
+            response: "no response",
           },
         }),
         headers: {
           "content-type": "application/json",
         },
       })
-        .then((res) => res.json)
-        .then((res) => JSON.parse(res));
+        .then((res) => res.json())
+        .then((res) => JSON.parse(res))
+        .then((res) => {
+          if (res.sucess) {
+            setIndex(res.index);
+          }
+        });
     }, 500);
 
     return () => {
       clearTimeout(timer);
     };
   }, []);
-  console.log("fcerferf");
 
   return (
     <div className={classes.container}>

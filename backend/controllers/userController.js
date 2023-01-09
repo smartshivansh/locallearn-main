@@ -189,27 +189,18 @@ const questions = async (req, res) => {
 
 //otpverify
 const otpverify = async (req, res) => {
-  if (!req.body.email) {
-    res.json({ msg: "EMAIL_EMPTY" });
-    return;
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.json({ msg: "EMAIL_EMPTY" });
   }
-  Users.findOneAndUpdate(
-    { email: req.body.email, otp: req.body.otp },
-    { verified: true, updated_at: Date.now() },
-    (err, result) => {
-      if (err) {
-        throw err;
-      }
-      // console.log(result);
-      if (result == null) {
-        res.status(200).json(JSON.stringify({ msg: "OTP_UNMATCHED" }));
-      } else {
-        res.status(200).json(JSON.stringify({ msg: "OTP_MATCHED" }));
-        //Next Step is to set password. But that all wiil go to Users Collection.
-        //The signup collection is only for doing the OTP/Verification purpose.
-      }
+
+  Users.findOne({ email }, function (err, user) {
+    if (user.otp == otp) {
+      return res.status(200).json(JSON.stringify({ msg: "OTP_MATCHED" }));
     }
-  );
+    return res.status(200).json(JSON.stringify({ msg: "OTP_NOT_MATCHED" }));
+  });
 };
 
 const signupPassword = async (req, res) => {
@@ -482,16 +473,19 @@ const questionAnswer = async (req, res) => {
   }
   const user = Chat.findOne({ email }, function (err, user) {
     if (err) {
-      res.status(200).json(JSON.stringify({ sucess: false }));
+      return res.status(200).json(JSON.stringify({ sucess: false }));
     } else {
+      const size = user.chat.length;
       Chat.findOneAndUpdate(
         { email },
         { chat: [...user.chat, data] },
         function (err, result) {
           if (err) {
-            res.status(200).json(JSON.stringify({ sucess: false }));
+            return res.status(200).json(JSON.stringify({ sucess: false }));
           } else {
-            res.status(200).json(JSON.stringify({ sucess: true }));
+            return res
+              .status(200)
+              .json(JSON.stringify({ sucess: true, index: size }));
           }
         }
       );
@@ -500,41 +494,26 @@ const questionAnswer = async (req, res) => {
 };
 
 const responseUpdate = (req, res) => {
-  const { email, response, answer } = req.body;
-  console.log("def");
+  const { email, response, index } = req.body;
+  console.log(index);
 
-  if (!email || !response || !answer) {
-    res.status(200).json(JSON.stringify({ sucess: false }));
-
-    return;
+  if (!email || !response || !index) {
+    return res.status(200).json(JSON.stringify({ sucess: false }));
   }
 
   Chat.findOne({ email }, function (err, user) {
     if (err) {
-      res.status(200).json(JSON.stringify({ sucess: false }));
-      return;
+      return res.status(200).json(JSON.stringify({ sucess: false }));
     } else {
-      const index = user.answers.indexOf(answer.trim());
-      if (index === -1) {
-        console.log(answer);
-        res.status(200).json(JSON.stringify({ sucess: false }));
-        return;
-      }
-      let responses = user.responses;
-      responses[index] = response;
-      Chat.findOneAndUpdate(
-        { email },
-        { responses: responses },
-        function (err, result) {
-          if (err) {
-            res.status(200).json(JSON.stringify({ sucess: false }));
-            return;
-          } else {
-            res.status(200).json(JSON.stringify({ sucess: true }));
-            return;
-          }
+      const chat = [...user.chat];
+      console.log(index);
+      chat[index].response = response;
+      Chat.findByIdAndUpdate(user.id, { chat: chat }, function (err, user) {
+        if (err) {
+          return res.status(200).json(JSON.stringify({ sucess: false }));
         }
-      );
+        return res.status(200).json(JSON.stringify({ sucess: true }));
+      });
     }
   });
 };
@@ -561,9 +540,6 @@ const forgetPassword = (req, res) => {
           { otp: otp },
           (err, res) => {}
         );
-        return res
-          .status(200)
-          .json(JSON.stringify({ sucess: true, msg: "otp send" }));
       }
     })
     .catch((err) => {

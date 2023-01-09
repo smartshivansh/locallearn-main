@@ -17,7 +17,7 @@ const NewPassword = () => {
   const [sucess, setSucess] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [showpassword, setShowPassword] = useState(false);
-  const [eye, setEye] = useState(showeye);
+  const [eye, setEye] = useState(hideeye);
   const [passwordType, setPasswordType] = useState("password");
   const email = useSelector((state) => state.userdata.email);
 
@@ -32,7 +32,7 @@ const NewPassword = () => {
   } = useForm();
 
   const password = watch("password");
-  const cpassword = watch("conpassword");
+  const cpassword = watch("cPassword");
 
   const showPasswordHandler = () => {
     if (!showpassword) {
@@ -66,13 +66,13 @@ const NewPassword = () => {
   const formSubmitHandler = (datas) => {
     setLoading(true);
 
-    const { password, conpassword } = datas;
+    // const { password, cpassword } = datas;
     if (password.length < 8) {
       setLoading(false);
       setPasswordError("minimum 8 characters required");
       return;
     }
-    if (password !== conpassword) {
+    if (password !== cpassword) {
       setPasswordError("password mismatch");
       setLoading(false);
       return;

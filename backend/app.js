@@ -23,9 +23,8 @@ const allowlist = [
   "http://doornextshop.com",
   "https://doornextshop.com",
   "http://locallearn.in",
-  "http://www.locallearn.in",
-  "https://localhost:3000",
   "http://localhost:3000",
+  "http://www.locallearn.in",
   "https://locallearn.in",
   "https://www.locallearn.in",
 ];
@@ -59,7 +58,7 @@ app.use("/", require("./routes/users"));
 //html pages
 
 app.get("/home", (req, res) => {
-  res.sendFile(path.join(__dirname, "localLearnLive", "index      .html"));
+  res.sendFile(path.join(__dirname, "localLearnLive", "index.html"));
 });
 app.get("/privacy", (req, res) => {
   res.sendFile(path.join(__dirname, "localLearnLive", "privacyPolicy.html"));

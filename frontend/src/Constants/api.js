@@ -1,4 +1,4 @@
-const api = "http://doornextshop.com";
+const api = "http://locallearn.in";
 
 const apis = {
   quesans: `${api}/quesans`,

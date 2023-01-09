@@ -7,11 +7,11 @@ import logo from "../images/logoblack.svg";
 const NewPasswordSucessScreen = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigate("/app/login");
-  //   }, 2100);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/app/login");
+    }, 2100);
+  }, []);
 
   return (
     <div className={classes.mainContainer}>

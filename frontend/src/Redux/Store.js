@@ -72,9 +72,7 @@ const chatSlice = createSlice({
   },
   reducers: {
     chatUpdate(state, action) {
-      console.log(action.payload.chat);
       state.chat = [...state.chat, ...action.payload.chat];
-      console.log(state.chat);
     },
   },
 });
