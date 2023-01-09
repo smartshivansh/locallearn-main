@@ -5,18 +5,11 @@ const ChatSchema = new mongoose.Schema({
     type: String,
     default: "",
     required: true,
-    unique: true,
   },
-  questions: {
+  chat: {
     type: Array,
-    default: [],
+    default: {},
   },
-
-  answers: {
-    type: Array,
-    default: [],
-  },
-
   responses: {
     type: Array,
     default: [],

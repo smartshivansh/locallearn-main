@@ -17,6 +17,7 @@ router.post("/quesans", userController.questionAnswer);
 router.post("/response", userController.responseUpdate);
 router.post("/forget-password", userController.forgetPassword);
 router.post("/newpassword", userController.newPassword);
+router.post("/getchat", userController.getChat);
 
 // router.post('/email-send', userController.emailSend)
 // router.post('/change-password', userController.changePassword)

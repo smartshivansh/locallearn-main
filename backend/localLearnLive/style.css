@@ -1511,5 +1511,6 @@ styles for 1000px */
   .logoContainer {
     position: absolute;
     right: 3rem;
+    height: max-content;
   }
 }

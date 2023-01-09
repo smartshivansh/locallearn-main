@@ -58,6 +58,9 @@ app.use("/", require("./routes/users"));
 
 //html pages
 
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "localLearnLive", "index      .html"));
+});
 app.get("/privacy", (req, res) => {
   res.sendFile(path.join(__dirname, "localLearnLive", "privacyPolicy.html"));
 });

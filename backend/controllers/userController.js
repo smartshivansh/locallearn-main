@@ -460,47 +460,41 @@ const finduser = async (req, res) => {
   });
 };
 
-const questionAnswer = async (req, res) => {
-  const { email, data, type } = req.body;
+const getChat = async (req, res) => {
+  const { email } = req.body;
 
-  if (!email || !data || !type) {
+  Chat.findOne({ email }, function (err, user) {
+    if (err || user === null) {
+      return res.status(200).json(JSON.stringify({ sucess: false }));
+    } else {
+      return res
+        .status(200)
+        .json(JSON.stringify({ sucess: true, data: user.chat }));
+    }
+  });
+};
+
+const questionAnswer = async (req, res) => {
+  const { email, data } = req.body;
+
+  if (!email || !data) {
     return res.status(200).json(JSON.stringify({ sucess: false }));
   }
   const user = Chat.findOne({ email }, function (err, user) {
     if (err) {
       res.status(200).json(JSON.stringify({ sucess: false }));
     } else {
-      if (type === "question") {
-        const ques = user.questions;
-        Chat.findOneAndUpdate(
-          { email },
-          { questions: [...ques, data] },
-          function (err, result) {
-            if (err) {
-              res.status(200).json(JSON.stringify({ sucess: false }));
-            } else {
-              res.status(200).json(JSON.stringify({ sucess: true }));
-            }
+      Chat.findOneAndUpdate(
+        { email },
+        { chat: [...user.chat, data] },
+        function (err, result) {
+          if (err) {
+            res.status(200).json(JSON.stringify({ sucess: false }));
+          } else {
+            res.status(200).json(JSON.stringify({ sucess: true }));
           }
-        );
-      } else if (type === "answer") {
-        const ans = user.answers;
-        const resp = user.responses;
-        Chat.findOneAndUpdate(
-          { email },
-          {
-            answers: [...ans, data.trim()],
-            responses: [...resp, "no response"],
-          },
-          function (err, result) {
-            if (err) {
-              res.status(200).json(JSON.stringify({ sucess: false }));
-            } else {
-              res.status(200).json(JSON.stringify({ sucess: true }));
-            }
-          }
-        );
-      }
+        }
+      );
     }
   });
 };
@@ -658,4 +652,5 @@ module.exports = {
   responseUpdate,
   forgetPassword,
   newPassword,
+  getChat,
 };
