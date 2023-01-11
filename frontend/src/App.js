@@ -46,52 +46,63 @@ function App() {
 
   const token = localStorage.getItem("token");
   const email = localStorage.getItem("email");
+  const [chat, setChat] = useState(null);
 
-  if (token || email) {
-    fetch(`${apis.finduser}`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ token, email }),
-    })
-      .then((res) => {
-        if (!res) {
-          return;
-        }
-        return res.json();
+  useEffect(() => {
+    if (token || email) {
+      fetch(`${apis.finduser}`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ token, email }),
       })
-      .then((res) => JSON.parse(res))
-      .then((data) => {
-        dispatch(
-          userDataUpdate({
-            email: data.email,
-            name: data.name,
-            username: data.username,
-          })
-        );
-        dispatch(authStatusLogin());
-        dispatch(locationUpdate({ location: data.location }));
-        dispatch(professionUpdate({ profession: data.profession }));
-        dispatch(addGoodSkill({ goodskills: data.goodSkills }));
-        dispatch(addLearnSkill({ learnskills: data.learnSkills }));
-      });
+        .then((res) => {
+          if (!res) {
+            return;
+          }
+          return res.json();
+        })
+        .then((res) => JSON.parse(res))
+        .then((data) => {
+          dispatch(
+            userDataUpdate({
+              email: data.email,
+              name: data.name,
+              username: data.username,
+            })
+          );
+          dispatch(authStatusLogin());
+          dispatch(locationUpdate({ location: data.location }));
+          dispatch(professionUpdate({ profession: data.profession }));
+          dispatch(addGoodSkill({ goodskills: data.goodSkills }));
+          dispatch(addLearnSkill({ learnskills: data.learnSkills }));
+        });
 
-    fetch(`${apis.getChat}`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((res) => res.json())
-      .then((res) => JSON.parse(res))
-      .then((res) => {
-        dispatch(chatUpdate({ chat: res.data }));
-      });
-  } else {
-    dispatch(authStatusLogout());
-  }
+      fetch(`${apis.getChat}`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+        .then((res) => res.json())
+        .then((res) => JSON.parse(res))
+        .then((res) => {
+          console.log(res);
+          if (!res.sucess) {
+            console.log(res);
+            return;
+          } else {
+            setChat(res.data);
+            dispatch(chatUpdate({ chat: res.data }));
+          }
+        });
+    } else {
+      setChat([]);
+      dispatch(authStatusLogout());
+    }
+  }, [email, token]);
 
   return (
     <>
@@ -105,9 +116,13 @@ function App() {
           <Route
             path="/app/chat"
             element={
-              <Protected>
-                <ChatUI />
-              </Protected>
+              chat ? (
+                <Protected>
+                  <ChatUI chat={chat} />
+                </Protected>
+              ) : (
+                <div>Loading...</div>
+              )
             }
           />
           <Route path="/app/chat" element={<ChatUI />} />

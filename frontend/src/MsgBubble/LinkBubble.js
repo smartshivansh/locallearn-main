@@ -11,34 +11,6 @@ const LinkBubble = (props) => {
 
   const email = useSelector((state) => state.userdata.email);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (props.content === "Hi there! How are you?") {
-        return;
-      }
-      fetch(`${apis.quesans}`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          data: {
-            message: props.message,
-            href: props.href,
-            type: "link",
-          },
-        }),
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((res) => res.json)
-        .then((res) => JSON.parse(res));
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-
   return (
     <div className={classes.container}>
       {/* <img href={"props.src"} alt="images" className={classes.image} /> */}

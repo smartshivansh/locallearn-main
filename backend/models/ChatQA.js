@@ -8,7 +8,12 @@ const ChatSchema = new mongoose.Schema({
   },
   chat: {
     type: Array,
-    default: {},
+    default: [
+      {
+        type: "text",
+        content: { text: "Hi there! How are you?" },
+      },
+    ],
   },
   responses: {
     type: Array,

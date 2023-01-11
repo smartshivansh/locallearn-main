@@ -102,7 +102,7 @@ const Navbar = (props) => {
   };
 
   const logoutHandler = () => {
-    // localStorage.clear();
+    localStorage.clear();
     navigate("/home");
   };
 

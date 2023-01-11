@@ -1,4 +1,4 @@
-const api = "http://locallearn.in";
+const api = "http://localhost:8090";
 
 const apis = {
   quesans: `${api}/quesans`,

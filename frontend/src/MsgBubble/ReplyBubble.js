@@ -12,7 +12,7 @@ import { ReactComponent as DownVoid } from "../images/thumbsdownvoid.svg";
 const ReplyBubble = (props) => {
   const [up, setUp] = useState(false);
   const [down, setDown] = useState(false);
-  const [index, setIndex] = useState(0);
+  // const [index, setIndex] = useState(0);
   const email = useSelector((state) => state.userdata.email);
 
   function thumbsUpHandler(e) {
@@ -29,11 +29,14 @@ const ReplyBubble = (props) => {
 
     fetch(`${apis.response}`, {
       method: "POST",
-      body: JSON.stringify({ email, index, response }),
+      body: JSON.stringify({ email, index: props.index, response }),
       headers: {
         "content-type": "application/json",
       },
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => JSON.parse(res))
+      .then((res) => console.log(res));
   }
 
   function thumbsDownHandler() {
@@ -48,45 +51,12 @@ const ReplyBubble = (props) => {
 
     fetch(`${apis.response}`, {
       method: "POST",
-      body: JSON.stringify({ email, index, response }),
+      body: JSON.stringify({ email, index: props.index, response }),
       headers: {
         "content-type": "application/json",
       },
     }).then((res) => res.json());
   }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (props.content === "Hi there! How are you?") {
-        return;
-      }
-      fetch(`${apis.quesans}`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          data: {
-            content: props.content,
-            type: "qa",
-            response: "no response",
-          },
-        }),
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => JSON.parse(res))
-        .then((res) => {
-          if (res.sucess) {
-            setIndex(res.index);
-          }
-        });
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <div className={classes.container}>

@@ -64,15 +64,16 @@ const chatSlice = createSlice({
   name: "chat",
   initialState: {
     chat: [
-      // {
-      //   type: "qr",
-      //   content: { text: "Hi there! How are you?" },
-      // },
+      {
+        type: "qr",
+        content: { text: "Hi there! How are you?" },
+      },
     ],
   },
   reducers: {
     chatUpdate(state, action) {
-      state.chat = [...state.chat, ...action.payload.chat];
+      // console.log(action.payload.chat);
+      state.chat = action.payload.chat;
     },
   },
 });

@@ -24,9 +24,10 @@ import apis from "../Constants/api";
 
 import sendSound from "./audio/audioSent.mp3";
 import receiveSound from "./audio/receiveMsg.mp3";
+import { useNavigate } from "react-router";
 
 let socket;
-const ENDPOINT = "https://locallearn.in/";
+const ENDPOINT = "https://locallearn.in";
 let msg1 = {
   type: "text",
   content: { text: "I would like to learn something new" },
@@ -90,17 +91,24 @@ const defaultQuickReplies = [
 ];
 
 const ChatUI = (props) => {
-  const email = useSelector((state) => state.userdata.email);
+  const email = localStorage.getItem("email");
+  let chat = useSelector((s) => s.chat.chat);
+  console.log(chat);
 
-  const [initialMessages, setInitialMessages] = useState([
-    {
-      type: "qr",
-      content: { text: "Hi there! How are you?" },
-    },
-  ]);
+  const [initialMessages, setInitialMessages] = useState(chat);
+
+  // useEffect(() => {
+  //   console.log("xx");
+  //   initialMessages.map((bubble) => {
+  //     if (bubble === {}) {
+  //       return;
+  //     }
+  //     console.log(bubble);
+  //     return renderMessageContent(bubble);
+  //   });
+  // }, [initialMessages]);
 
   const { messages, appendMsg, setTyping } = useMessages(initialMessages);
-  // console.log(initialMessages);
   const [connected, setConnected] = useState(false);
 
   const [myplaceholder, setMyplaceholder] = useState("Go on, ask me something");
@@ -132,14 +140,33 @@ const ChatUI = (props) => {
       console.log("response", response);
     });
 
-    socket.on("broadcast", (data) => {});
+    socket.on("broadcast", (data) => {
+      console.log(data);
+    });
     socket.on("send-msg-response", (data) => {
       // console.log("response msg  ----> ", data);
-
       if (getUrls(data).size > 0) {
         let url = getUrls(data);
         url = url.values();
         url = url.next();
+
+        fetch(`${apis.quesans}`, {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            data: {
+              type: "link",
+              content: { href: url.value, message: data },
+              position: "left",
+            },
+          }),
+          headers: {
+            "content-type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => JSON.parse(res))
+          .then((res) => console.log(res));
 
         appendMsg({
           type: "link",
@@ -147,10 +174,32 @@ const ChatUI = (props) => {
         });
         return;
       }
+      let index;
+
+      fetch(`${apis.quesans}`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          data: {
+            type: "qr",
+            content: { text: data, response: "no response" },
+            position: "left",
+          },
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => JSON.parse(res))
+        .then((res) => {
+          index = res.index;
+          console.log(res);
+        });
 
       appendMsg({
         type: "qr",
-        content: { text: data },
+        content: { text: data, index: index },
         // user: {
         //   avatar:
         //     "https://avatars.dicebear.com/api/croodles-neutral/vibhavari.svg",
@@ -188,8 +237,27 @@ const ChatUI = (props) => {
   function handleSend(type, val) {
     var tenor = true;
     if (type === "text" && val.trim()) {
+      fetch(`${apis.quesans}`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          data: {
+            type: "text",
+            content: { text: val },
+            position: "right",
+          },
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => JSON.parse(res))
+        .then((res) => console.log(res));
       if (val.length > 10) {
-        socket.emit("SendMessage", { text: val }, () => {});
+        socket.emit("SendMessage", { text: val }, (data) => {
+          console.log(data);
+        });
         tenor = false;
       }
       appendMsg({
@@ -204,7 +272,26 @@ const ChatUI = (props) => {
       send.play();
 
       setTyping(true);
+
       if (tenor) {
+        fetch(`${apis.quesans}`, {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+            data: {
+              type: "tenor",
+              content: { item: val },
+              position: "right",
+            },
+          }),
+          headers: {
+            "content-type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => JSON.parse(res))
+          .then((res) => console.log(res));
+
         setTimeout(() => {
           appendMsg({
             type: "tenor",
@@ -232,14 +319,14 @@ const ChatUI = (props) => {
     switch (type) {
       case "text":
         return (
-          <>
+          <div style={{ display: "flex", alingItems: "center" }}>
+            <SendBubble content={content.text} />
             <Avatar
               src="https://avatars.dicebear.com/api/croodles-neutral/shivansh.svg"
               size="md"
               className={Avatars.container}
             />
-            <SendBubble content={content.text} />
-          </>
+          </div>
         );
         break;
 
@@ -264,7 +351,7 @@ const ChatUI = (props) => {
               size="md"
               className={Avatars.container}
             />
-            <ReplyBubble content={content.text} />
+            <ReplyBubble content={content.text} index={content.index} />
           </>
         );
         break;
@@ -406,7 +493,6 @@ const ChatUI = (props) => {
   //     body: JSON.stringify({ email, msgdata }),
   //   });
   // }
-
   return (
     <div className={classes.container} id={classes.chatbox}>
       {" "}
@@ -434,4 +520,4 @@ const ChatUI = (props) => {
   );
 };
 
-export default React.memo(ChatUI);
+export default ChatUI;
