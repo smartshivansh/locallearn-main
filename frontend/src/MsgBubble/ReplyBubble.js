@@ -10,9 +10,9 @@ import { ReactComponent as UpVoid } from "../images/thumbsupvoid.svg";
 import { ReactComponent as DownVoid } from "../images/thumbsdownvoid.svg";
 
 const ReplyBubble = (props) => {
-  const [up, setUp] = useState(false);
-  const [down, setDown] = useState(false);
-  // const [index, setIndex] = useState(0);
+  console.log(props.response);
+  const [up, setUp] = useState(props.response === "liked" ? true : false);
+  const [down, setDown] = useState(props.response === "unliked" ? true : false);
   const email = useSelector((state) => state.userdata.email);
 
   function thumbsUpHandler(e) {
@@ -55,7 +55,10 @@ const ReplyBubble = (props) => {
       headers: {
         "content-type": "application/json",
       },
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((res) => JSON.parse(res))
+      .then((res) => console.log(res));
   }
 
   return (

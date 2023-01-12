@@ -483,9 +483,30 @@ const questionAnswer = async (req, res) => {
           if (err) {
             return res.status(200).json(JSON.stringify({ sucess: false }));
           } else {
-            return res
-              .status(200)
-              .json(JSON.stringify({ sucess: true, index: size }));
+            Chat.findOne({ email }, function (err, user) {
+              if (err) {
+                return res.status(200).json(JSON.stringify({ sucess: false }));
+              } else {
+                let chat = [...user.chat];
+                chat[size].content.index = size;
+
+                Chat.findByIdAndUpdate(
+                  user.id,
+                  { chat: chat },
+                  function (err, user) {
+                    if (err) {
+                      return res
+                        .status(200)
+                        .json(JSON.stringify({ sucess: false }));
+                    } else {
+                      return res
+                        .status(200)
+                        .json(JSON.stringify({ sucess: true, index: size }));
+                    }
+                  }
+                );
+              }
+            });
           }
         }
       );
@@ -507,7 +528,7 @@ const responseUpdate = (req, res) => {
     } else {
       const chat = [...user.chat];
       console.log(index);
-      chat[index].response = response;
+      chat[index].content.response = response;
       Chat.findByIdAndUpdate(user.id, { chat: chat }, function (err, user) {
         if (err) {
           return res.status(200).json(JSON.stringify({ sucess: false }));

@@ -93,7 +93,8 @@ const defaultQuickReplies = [
 const ChatUI = (props) => {
   const email = localStorage.getItem("email");
   let chat = useSelector((s) => s.chat.chat);
-  console.log(chat);
+  const [index, setindex] = useState(0);
+  const [text, setText] = useState("");
 
   const [initialMessages, setInitialMessages] = useState(chat);
 
@@ -156,7 +157,7 @@ const ChatUI = (props) => {
             email,
             data: {
               type: "link",
-              content: { href: url.value, message: data },
+              content: { href: url.value, message: data, index: 0 },
               position: "left",
             },
           }),
@@ -173,38 +174,31 @@ const ChatUI = (props) => {
           content: { href: url.value, message: data },
         });
         return;
-      }
-      let index;
-
-      fetch(`${apis.quesans}`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          data: {
-            type: "qr",
-            content: { text: data, response: "no response" },
-            position: "left",
+      } else {
+        fetch(`${apis.quesans}`, {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+            data: {
+              type: "qr",
+              content: { text: data, response: "no response", index: 0 },
+              position: "left",
+            },
+          }),
+          headers: {
+            "content-type": "application/json",
           },
-        }),
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => JSON.parse(res))
-        .then((res) => {
-          index = res.index;
-          console.log(res);
-        });
-
-      appendMsg({
-        type: "qr",
-        content: { text: data, index: index },
-        // user: {
-        //   avatar:
-        //     "https://avatars.dicebear.com/api/croodles-neutral/vibhavari.svg",
-        // },
-      });
+        })
+          .then((res) => res.json())
+          .then((res) => JSON.parse(res))
+          .then((res) => {
+            console.log(1111, res);
+            appendMsg({
+              type: "qr",
+              content: { text: data, index: res.index, response:"no response" },
+            });
+          });
+      }
     });
     return () => {
       socket.disconnect();
@@ -236,6 +230,7 @@ const ChatUI = (props) => {
 
   function handleSend(type, val) {
     var tenor = true;
+
     if (type === "text" && val.trim()) {
       fetch(`${apis.quesans}`, {
         method: "POST",
@@ -243,7 +238,7 @@ const ChatUI = (props) => {
           email: email,
           data: {
             type: "text",
-            content: { text: val },
+            content: { text: val, index: 0 },
             position: "right",
           },
         }),
@@ -254,10 +249,9 @@ const ChatUI = (props) => {
         .then((res) => res.json())
         .then((res) => JSON.parse(res))
         .then((res) => console.log(res));
+
       if (val.length > 10) {
-        socket.emit("SendMessage", { text: val }, (data) => {
-          console.log(data);
-        });
+        socket.emit("SendMessage", { text: val }, (data) => {});
         tenor = false;
       }
       appendMsg({
@@ -279,8 +273,8 @@ const ChatUI = (props) => {
           body: JSON.stringify({
             email: email,
             data: {
-              type: "tenor",
-              content: { item: val },
+              type: "text",
+              content: { text: val, index: 0 },
               position: "right",
             },
           }),
@@ -290,7 +284,25 @@ const ChatUI = (props) => {
         })
           .then((res) => res.json())
           .then((res) => JSON.parse(res))
-          .then((res) => console.log(res));
+          .then((res) => {
+            fetch(`${apis.quesans}`, {
+              method: "POST",
+              body: JSON.stringify({
+                email: email,
+                data: {
+                  type: "tenor",
+                  content: { item: val, index: 0 },
+                  position: "left",
+                },
+              }),
+              headers: {
+                "content-type": "application/json",
+              },
+            })
+              .then((res) => res.json())
+              .then((res) => JSON.parse(res))
+              .then((res) => console.log(res));
+          });
 
         setTimeout(() => {
           appendMsg({
@@ -351,7 +363,11 @@ const ChatUI = (props) => {
               size="md"
               className={Avatars.container}
             />
-            <ReplyBubble content={content.text} index={content.index} />
+            <ReplyBubble
+              content={content.text}
+              index={content.index}
+              response={content.response}
+            />
           </>
         );
         break;

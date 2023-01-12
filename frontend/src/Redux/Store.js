@@ -67,6 +67,7 @@ const chatSlice = createSlice({
       {
         type: "qr",
         content: { text: "Hi there! How are you?" },
+        position: "left",
       },
     ],
   },

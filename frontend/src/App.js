@@ -103,6 +103,7 @@ function App() {
       dispatch(authStatusLogout());
     }
   }, [email, token]);
+  console.log(chat);
 
   return (
     <>
