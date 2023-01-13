@@ -80,6 +80,9 @@ const LoginScreen = () => {
   };
 
   const emailBlurHandler = (e) => {
+    if(e.target.value === ""){
+      return;
+    }
     emailValidator(e.target.value);
   };
 
@@ -87,6 +90,7 @@ const LoginScreen = () => {
     const { loginId, password } = datas;
 
     if(loginId === ""){
+      setEmailError("This field can't be empty")
       setEmailInputColor("red");
       return;
     }
@@ -125,7 +129,14 @@ const LoginScreen = () => {
           dispatch(addLearnSkill({ learnskills: data.user.learnSkills }));
           navigate("/app/chat");
         } else {
-          alert(data.message);
+          if(data.message === "Wrong Password"){
+            setPasswordError("Wrong Password")
+            setPasswordInputColor("red")
+          }
+          else if(data.message === "Email ID not registered"){
+            setEmailError("Email ID not registered")
+            setEmailInputColor("red")
+          }
           setLoading(false);
         }
       });
@@ -187,7 +198,7 @@ const LoginScreen = () => {
               onClick={showPasswordHandler}
             />
           </div>
-          <p className={classes.errorMsg}>{errors.password?.message}</p>
+          <p className={classes.errorMsg}>{errors.password?.message || passwordError}</p>
           <input
             type="submit"
             placeholder="submit"

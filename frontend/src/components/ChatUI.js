@@ -18,6 +18,7 @@ import FormBubble from "../MsgBubble/FormBubble";
 import NavBar from "./NavBar";
 import LinkBubble from "../MsgBubble/LinkBubble";
 
+
 import classes from "./Chat.module.css";
 import Avatars from "./Avatar.module.css";
 import apis from "../Constants/api";
@@ -92,22 +93,10 @@ const defaultQuickReplies = [
 
 const ChatUI = (props) => {
   const email = localStorage.getItem("email");
-  let chat = useSelector((s) => s.chat.chat);
-  const [index, setindex] = useState(0);
-  const [text, setText] = useState("");
+  const chat = useSelector(s => s.chat.chat)
+  console.log(chat)
 
-  const [initialMessages, setInitialMessages] = useState(props.chat);
-
-  // useEffect(() => {
-  //   console.log("xx");
-  //   initialMessages.map((bubble) => {
-  //     if (bubble === {}) {
-  //       return;
-  //     }
-  //     console.log(bubble);
-  //     return renderMessageContent(bubble);
-  //   });
-  // }, [initialMessages]);
+  const [initialMessages, setInitialMessages] = useState(chat);
 
   const { messages, appendMsg, setTyping } = useMessages(initialMessages);
   const [connected, setConnected] = useState(false);
@@ -472,46 +461,9 @@ const ChatUI = (props) => {
     }
   }, [referenceForMessageBox]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(async () => {
-  //     if (msgdata.question === "" || msgdata.answer === "" || !email) {
-  //       return;
-  //     }
-
-  //     await fetch("https://locallearn.in/quesans", {
-  //       method: "POST",
-  //       headers: {
-  //         "content-type": "application/json",
-  //       },
-  //       body: JSON.stringify({ email, msgdata }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data));
-  //     // msgdata.question = "";
-  //     // msgdata.answer = "";
-  //   }, 1000);
-
-  //   // return () => {
-  //   //   clearTimeout(timer);
-  //   // };
-  // }, [msgdata.answer]);
-
-  // async function chatSaver(msgdata) {
-  //   if (msgdata.question === "" || msgdata.answer === "" || !email) {
-  //     return;
-  //   }
-
-  //   await fetch("http://localhost:4000/quesans", {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({ email, msgdata }),
-  //   });
-  // }
+  
   return (
     <div className={classes.container} id={classes.chatbox}>
-      {" "}
       <NavBar />
       <div className={classes.chat}>
         <Chat
