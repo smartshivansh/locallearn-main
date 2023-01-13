@@ -89,7 +89,7 @@ const SignUp = () => {
             disabled={false}
             className={classes.otpInput}
           />
-          <p className={classes.error}>{content}</p>
+          <p className={classes.errorMsg}>{content}</p>
           <button className={classes.submit}>Let's get started</button>
           <div className={classes.link} onClick={resendOtpHandler}>
             Resend otp

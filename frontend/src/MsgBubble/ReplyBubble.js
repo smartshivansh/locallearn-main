@@ -10,7 +10,6 @@ import { ReactComponent as UpVoid } from "../images/thumbsupvoid.svg";
 import { ReactComponent as DownVoid } from "../images/thumbsdownvoid.svg";
 
 const ReplyBubble = (props) => {
-  console.log(props.response);
   const [up, setUp] = useState(props.response === "liked" ? true : false);
   const [down, setDown] = useState(props.response === "unliked" ? true : false);
   const email = useSelector((state) => state.userdata.email);

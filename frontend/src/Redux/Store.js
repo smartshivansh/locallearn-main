@@ -66,15 +66,18 @@ const chatSlice = createSlice({
     chat: [
       {
         type: "qr",
-        content: { text: "Hi there! How are you?" },
+        content: { text: "Hi there! How are you?", reaponse: "no response", index: 0 },
         position: "left",
       },
     ],
+
+    isLoaded: false
   },
   reducers: {
     chatUpdate(state, action) {
       // console.log(action.payload.chat);
       state.chat = action.payload.chat;
+      state.isLoaded = true;
     },
   },
 });

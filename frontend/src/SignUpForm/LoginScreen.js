@@ -19,6 +19,9 @@ import PreChatScreen from "./PreChatScreen";
 import Spinners from "../Spinner/Spinner";
 import apis from "../Constants/api";
 
+import showeye from "../images/eye.svg";
+import hideeye from "../images/eyekati.svg";
+
 const LoginScreen = () => {
   const {
     register,
@@ -31,8 +34,27 @@ const LoginScreen = () => {
   const [sucess, setSucess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [emailInputColor, setEmailInputColor] = useState(null);
+
+  const [showpassword, setShowPassword] = useState(false);
+  const [eye, setEye] = useState(hideeye);
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordInputColor, setPasswordInputColor] = useState(null);
+
   const dispatch = useDispatch();
+
+  const showPasswordHandler = () => {
+    if (!showpassword) {
+      setEye(showeye);
+      setPasswordType("text");
+      setShowPassword((p) => !p);
+    } else {
+      setEye(hideeye);
+      setPasswordType("password");
+      setShowPassword((p) => !p);
+    }
+  };
 
   const emailValidator = (email) => {
     if (validate(email)) {
@@ -63,6 +85,15 @@ const LoginScreen = () => {
 
   async function formSubmitHandler(datas) {
     const { loginId, password } = datas;
+
+    if(loginId === ""){
+      setEmailInputColor("red");
+      return;
+    }
+
+    if(!emailValidator(loginId)){
+      return;
+    }
 
     setLoading(true);
     await fetch(`${apis.signin}`, {
@@ -123,28 +154,39 @@ const LoginScreen = () => {
             style={{ borderColor: emailInputColor }}
             onBlurCapture={emailBlurHandler}
             {...register("loginId", {
-              minLength: {
-                value: 1,
-                message: "please enter a valid Value",
-              },
-              required: "this field is mandatory",
+              required: "This field can't be Empty"
             })}
           />
           <p className={classes.errorMsg}>
-            {errors.loginId?.message} {emailError}
+            {errors.loginId?.message || emailError}
           </p>
-          <input
-            type="password"
-            placeholder="Enter password"
-            className={classes.input}
-            {...register("password", {
-              minLength: {
-                value: 8,
-                message: "please enter a valid Value",
-              },
-              required: "this field is mandatory",
-            })}
-          />
+          <div
+            className={classes.passwordInputBox}
+          >
+            <input
+              placeholder="Password"
+              className={classes.passwordInput}
+              style={{ borderColor: passwordInputColor }}
+              type={passwordType}
+              autoComplete="off"
+              {...register("password", {
+                minLength: {
+                  value: 10,
+                  message: "Password must be 10 digit long",
+                },
+                required: "Password field can't be empty"
+              })}
+              onFocus={() => {
+                setPasswordError("");
+              }}
+            />
+            <img
+              src={eye}
+              alt="show password"
+              className={classes.passwordImg}
+              onClick={showPasswordHandler}
+            />
+          </div>
           <p className={classes.errorMsg}>{errors.password?.message}</p>
           <input
             type="submit"

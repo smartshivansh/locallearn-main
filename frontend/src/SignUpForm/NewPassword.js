@@ -67,13 +67,13 @@ const NewPassword = () => {
     setLoading(true);
 
     // const { password, cpassword } = datas;
-    if (password.length < 8) {
+    if (password.length < 10) {
       setLoading(false);
-      setPasswordError("minimum 8 characters required");
+      setPasswordError("Password must be 10 digit long");
       return;
     }
     if (password !== cpassword) {
-      setPasswordError("password mismatch");
+      setPasswordError("Password mismatch");
       setLoading(false);
       return;
     }
@@ -114,6 +114,13 @@ const NewPassword = () => {
   };
 
   const passwordBlurHandler = (e) => {
+
+    if(password === "" || cpassword === ""){
+      setPasswordInputColor("red");
+      setPasswordError("Password Field can't be empty");
+      return;
+    }
+
     passwordValidator(password, cpassword);
   };
   return (
@@ -138,10 +145,9 @@ const NewPassword = () => {
                 autoComplete="off"
                 {...register("password", {
                   minLength: {
-                    value: 8,
-                    message: "minimum 10 charactes required",
+                    value: 10,
+                    message: "Password must be 10 digit long",
                   },
-                  required: "this field is mandatory",
                 })}
               />
               <img
@@ -178,11 +184,9 @@ const NewPassword = () => {
               autoComplete="off"
               {...register("cPassword", {
                 minLength: {
-                  value: 8,
-                  message: "minimum 10 charactes required",
+                  value: 10,
+                  message: "Password must be 10 digit long",
                 },
-                required: "this field is mandatory",
-                validate: (value) => value === password,
               })}
               onFocus={() => {
                 setPasswordError("");

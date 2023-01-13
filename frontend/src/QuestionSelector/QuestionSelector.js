@@ -21,7 +21,7 @@ function QuestionSelector(props) {
     e.preventDefault();
     let data;
 
-    if (props.id === "q1") {
+    if (props.id === "profession") {
       dispatch(professionUpdate({ profession: answer }));
       data = { type: "profession", email, data: answer };
     }

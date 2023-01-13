@@ -97,6 +97,10 @@
   width: 15px;
 }
 
+.passwordImg:hover{
+  cursor: pointer;
+}
+
 .strength {
   display: inline;
   font-size: 1rem;

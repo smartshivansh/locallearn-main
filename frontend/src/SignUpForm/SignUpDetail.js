@@ -26,6 +26,7 @@ const SignUpDetail = () => {
 
   const [usernameError, setUsernameError] = useState("");
   const [usernameInputColor, setUsernameInputColor] = useState(null);
+  const [tocError, setTocError] = useState("");
   const [showpassword, setShowPassword] = useState(false);
   const [eye, setEye] = useState(hideeye);
   const [passwordType, setPasswordType] = useState("password");
@@ -97,6 +98,12 @@ const SignUpDetail = () => {
   };
 
   const emailBlurHandler = (e) => {
+
+    if(e.target.value===""){
+      setEmailInputColor("red");
+      setEmailError("Email field can't be empty")
+      return;
+    }
     emailValidator(e.target.value);
   };
 
@@ -119,9 +126,6 @@ const SignUpDetail = () => {
     passwordValidator(password, cpassword);
   };
 
-  const usernameValidator = () => {
-    console.log("frefc");
-  };
 
   async function formSubmitHandler(data) {
     setEmailError("");
@@ -135,7 +139,7 @@ const SignUpDetail = () => {
       return;
     }
     if (!data.agree) {
-      alert("please accept Terms and condition");
+      setTocError("Please accept Terms and Condition");
       return;
     }
     const { email, password, username, name } = data;
@@ -163,6 +167,7 @@ const SignUpDetail = () => {
       .then((result) => {
         if (!result.sucess) {
           setUsernameError(`${result.message}`);
+          setUsernameInputColor("red")
           setLoading(false);
           return;
         } else {
@@ -218,15 +223,11 @@ const SignUpDetail = () => {
             type="text"
             autoComplete="off"
             {...register("email", {
-              minLength: {
-                value: 1,
-                message: "please enter a valid Value",
-              },
-              required: "this field is mandatory",
+              required: "This field can't be Empty"
             })}
           />
           <p className={classes.errorMsg}>
-            {errors.email?.message} {emailError}
+            {errors.email?.message || emailError}
           </p>
           <input
             className={classes.input}
@@ -234,11 +235,7 @@ const SignUpDetail = () => {
             type="text"
             autoComplete="off"
             {...register("name", {
-              minLength: {
-                value: 1,
-                message: "please enter a valid Value",
-              },
-              required: "this field is mandatory",
+              required: "Name field can't be empty"
             })}
           />
           <p className={classes.errorMsg}>{errors.name?.message}</p>
@@ -249,12 +246,11 @@ const SignUpDetail = () => {
             type="text"
             autoComplete="off"
             {...register("username", {
-              minLength: 1,
-              required: "this field is mandatory",
+              required: "Username field can't be empty",
             })}
           />
           <p className={classes.errorMsg}>
-            {errors.username?.message} {usernameError}
+            {errors.username?.message || usernameError}
           </p>
 
           {/* //password */}
@@ -269,10 +265,10 @@ const SignUpDetail = () => {
                 autoComplete="off"
                 {...register("password", {
                   minLength: {
-                    value: 8,
-                    message: "minimum 10 charactes required",
+                    value: 10,
+                    message: "Password must be 10 digit long",
                   },
-                  required: "this field is mandatory",
+                  required: "Password field can't be empty"
                 })}
               />
               <img
@@ -309,11 +305,10 @@ const SignUpDetail = () => {
               autoComplete="off"
               {...register("confirmPassword", {
                 minLength: {
-                  value: 8,
-                  message: "minimum 10 charactes required",
+                  value: 10,
+                  message: "Password must be 10 digit long",
                 },
-                required: "this field is mandatory",
-                validate: (value) => value === password,
+                required: "Password field can't be empty"
               })}
               onFocus={() => {
                 setPasswordError("");
@@ -328,8 +323,8 @@ const SignUpDetail = () => {
           </div>
 
           <p className={classes.errorMsg}>
-            {errors.confirmPassword?.message}
-            {passwordError}
+            {errors.confirmPassword?.message || passwordError}
+            
           </p>
           <label className={classes.checkbox}>
             <input
@@ -367,6 +362,7 @@ const SignUpDetail = () => {
               </a>
             </p>
           </label>
+          <p className={classes.errorMsg}>{tocError}</p>
           <input type="submit" className={classes.submit} />
           <p className={classes.login}>
             Already have an account?{" "}

@@ -21,7 +21,7 @@ import SignUp from "./SignUpForm/SignUp";
 import ForgetPassword from "./SignUpForm/ForgetPassword";
 import ForgetPasswordOtp from "./SignUpForm/FogetPasswordOtp";
 import NewPassword from "./SignUpForm/NewPassword";
-import SignInSuccessfull from "./SignUpForm/SignInSuccessfull";
+import Chats from "./chats";
 
 import NewPasswordSucessScreen from "./SignUpForm/NewPasswordSucessScreen";
 
@@ -89,9 +89,8 @@ function App() {
         .then((res) => res.json())
         .then((res) => JSON.parse(res))
         .then((res) => {
-          console.log(res);
+          
           if (!res.sucess) {
-            console.log(res);
             return;
           } else {
             setChat(res.data);
@@ -103,7 +102,6 @@ function App() {
       dispatch(authStatusLogout());
     }
   }, [email, token]);
-  console.log(chat);
 
   return (
     <>
@@ -118,7 +116,7 @@ function App() {
             path="/app/chat"
             element={
               chat ? (
-                <Protected>
+                <Protected chat={chat}>
                   <ChatUI chat={chat} />
                 </Protected>
               ) : (

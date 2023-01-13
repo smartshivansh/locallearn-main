@@ -51,11 +51,11 @@ const QuestionPanel = (props) => {
         .then((res) => res.json())
         .then((data) => JSON.parse(data))
         .then(() => {
-          if (props.id === "q5") {
+          if (props.id === "goodskills") {
             dispatch(
               addGoodSkill({ goodskills: [...selections, ...customize] })
             );
-          } else if (props.id === "q4") {
+          } else if (props.id === "learnskills") {
             dispatch(
               addLearnSkill({ learnskills: [...selections, ...customize] })
             );

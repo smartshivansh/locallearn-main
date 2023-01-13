@@ -22,7 +22,7 @@ const TypeInput = (props) => {
     setTransform(-110);
 
     let data;
-    if (props.id === "q2") {
+    if (props.id === "location") {
       dispatch(locationUpdate({ location: value }));
       data = { type: "location", email, data: value };
     }

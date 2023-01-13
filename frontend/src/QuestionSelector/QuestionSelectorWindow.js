@@ -20,7 +20,7 @@ const QuestionSelectorWindow = () => {
     return [
       {
         question: "I am a/an",
-        Id: "q1",
+        Id: "profession",
         options: [
           "Student",
           "Educator",
@@ -54,7 +54,7 @@ const QuestionSelectorWindow = () => {
         question: "I live in",
         options: ["option1", "option2", "option3", "option4", "option5"],
         last: true,
-        Id: "q2",
+        Id: "location",
       },
     ];
   }, []);
@@ -63,7 +63,7 @@ const QuestionSelectorWindow = () => {
     return [
       {
         question: "Skills that I want to learn",
-        Id: "q4",
+        Id: "learnskills",
         options: [
           "Content Writing",
           "Public Speaking",
@@ -100,7 +100,7 @@ const QuestionSelectorWindow = () => {
           "Makeup",
           "Investment",
         ],
-        Id: "q5",
+        Id: "goodskills",
         min: 1,
         max: 5,
         last: false,

@@ -96,7 +96,7 @@ const ChatUI = (props) => {
   const [index, setindex] = useState(0);
   const [text, setText] = useState("");
 
-  const [initialMessages, setInitialMessages] = useState(chat);
+  const [initialMessages, setInitialMessages] = useState(props.chat);
 
   // useEffect(() => {
   //   console.log("xx");
@@ -142,7 +142,7 @@ const ChatUI = (props) => {
     });
 
     socket.on("broadcast", (data) => {
-      console.log(data);
+      // console.log(data);
     });
     socket.on("send-msg-response", (data) => {
       // console.log("response msg  ----> ", data);

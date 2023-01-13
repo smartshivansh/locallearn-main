@@ -148,7 +148,7 @@ const signup = async (req, res) => {
 const questions = async (req, res) => {
   const email = req.body.email;
 
-  if (req.body.id === "q5") {
+  if (req.body.id === "goodskills") {
     Users.findOneAndUpdate(
       { email },
       { goodSkills: req.body.skills },
@@ -166,7 +166,7 @@ const questions = async (req, res) => {
         }
       }
     );
-  } else if (req.body.id === "q4") {
+  } else if (req.body.id === "learnskills") {
     Users.findOneAndUpdate(
       { email },
       { learnSkills: req.body.skills },

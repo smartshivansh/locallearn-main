@@ -8,7 +8,7 @@ var cors = require("cors");
 
 let onlineUsers = [];
 
-const port = process.env.PORT || 8090;
+const port = process.env.PORT || 3000;
 
 require("dotenv").config({
   path: path.join(__dirname, ".env"),
@@ -23,7 +23,6 @@ const allowlist = [
   "http://doornextshop.com",
   "https://doornextshop.com",
   "http://locallearn.in",
-  "http://localhost:3000",
   "http://www.locallearn.in",
   "https://locallearn.in",
   "https://www.locallearn.in",
