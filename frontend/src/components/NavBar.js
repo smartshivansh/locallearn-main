@@ -8,6 +8,8 @@ import hamberger from "../images/List.svg";
 import profileBtn from "../images/UserCircle.svg";
 import xBtn from "../images/X.svg";
 
+import apis from "../Constants/api"
+
 import {clearChat,  clearSkillData, clearUserData} from "../Redux/Store"
 
 import { useNavigate } from "react-router-dom";
@@ -108,6 +110,12 @@ const Navbar = (props) => {
     dispatch(clearChat);
     dispatch(clearUserData);
     dispatch(clearSkillData);
+    setTimeout(()=> {
+
+      window.location.reload()
+    }, 
+      100
+    )
     navigate("/")
   };
 
@@ -281,7 +289,9 @@ const Navbar = (props) => {
 
           <div className={classes.logoutcont}>
             <button className={classes.logout} onClick={logoutHandler}>
+            <a>
               Log out
+              </a>
             </button>
           </div>
         </div>
