@@ -1,4 +1,4 @@
-const api = "http://localhost:4000";
+const api = "http://doornextshop.com";
 
 const apis = {
   home: `${api}/app/home`,
