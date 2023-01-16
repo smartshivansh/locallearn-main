@@ -94,7 +94,6 @@ const defaultQuickReplies = [
 const ChatUI = (props) => {
   const email = localStorage.getItem("email");
   const chat = useSelector(s => s.chat.chat)
-  console.log(chat)
 
   const [initialMessages, setInitialMessages] = useState(chat);
 

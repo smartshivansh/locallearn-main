@@ -127,7 +127,7 @@ const LoginScreen = () => {
           dispatch(professionUpdate({ profession: data.user.profession }));
           dispatch(addGoodSkill({ goodskills: data.user.goodSkills }));
           dispatch(addLearnSkill({ learnskills: data.user.learnSkills }));
-          navigate("/app/chat");
+          navigate("/app/chatHelper");
         } else {
           if(data.message === "Wrong Password"){
             setPasswordError("Wrong Password")

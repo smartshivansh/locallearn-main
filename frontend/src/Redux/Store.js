@@ -39,6 +39,11 @@ const skillSlice = createSlice({
         }
       });
     },
+
+    clearSkillData(state, action) {
+      state.learn = ["skill1", "skill2", "skill3"];
+      state.good = ["skill1", "skill2", "skill3"];
+    }
   },
 });
 
@@ -57,6 +62,14 @@ const userDataSlice = createSlice({
     professionUpdate(state, action) {
       state.profession = action.payload.profession;
     },
+
+    clearUserData(state, action){
+      state.email = "";
+      state.name = "";
+      state.names = "names";
+      state.location = "location";
+      state.profession = "profession";
+    }
   },
 });
 
@@ -70,7 +83,6 @@ const chatSlice = createSlice({
         position: "left",
       },
     ],
-
     isLoaded: false
   },
   reducers: {
@@ -79,6 +91,16 @@ const chatSlice = createSlice({
       state.chat = action.payload.chat;
       state.isLoaded = true;
     },
+    clearChat(state,action) {
+      state.chat = [
+        {
+          type: "qr",
+          content: { text: "Hi there! How are you?", reaponse: "no response", index: 0 },
+          position: "left",
+        },
+      ];
+      state.isLoaded = false;
+    }
   },
 });
 
@@ -96,13 +118,14 @@ export const {
   addLearnSkill,
   removeGoodSkill,
   removeLearnSkill,
+  clearSkillData
 } = skillSlice.actions;
 
-export const { userDataUpdate, locationUpdate, professionUpdate } =
+export const { userDataUpdate, locationUpdate, professionUpdate, clearUserData } =
   userDataSlice.actions;
 
 export const { authStatusLogin, authStatusLogout } = authSlice.actions;
 
-export const { chatUpdate } = chatSlice.actions;
+export const { chatUpdate , clearChat} = chatSlice.actions;
 
 export default Store;

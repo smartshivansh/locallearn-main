@@ -249,7 +249,7 @@
   background: linear-gradient(180deg, #40e0d0 0%, #a9dbb8 100%);
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1400px) {
   .container {
     width: 80%;
     left: 10%;

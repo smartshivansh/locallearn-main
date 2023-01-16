@@ -9,7 +9,7 @@ const PreChatScreen = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/app/chat");
+      navigate("/app/chatHelper");
     }, 2100);
   }, []);
 

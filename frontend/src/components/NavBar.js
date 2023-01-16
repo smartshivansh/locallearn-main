@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import classes from "./Navbar.module.css";
 import SkillChip from "./SkillChip";
 
 import logo from "../images/logo.svg";
-import holoImg from "../images/holoImg.jpg";
 import hamberger from "../images/List.svg";
 import profileBtn from "../images/UserCircle.svg";
 import xBtn from "../images/X.svg";
 
+import {clearChat,  clearSkillData, clearUserData} from "../Redux/Store"
+
 import { useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 
 const Navbar = (props) => {
   //sidebar states
@@ -41,6 +41,8 @@ const Navbar = (props) => {
   const names = useSelector((state) => state.userdata.names);
   const location = useSelector((state) => state.userdata.location);
   const profession = useSelector((state) => state.userdata.profession);
+
+  const dispatch = useDispatch()
 
   const showSideMenuHandler = () => {
     setSideBar((prevVal) => !prevVal);
@@ -103,6 +105,9 @@ const Navbar = (props) => {
 
   const logoutHandler = () => {
     localStorage.clear();
+    dispatch(clearChat);
+    dispatch(clearUserData);
+    dispatch(clearSkillData);
     navigate("/")
   };
 

@@ -22,6 +22,7 @@ import ForgetPassword from "./SignUpForm/ForgetPassword";
 import ForgetPasswordOtp from "./SignUpForm/FogetPasswordOtp";
 import NewPassword from "./SignUpForm/NewPassword";
 import Chats from "./chats";
+import ChatHelper from "./ChatHelper";
 
 import NewPasswordSucessScreen from "./SignUpForm/NewPasswordSucessScreen";
 
@@ -47,6 +48,8 @@ function App() {
   const token = localStorage.getItem("token");
   const email = localStorage.getItem("email");
   const [chat, setChat] = useState(null);
+
+  const isAuth = useSelector((state) => state.authstatus.isAuthenticated);
 
   useEffect(() => {
     if (token || email) {
@@ -101,14 +104,14 @@ function App() {
       setChat([]);
       dispatch(authStatusLogout());
     }
-  }, [email, token]);
+  },[isAuth]);
 
   return (
     <>
       <Router>
         <Routes>
           <Route exact path="/app/termsofuse" element={<TermsOfUse />} />
-          <Route exact path="/app/test" element={<ChatUI />} />
+          <Route exact path="/app/chatHelper" element={<ChatHelper />} />
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />
           <Route exact path="/app/coc" element={<CoC />} />
@@ -124,7 +127,6 @@ function App() {
               )
             }
           />
-          <Route path="/app/chat" element={<ChatUI />} />
           <Route exact path="/app/signup" element={<SignupDetail />} />
           <Route exact path="/app" element={<SignupDetail />} />
           <Route exact path="/app/login" element={<LoginScreen />} />
