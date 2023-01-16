@@ -11,10 +11,10 @@ const navigate = useNavigate()
   useEffect(()=> {
     setTimeout(()=> {
       navigate("/app/chat")
-    }, 1500)
+    }, 500)
   }, [])
 
-  return <h1>Loading....</h1>
+  return <Spinner/>
 }
 
 export default ChatHelper;
