@@ -28,8 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 const allowlist = [
   "http://doornextshop.com",
   "https://doornextshop.com",
+  "http://www.doornextshop.com",
+  "https://www.doornextshop.com",
   "http://locallearn.in",
-  "http://localhost:3000",
   "http://www.locallearn.in",
   "https://locallearn.in",
   "https://www.locallearn.in",
