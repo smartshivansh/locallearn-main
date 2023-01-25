@@ -14,7 +14,7 @@ const { now } = require("mongoose");
 
 let onlineUsers = [];
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8090;
 
 require("dotenv").config({
   path: path.join(__dirname, ".env"),
