@@ -129,8 +129,11 @@ const signup = async (req, res) => {
 
     const chat = await Chat.create({
       email,
-      questions: [],
-      answers: [],
+      chat: [{
+        type: "qr",
+        content: { text: "Hi there! How are you?", reaponse: "no response", index: 0 },
+        position: "left",
+      }],
     });
     return res
       .status(200)
@@ -566,7 +569,7 @@ const forgetPassword = (req, res) => {
     .catch((err) => {
       res.send(
         JSON.stringify({
-          msg: "EMAIL_DOES_NOT_EXISTS",
+          msg: "User does not exist",
           sucess: false,
         })
       );

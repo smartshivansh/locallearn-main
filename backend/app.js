@@ -5,6 +5,12 @@ const path = require("path");
 const fs = require("fs");
 const { Server } = require("socket.io");
 var cors = require("cors");
+var validator = require("email-validator");
+
+const Users = require("./models/users");
+const { now } = require("mongoose");
+
+
 
 let onlineUsers = [];
 

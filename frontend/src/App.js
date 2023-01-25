@@ -101,7 +101,11 @@ function App() {
           }
         });
     } else {
-      setChat([]);
+      setChat({
+        type: "qr",
+        content: { text: "Hi there! How are you?", reaponse: "no response", index: 0 },
+        position: "left",
+      });
       dispatch(authStatusLogout());
     }
   },[isAuth]);
@@ -111,6 +115,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/app/termsofuse" element={<TermsOfUse />} />
+          <Route exact path="/app/test" element={<ChatUI />} />
           <Route exact path="/app/chatHelper" element={<ChatHelper />} />
           <Route exact path="/app/aboutus" element={<AboutUsPage />} />
           <Route exact path="/app/privacypolicy" element={<Privacy />} />

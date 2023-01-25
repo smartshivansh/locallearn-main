@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     username: { type: String },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
+    mobile: { type: String, required: true },
     password: { type: String, minlength: 8 },
     createdAt: { type: Date, default: Date.now },
     token: { type: String, default: "cfref" },
@@ -43,11 +44,14 @@ userSchema.methods.getAuthToken = async function (data) {
   var tokenValue = jwt.sign(param, "hssssghsjmQQQisjsnsnbnmmmaxmnmmamsm", {
     expiresIn: "300000s",
   });
-  console.log(tokenValue);
   this.token = tokenValue;
   await this.save();
   return tokenValue;
 };
+
+userSchema.methods.addmobile = async function(data){
+  this.mobile = "kkk"
+}
 
 userSchema.methods.comparePassword = function (candidatePassword) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {

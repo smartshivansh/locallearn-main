@@ -95,9 +95,11 @@ const ChatUI = (props) => {
   const email = localStorage.getItem("email");
   const chat = useSelector(s => s.chat.chat)
 
+
   const [initialMessages, setInitialMessages] = useState(chat);
 
   const { messages, appendMsg, setTyping } = useMessages(initialMessages);
+
   const [connected, setConnected] = useState(false);
 
   const [myplaceholder, setMyplaceholder] = useState("Go on, ask me something");
