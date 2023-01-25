@@ -1,4 +1,4 @@
-const api = "http://locallearn.in";
+const api = "https://locallearn.in";
 
 const apis = {
   home: `${api}/app/home`,
