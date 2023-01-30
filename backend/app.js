@@ -34,6 +34,7 @@ const allowlist = [
   "http://www.locallearn.in",
   "https://locallearn.in",
   "https://www.locallearn.in",
+  "http://localhost:3000"
 ];
 
 app.use((req, res, next) => {
@@ -165,13 +166,13 @@ io.on("connection", (socket) => {
       presence_penalty: 0,
     });
 
-    console.log("RESPONSE\n", completion.data.choices[0].text);
+    console.log("RESPONSE", completion.data.choices[0].text.trim());
     // let response = await generateResponseAI(data.text);
     // console.log(response);
 
-    socket.emit("send-msg-response", completion.data.choices[0].text);
+    socket.emit("send-msg-response", completion.data.choices[0].text.trim());
 
-    data["response"] = completion.data.choices[0].text;
+    data["response"] = completion.data.choices[0].text.trim();
 
     console.log("data with reponse", data);
 
